@@ -1,0 +1,21 @@
+# Ignore Gradle build output
+/build/
+/.gradle/
+/.gradle/
+/.mcreator/
+
+# Gradle wrapper exception (keep the jar)
+/!gradle/wrapper/gradle-wrapper.jar
+
+# IDE/project files
+*.iml
+.idea/
+.vscode/
+
+# Logs and runtime
+*.log
+/run/
+
+# OS clutter
+.DS_Store
+Thumbs.db
