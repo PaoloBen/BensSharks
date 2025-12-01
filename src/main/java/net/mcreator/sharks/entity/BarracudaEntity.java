@@ -16,8 +16,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -40,7 +38,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
@@ -80,6 +77,7 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(BarracudaEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(BarracudaEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(BarracudaEntity.class, EntityDataSerializers.STRING);
+	public static final EntityDataAccessor<Boolean> DATA_Sprinting = SynchedEntityData.defineId(BarracudaEntity.class, EntityDataSerializers.BOOLEAN);
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private boolean swinging;
 	private boolean lastloop;
@@ -136,6 +134,7 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
 		this.entityData.define(TEXTURE, "barracuda");
+		this.entityData.define(DATA_Sprinting, false);
 	}
 
 	public void setTexture(String texture) {
@@ -160,25 +159,42 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 1, 1));
-		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1, false) {
+		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, BaskingSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, BlacktipReefSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, BlueSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, BonnetheadSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(7, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(8, new AvoidEntityGoal<>(this, GreaterAxodileEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, GreenlandSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(10, new AvoidEntityGoal<>(this, LandSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(11, new AvoidEntityGoal<>(this, LemonSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(12, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(13, new AvoidEntityGoal<>(this, NurseSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(14, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(15, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(16, new AvoidEntityGoal<>(this, WhaleSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, WhitetipSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, SeaLionEntity.class, (float) 6, 1, 1.2));
+		this.targetSelector.addGoal(20, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(21, new MeleeAttackGoal(this, 1, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Salmon.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, RemoraEntity.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Cod.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, PilotFishEntity.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, TropicalFish.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, Pufferfish.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
+		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
+		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
+		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Salmon.class, true, true));
+		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, RemoraEntity.class, true, true));
+		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, Cod.class, true, true));
+		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, PilotFishEntity.class, true, true));
+		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, TropicalFish.class, true, true));
+		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, Pufferfish.class, true, true));
+		this.targetSelector.addGoal(31, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(32, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(33, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = BarracudaEntity.this.getX();
@@ -199,23 +215,7 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, BaskingSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, BlacktipReefSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, BlueSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, BonnetheadSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, GreaterAxodileEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, GreenlandSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(25, new AvoidEntityGoal<>(this, LandSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(26, new AvoidEntityGoal<>(this, LemonSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(27, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(28, new AvoidEntityGoal<>(this, NurseSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(29, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(30, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(31, new AvoidEntityGoal<>(this, WhaleSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(32, new AvoidEntityGoal<>(this, WhitetipSharkEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(33, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(34, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override
@@ -260,6 +260,7 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
+		compound.putBoolean("DataSprinting", this.entityData.get(DATA_Sprinting));
 	}
 
 	@Override
@@ -267,6 +268,8 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("Texture"))
 			this.setTexture(compound.getString("Texture"));
+		if (compound.contains("DataSprinting"))
+			this.entityData.set(DATA_Sprinting, compound.getBoolean("DataSprinting"));
 	}
 
 	@Override
@@ -279,9 +282,7 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level();
-
-		BarracudaRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
-		return retval;
+		return BarracudaRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
 	}
 
 	@Override
@@ -318,8 +319,6 @@ public class BarracudaEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(BenssharksModEntities.BARRACUDA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER)));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

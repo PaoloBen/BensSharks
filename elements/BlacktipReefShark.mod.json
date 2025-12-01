@@ -37,6 +37,11 @@
         "name": "uuid",
         "type": "string",
         "value": ""
+      },
+      {
+        "name": "Sprinting",
+        "type": "logic",
+        "value": false
       }
     ],
     "modelWidth": 1.0,
@@ -196,7 +201,7 @@
       4,
       2
     ],
-    "spawnThisMob": true,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 5,
     "mobSpawningType": "waterAmbient",

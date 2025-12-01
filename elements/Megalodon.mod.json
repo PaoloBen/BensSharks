@@ -12,7 +12,13 @@
     "boundingBoxScale": {
       "fixedValue": 4.5
     },
-    "entityDataEntries": [],
+    "entityDataEntries": [
+      {
+        "name": "Sprinting",
+        "type": "logic",
+        "value": false
+      }
+    ],
     "modelWidth": 1.55,
     "modelHeight": 0.7,
     "modelShadowSize": 3.0,
@@ -175,8 +181,11 @@
       4,
       2
     ],
-    "spawnThisMob": true,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": false,
+    "spawningCondition": {
+      "name": "GoblinSharkNaturalEntitySpawningCondition"
+    },
     "spawningProbability": 1,
     "mobSpawningType": "waterCreature",
     "minNumberOfMobsPerGroup": 1,

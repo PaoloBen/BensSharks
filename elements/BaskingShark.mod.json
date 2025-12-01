@@ -12,7 +12,13 @@
     "boundingBoxScale": {
       "fixedValue": 1.9
     },
-    "entityDataEntries": [],
+    "entityDataEntries": [
+      {
+        "name": "Sprinting",
+        "type": "logic",
+        "value": false
+      }
+    ],
     "modelWidth": 1.0,
     "modelHeight": 0.7,
     "modelShadowSize": 0.5,
@@ -166,7 +172,7 @@
       4,
       2
     ],
-    "spawnThisMob": true,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": true,
     "spawningCondition": {
       "name": "SharkNaturalEntitySpawningCondition"

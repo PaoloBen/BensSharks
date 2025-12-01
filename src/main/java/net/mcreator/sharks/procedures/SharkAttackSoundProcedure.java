@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
@@ -214,6 +215,28 @@ public class SharkAttackSoundProcedure {
 				} else {
 					_level.playLocalSound((sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks:shark.chomp")), SoundSource.NEUTRAL, (float) 0.7, (float) (-0.1),
 							false);
+				}
+			}
+		}
+		if (sourceentity instanceof SharkMinionEntity) {
+			if ((sourceentity.getDisplayName().getString()).equals("Gura") || (sourceentity.getDisplayName().getString()).equals("Gawr Gura")) {
+				if (world instanceof Level _level) {
+					if (!_level.isClientSide()) {
+						_level.playSound(null, BlockPos.containing(sourceentity.getX(), sourceentity.getY(), sourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.knockback")), SoundSource.NEUTRAL,
+								(float) 0.7, 1);
+					} else {
+						_level.playLocalSound((sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.knockback")), SoundSource.NEUTRAL, (float) 0.7, 1,
+								false);
+					}
+				}
+			} else {
+				if (world instanceof Level _level) {
+					if (!_level.isClientSide()) {
+						_level.playSound(null, BlockPos.containing(sourceentity.getX(), sourceentity.getY(), sourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks:shark.chomp")), SoundSource.NEUTRAL,
+								(float) 0.7, 3);
+					} else {
+						_level.playLocalSound((sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks:shark.chomp")), SoundSource.NEUTRAL, (float) 0.7, 3, false);
+					}
 				}
 			}
 		}

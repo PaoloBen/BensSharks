@@ -1,0 +1,30 @@
+{
+  "_fv": 73,
+  "_type": "projectile",
+  "definition": {
+    "projectileItem": {
+      "value": "CUSTOM:MutatedEgg"
+    },
+    "showParticles": false,
+    "actionSound": {
+      "value": "entity.endereye.launch"
+    },
+    "igniteFire": false,
+    "power": 1.0,
+    "damage": 0.0,
+    "knockback": 1,
+    "entityModel": "Default",
+    "customModelTexture": "",
+    "modelWidth": 0.5,
+    "modelHeight": 0.5,
+    "onHitsBlock": {
+      "name": "MutatedEggProjectileProjectileHitsBlock"
+    },
+    "onHitsEntity": {
+      "name": "MutatedEggProjectileProjectileHitsLivingEntity"
+    },
+    "onFlyingTick": {
+      "name": "MutatedEggProjectileWhileProjectileFlyingTick"
+    }
+  }
+}

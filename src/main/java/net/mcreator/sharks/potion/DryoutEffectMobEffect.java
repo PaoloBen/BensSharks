@@ -3,6 +3,7 @@ package net.mcreator.sharks.potion;
 
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -11,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen
 import net.minecraft.client.gui.GuiGraphics;
 
 import net.mcreator.sharks.procedures.DryoutEffectOnEffectActiveTickProcedure;
+import net.mcreator.sharks.procedures.DryoutEffectEffectExpiresProcedure;
 
 public class DryoutEffectMobEffect extends MobEffect {
 	public DryoutEffectMobEffect() {
@@ -20,6 +22,12 @@ public class DryoutEffectMobEffect extends MobEffect {
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier) {
 		DryoutEffectOnEffectActiveTickProcedure.execute(entity.level(), entity);
+	}
+
+	@Override
+	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
+		super.removeAttributeModifiers(entity, attributeMap, amplifier);
+		DryoutEffectEffectExpiresProcedure.execute(entity);
 	}
 
 	@Override

@@ -9,13 +9,17 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+
 import net.mcreator.sharks.client.renderer.WhitetipSharkRenderer;
 import net.mcreator.sharks.client.renderer.WhaleSharkRenderer;
 import net.mcreator.sharks.client.renderer.TigerSharkRenderer;
 import net.mcreator.sharks.client.renderer.ThalassogerRenderer;
 import net.mcreator.sharks.client.renderer.ShrakRenderer;
+import net.mcreator.sharks.client.renderer.SharkMinionRenderer;
 import net.mcreator.sharks.client.renderer.SeekingArrowRenderer;
 import net.mcreator.sharks.client.renderer.SeekerSharkProjectileRenderer;
+import net.mcreator.sharks.client.renderer.SeaLionRenderer;
 import net.mcreator.sharks.client.renderer.SawsharkRenderer;
 import net.mcreator.sharks.client.renderer.RollParticleRenderer;
 import net.mcreator.sharks.client.renderer.RemoraRenderer;
@@ -43,7 +47,7 @@ import net.mcreator.sharks.client.renderer.AxodileRenderer;
 public class BenssharksModEntityRenderers {
 	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(BenssharksModEntities.GREATWHITESHARK.get(), ShrakRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.GREATWHITE_SHARK.get(), ShrakRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.NURSE_SHARK.get(), NurseSharkRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.REMORA.get(), RemoraRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.TIGER_SHARK.get(), TigerSharkRenderer::new);
@@ -72,5 +76,8 @@ public class BenssharksModEntityRenderers {
 		event.registerEntityRenderer(BenssharksModEntities.LEOPARD_SHARK.get(), LeopardSharkRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.GOBLIN_SHARK.get(), GoblinSharkRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.SAWSHARK.get(), SawsharkRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.SHARK_MINION.get(), SharkMinionRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.MUTATED_EGG_PROJECTILE.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.SEA_LION.get(), SeaLionRenderer::new);
 	}
 }

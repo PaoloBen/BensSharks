@@ -16,7 +16,7 @@
     ],
     "stackSize": 1,
     "enchantability": 0,
-    "useDuration": 0,
+    "useDuration": 1,
     "toolType": 1.0,
     "damageCount": 0,
     "recipeRemainder": {
@@ -36,13 +36,16 @@
     },
     "inventorySize": 9,
     "inventoryStackSize": 64,
-    "enableRanged": false,
-    "shootConstantly": false,
+    "enableRanged": true,
+    "shootConstantly": true,
     "rangedItemChargesPower": false,
     "projectile": {
-      "value": "Arrow"
+      "value": "CUSTOM:MutatedEggProjectile"
     },
-    "projectileDisableAmmoCheck": false,
+    "projectileDisableAmmoCheck": true,
+    "onRangedItemUsed": {
+      "name": "MutatedEggRangedItemShootsProjectile"
+    },
     "isFood": false,
     "nutritionalValue": 4,
     "saturation": 0.3,
@@ -53,6 +56,10 @@
     "isAlwaysEdible": false,
     "animation": "none",
     "isMusicDisc": false,
+    "musicDiscMusic": {
+      "value": ""
+    },
+    "musicDiscDescription": "",
     "musicDiscLengthInTicks": 0,
     "musicDiscAnalogOutput": 0
   }

@@ -97,6 +97,7 @@ public class BenssharksModVariables {
 		public double SwimSpeed = 0;
 		public double KBRes = 0;
 		public boolean Sitting = false;
+		public boolean LandSsit = false;
 
 		public static MapVariables load(CompoundTag tag) {
 			MapVariables data = new MapVariables();
@@ -108,6 +109,7 @@ public class BenssharksModVariables {
 			SwimSpeed = nbt.getDouble("SwimSpeed");
 			KBRes = nbt.getDouble("KBRes");
 			Sitting = nbt.getBoolean("Sitting");
+			LandSsit = nbt.getBoolean("LandSsit");
 		}
 
 		@Override
@@ -115,6 +117,7 @@ public class BenssharksModVariables {
 			nbt.putDouble("SwimSpeed", SwimSpeed);
 			nbt.putDouble("KBRes", KBRes);
 			nbt.putBoolean("Sitting", Sitting);
+			nbt.putBoolean("LandSsit", LandSsit);
 			return nbt;
 		}
 

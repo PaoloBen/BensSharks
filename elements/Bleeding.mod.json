@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Bleeding",
-    "icon": "bleeding.png",
+    "icon": "bleeding",
     "color": {
       "value": -10092544,
       "falpha": 0.0
@@ -18,6 +18,9 @@
     "modifiers": [],
     "onActiveTick": {
       "name": "BleedingOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "BleedingEffectExpires"
     }
   }
 }

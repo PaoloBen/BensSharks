@@ -3,6 +3,7 @@ package net.mcreator.sharks.potion;
 
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -11,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen
 import net.minecraft.client.gui.GuiGraphics;
 
 import net.mcreator.sharks.procedures.PreyOnEffectActiveTickProcedure;
+import net.mcreator.sharks.procedures.PreyEffectExpiresProcedure;
 
 public class PreyMobEffect extends MobEffect {
 	public PreyMobEffect() {
@@ -20,6 +22,12 @@ public class PreyMobEffect extends MobEffect {
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier) {
 		PreyOnEffectActiveTickProcedure.execute(entity.level(), entity.getX(), entity.getY(), entity.getZ(), entity);
+	}
+
+	@Override
+	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
+		super.removeAttributeModifiers(entity, attributeMap, amplifier);
+		PreyEffectExpiresProcedure.execute(entity);
 	}
 
 	@Override

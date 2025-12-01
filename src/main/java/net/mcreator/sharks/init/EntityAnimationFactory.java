@@ -9,6 +9,8 @@ import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
 import net.mcreator.sharks.entity.ThalassogerEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.SharkMinionEntity;
+import net.mcreator.sharks.entity.SeaLionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.RollParticleEntity;
 import net.mcreator.sharks.entity.RemoraEntity;
@@ -220,6 +222,20 @@ public class EntityAnimationFactory {
 				}
 			}
 			if (event.getEntity() instanceof SawsharkEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof SharkMinionEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof SeaLionEntity syncable) {
 				String animation = syncable.getSyncedAnimation();
 				if (!animation.equals("undefined")) {
 					syncable.setAnimation("undefined");

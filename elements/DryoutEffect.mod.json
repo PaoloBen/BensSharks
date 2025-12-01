@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Dryout",
-    "icon": "null.png",
+    "icon": "null",
     "color": {
       "value": -6646126,
       "falpha": 0.0
@@ -18,6 +18,9 @@
     "modifiers": [],
     "onActiveTick": {
       "name": "DryoutEffectOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "DryoutEffectEffectExpires"
     }
   }
 }

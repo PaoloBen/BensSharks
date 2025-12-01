@@ -4,7 +4,7 @@ license="GNU Lesser General Public License version 3 (LGPLv3)"
 
 [[mods]]
 modId="benssharks"
-version="1.2.7.1"
+version="1.3.0"
 displayName="Ben's Sharks"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/bens-sharks"
 logoFile="logo.png"

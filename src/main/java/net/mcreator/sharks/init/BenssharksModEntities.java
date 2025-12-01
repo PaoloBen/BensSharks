@@ -21,13 +21,16 @@ import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
 import net.mcreator.sharks.entity.ThalassogerEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SeekingArrowEntity;
 import net.mcreator.sharks.entity.SeekerSharkProjectileEntity;
+import net.mcreator.sharks.entity.SeaLionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.RollParticleEntity;
 import net.mcreator.sharks.entity.RemoraEntity;
 import net.mcreator.sharks.entity.PilotFishEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
+import net.mcreator.sharks.entity.MutatedEggProjectileEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
 import net.mcreator.sharks.entity.LeopardSharkEntity;
@@ -50,7 +53,7 @@ import net.mcreator.sharks.BenssharksMod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BenssharksModEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BenssharksMod.MODID);
-	public static final RegistryObject<EntityType<ShrakEntity>> GREATWHITESHARK = register("greatwhiteshark",
+	public static final RegistryObject<EntityType<ShrakEntity>> GREATWHITE_SHARK = register("greatwhite_shark",
 			EntityType.Builder.<ShrakEntity>of(ShrakEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(32).setUpdateInterval(3).setCustomClientFactory(ShrakEntity::new)
 
 					.sized(1f, 0.6f));
@@ -161,6 +164,16 @@ public class BenssharksModEntities {
 			EntityType.Builder.<SawsharkEntity>of(SawsharkEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(32).setUpdateInterval(3).setCustomClientFactory(SawsharkEntity::new)
 
 					.sized(1.15f, 0.7f));
+	public static final RegistryObject<EntityType<SharkMinionEntity>> SHARK_MINION = register("shark_minion",
+			EntityType.Builder.<SharkMinionEntity>of(SharkMinionEntity::new, MobCategory.CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SharkMinionEntity::new)
+
+					.sized(0.4f, 0.875f));
+	public static final RegistryObject<EntityType<MutatedEggProjectileEntity>> MUTATED_EGG_PROJECTILE = register("mutated_egg_projectile", EntityType.Builder.<MutatedEggProjectileEntity>of(MutatedEggProjectileEntity::new, MobCategory.MISC)
+			.setCustomClientFactory(MutatedEggProjectileEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+	public static final RegistryObject<EntityType<SeaLionEntity>> SEA_LION = register("sea_lion",
+			EntityType.Builder.<SeaLionEntity>of(SeaLionEntity::new, MobCategory.CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SeaLionEntity::new)
+
+					.sized(0.85f, 0.67f));
 
 	// Start of user code block custom entities
 	// End of user code block custom entities
@@ -198,12 +211,14 @@ public class BenssharksModEntities {
 			LeopardSharkEntity.init();
 			GoblinSharkEntity.init();
 			SawsharkEntity.init();
+			SharkMinionEntity.init();
+			SeaLionEntity.init();
 		});
 	}
 
 	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(GREATWHITESHARK.get(), ShrakEntity.createAttributes().build());
+		event.put(GREATWHITE_SHARK.get(), ShrakEntity.createAttributes().build());
 		event.put(NURSE_SHARK.get(), NurseSharkEntity.createAttributes().build());
 		event.put(REMORA.get(), RemoraEntity.createAttributes().build());
 		event.put(TIGER_SHARK.get(), TigerSharkEntity.createAttributes().build());
@@ -230,5 +245,7 @@ public class BenssharksModEntities {
 		event.put(LEOPARD_SHARK.get(), LeopardSharkEntity.createAttributes().build());
 		event.put(GOBLIN_SHARK.get(), GoblinSharkEntity.createAttributes().build());
 		event.put(SAWSHARK.get(), SawsharkEntity.createAttributes().build());
+		event.put(SHARK_MINION.get(), SharkMinionEntity.createAttributes().build());
+		event.put(SEA_LION.get(), SeaLionEntity.createAttributes().build());
 	}
 }

@@ -16,7 +16,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -44,7 +43,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobType;
@@ -71,7 +69,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
 
-import net.mcreator.sharks.procedures.SharkNaturalEntitySpawningConditionProcedure;
 import net.mcreator.sharks.procedures.LemonSharkRightClickedOnEntityProcedure;
 import net.mcreator.sharks.procedures.LemonSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.LemonSharkOnEntityTickUpdateProcedure;
@@ -88,6 +85,7 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(LemonSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(LemonSharkEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(LemonSharkEntity.class, EntityDataSerializers.STRING);
+	public static final EntityDataAccessor<Boolean> DATA_Sprinting = SynchedEntityData.defineId(LemonSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private boolean swinging;
 	private boolean lastloop;
@@ -144,6 +142,7 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
 		this.entityData.define(TEXTURE, "lemonshark");
+		this.entityData.define(DATA_Sprinting, false);
 	}
 
 	public void setTexture(String texture) {
@@ -255,6 +254,7 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
+		compound.putBoolean("DataSprinting", this.entityData.get(DATA_Sprinting));
 	}
 
 	@Override
@@ -262,6 +262,8 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("Texture"))
 			this.setTexture(compound.getString("Texture"));
+		if (compound.contains("DataSprinting"))
+			this.entityData.set(DATA_Sprinting, compound.getBoolean("DataSprinting"));
 	}
 
 	@Override
@@ -274,9 +276,7 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level();
-
-		LemonSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
-		return retval;
+		return LemonSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
 	}
 
 	@Override
@@ -325,12 +325,6 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(BenssharksModEntities.LEMON_SHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			return SharkNaturalEntitySpawningConditionProcedure.execute(world);
-		});
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

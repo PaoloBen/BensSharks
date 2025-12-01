@@ -28,7 +28,7 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.COOKIECUTTER_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.GOBLIN_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.GREATER_AXODILE_SPAWN_EGG.get());
-				tabData.accept(BenssharksModItems.GREATWHITESHARK_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.GREATWHITE_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.GREENLAND_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.KRILL_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.LAND_SHARK_SPAWN_EGG.get());
@@ -41,6 +41,8 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.PILOT_FISH_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.REMORA_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SAWSHARK_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.SEA_LION_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.SHARK_MINION_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.TIGER_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.THALASSOGER_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.WHALE_SHARK_SPAWN_EGG.get());

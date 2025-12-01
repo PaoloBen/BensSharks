@@ -8,7 +8,9 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.event.TickEvent;
@@ -17,6 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 
+import net.mcreator.sharks.worldgen.SharkBiomeModifiers;
 import net.mcreator.sharks.init.BenssharksModTabs;
 import net.mcreator.sharks.init.BenssharksModSounds;
 import net.mcreator.sharks.init.BenssharksModPotions;
@@ -26,6 +29,7 @@ import net.mcreator.sharks.init.BenssharksModEntities;
 import net.mcreator.sharks.init.BenssharksModEnchantments;
 import net.mcreator.sharks.init.BenssharksModBlocks;
 import net.mcreator.sharks.init.BenssharksModBlockEntities;
+import net.mcreator.sharks.configuration.SpawnsConfiguration;
 
 import java.util.function.Supplier;
 import java.util.function.Function;
@@ -43,6 +47,10 @@ public class BenssharksMod {
 
 	public BenssharksMod() {
 		// Start of user code block mod constructor
+		// 1. Registers your new Biome Modifier system
+		SharkBiomeModifiers.register(FMLJavaModLoadingContext.get().getModEventBus());
+		// 2. Registers your config file so it actually loads! This was missing.
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpawnsConfiguration.SPEC);
 		// End of user code block mod constructor
 		MinecraftForge.EVENT_BUS.register(this);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -53,10 +61,8 @@ public class BenssharksMod {
 		BenssharksModEntities.REGISTRY.register(bus);
 		BenssharksModEnchantments.REGISTRY.register(bus);
 		BenssharksModTabs.REGISTRY.register(bus);
-
 		BenssharksModMobEffects.REGISTRY.register(bus);
 		BenssharksModPotions.REGISTRY.register(bus);
-
 		// Start of user code block mod init
 		// End of user code block mod init
 	}

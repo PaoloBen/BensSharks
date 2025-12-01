@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,9 +23,9 @@ import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.entity.BarracudaEntity;
 
 public class BarracudaRightClickedOnEntityProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
+	public static InteractionResult execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
 		if (entity == null || sourceentity == null)
-			return;
+			return InteractionResult.PASS;
 		double health = 0;
 		double oxygen = 0;
 		String nametag = "";
@@ -96,5 +97,6 @@ public class BarracudaRightClickedOnEntityProcedure {
 				}
 			}
 		}
+		return InteractionResult.PASS;
 	}
 }

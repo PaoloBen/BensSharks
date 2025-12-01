@@ -25,6 +25,7 @@ import net.mcreator.sharks.init.BenssharksModEnchantments;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
@@ -59,7 +60,7 @@ public class BleedingGlobalProcedure {
 			return;
 		if (sourceentity instanceof ShrakEntity || sourceentity instanceof TigerSharkEntity || sourceentity instanceof BlueSharkEntity || sourceentity instanceof MakoSharkEntity || sourceentity instanceof BonnetheadSharkEntity
 				|| sourceentity instanceof BlacktipReefSharkEntity || sourceentity instanceof BullSharkEntity || sourceentity instanceof MegalodonEntity || sourceentity instanceof LemonSharkEntity || sourceentity instanceof GreenlandSharkEntity
-				|| sourceentity instanceof WhitetipSharkEntity || sourceentity instanceof LandSharkEntity || sourceentity instanceof GoblinSharkEntity || sourceentity instanceof SawsharkEntity) {
+				|| sourceentity instanceof WhitetipSharkEntity || sourceentity instanceof LandSharkEntity || sourceentity instanceof GoblinSharkEntity || sourceentity instanceof SawsharkEntity || sourceentity instanceof SharkMinionEntity) {
 			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 				_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.BLEEDING.get(), 200, 0, true, false));
 		}

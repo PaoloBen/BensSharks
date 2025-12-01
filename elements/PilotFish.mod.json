@@ -163,7 +163,7 @@
       0,
       0
     ],
-    "spawnThisMob": true,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 12,
     "mobSpawningType": "waterAmbient",

@@ -1,13 +1,16 @@
 {
-  "type": "minecraft:smithing_transform",
-  "template": [],
-  "base": {
-    "item": "benssharks:axoleather"
-  },
-  "addition": {
-    "item": "minecraft:scute"
-  },
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "benssharks:axoleather"
+    },
+    {
+      "item": "minecraft:scute"
+    }
+  ],
   "result": {
-    "item": "benssharks:axoscute"
+    "item": "benssharks:axoscute",
+    "count": 1
   }
 }

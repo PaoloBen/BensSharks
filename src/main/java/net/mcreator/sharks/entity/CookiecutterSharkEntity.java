@@ -16,7 +16,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -38,7 +37,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
@@ -64,7 +62,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
 
-import net.mcreator.sharks.procedures.GoblinSharkNaturalEntitySpawningConditionProcedure;
 import net.mcreator.sharks.procedures.CookiecutterSharkRightClickedOnEntityProcedure;
 import net.mcreator.sharks.procedures.CookiecutterSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.CookiecutterSharkOnEntityTickUpdateProcedure;
@@ -293,9 +290,7 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level();
-
-		CookiecutterSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
-		return retval;
+		return CookiecutterSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
 	}
 
 	@Override
@@ -332,12 +327,6 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 	}
 
 	public static void init() {
-		SpawnPlacements.register(BenssharksModEntities.COOKIECUTTER_SHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			return GoblinSharkNaturalEntitySpawningConditionProcedure.execute(world);
-		});
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

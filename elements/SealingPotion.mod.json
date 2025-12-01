@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Sealing",
-    "icon": "sealing.png",
+    "icon": "sealing",
     "color": {
       "value": -3230104,
       "falpha": 0.0
@@ -18,6 +18,9 @@
     "modifiers": [],
     "onActiveTick": {
       "name": "SealingPotionOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "SealingPotionEffectExpires"
     }
   }
 }

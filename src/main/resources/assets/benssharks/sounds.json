@@ -34,5 +34,36 @@
         "stream": false
       }
     ]
+  },
+  "sea_lion.ambient": {
+    "subtitle": "subtitles.sea_lion.ambient",
+    "sounds": [
+      {
+        "name": "benssharks:sea_lion.ambient",
+        "stream": false
+      },
+      {
+        "name": "benssharks:sea_lion.ambient2",
+        "stream": false
+      }
+    ]
+  },
+  "sea_lion.hurt": {
+    "subtitle": "subtitles.sea_lion.hurt",
+    "sounds": [
+      {
+        "name": "benssharks:sea_lion.hurt",
+        "stream": false
+      }
+    ]
+  },
+  "sea_lion.death": {
+    "subtitle": "subtitles.sea_lion.death",
+    "sounds": [
+      {
+        "name": "benssharks:sea_lion.death",
+        "stream": false
+      }
+    ]
   }
 }

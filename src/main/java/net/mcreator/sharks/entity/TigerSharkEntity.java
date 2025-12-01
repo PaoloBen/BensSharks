@@ -16,8 +16,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -44,7 +42,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
@@ -74,6 +71,7 @@ import net.mcreator.sharks.procedures.TigerSharkRightClickedOnEntityProcedure;
 import net.mcreator.sharks.procedures.TigerSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.TigerSharkOnEntityTickUpdateProcedure;
 import net.mcreator.sharks.procedures.TigerSharkEntityIsHurtProcedure;
+import net.mcreator.sharks.procedures.TigerSharkBoundingBoxScaleProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
@@ -84,6 +82,7 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(TigerSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(TigerSharkEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(TigerSharkEntity.class, EntityDataSerializers.STRING);
+	public static final EntityDataAccessor<Boolean> DATA_Sprinting = SynchedEntityData.defineId(TigerSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private boolean swinging;
 	private boolean lastloop;
@@ -140,6 +139,7 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
 		this.entityData.define(TEXTURE, "tigershark");
+		this.entityData.define(DATA_Sprinting, false);
 	}
 
 	public void setTexture(String texture) {
@@ -176,11 +176,12 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
 		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, ElderGuardian.class, true, true));
 		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, SeaLionEntity.class, true, true));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = TigerSharkEntity.this.getX();
@@ -201,16 +202,16 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(15, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
-		this.goalSelector.addGoal(16, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
-		this.goalSelector.addGoal(17, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
-		this.goalSelector.addGoal(18, new TemptGoal(this, 1, Ingredient.of(Items.SALMON), false));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 4, 16, 16));
-		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1));
-		this.goalSelector.addGoal(24, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(16, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
+		this.goalSelector.addGoal(17, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
+		this.goalSelector.addGoal(18, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
+		this.goalSelector.addGoal(19, new TemptGoal(this, 1, Ingredient.of(Items.SALMON), false));
+		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 4, 16, 16));
+		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1));
+		this.goalSelector.addGoal(25, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override
@@ -255,6 +256,7 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
+		compound.putBoolean("DataSprinting", this.entityData.get(DATA_Sprinting));
 	}
 
 	@Override
@@ -262,6 +264,8 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("Texture"))
 			this.setTexture(compound.getString("Texture"));
+		if (compound.contains("DataSprinting"))
+			this.entityData.set(DATA_Sprinting, compound.getBoolean("DataSprinting"));
 	}
 
 	@Override
@@ -274,9 +278,7 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level();
-
-		TigerSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
-		return retval;
+		return TigerSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
 	}
 
 	@Override
@@ -288,7 +290,12 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 
 	@Override
 	public EntityDimensions getDimensions(Pose p_33597_) {
-		return super.getDimensions(p_33597_).scale((float) 1.75);
+		Entity entity = this;
+		Level world = this.level();
+		double x = this.getX();
+		double y = entity.getY();
+		double z = entity.getZ();
+		return super.getDimensions(p_33597_).scale((float) TigerSharkBoundingBoxScaleProcedure.execute(entity));
 	}
 
 	@Override
@@ -313,8 +320,6 @@ public class TigerSharkEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(BenssharksModEntities.TIGER_SHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER)));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

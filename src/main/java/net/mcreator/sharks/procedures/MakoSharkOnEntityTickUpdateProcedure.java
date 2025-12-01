@@ -26,7 +26,7 @@ public class MakoSharkOnEntityTickUpdateProcedure {
 				_entity.removeEffect(BenssharksModMobEffects.DRYOUT_EFFECT.get());
 		}
 		if (entity instanceof MakoSharkEntity && entity.isInWaterOrBubble()) {
-			if (entity instanceof LivingEntity _livEnt9 && _livEnt9.hasEffect(BenssharksModMobEffects.FRENZY.get())) {
+			if (entity.getPersistentData().getBoolean("Sprinting") == true) {
 				if (entity instanceof MakoSharkEntity) {
 					((MakoSharkEntity) entity).setAnimation("sprint");
 				}

@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Detached",
-    "icon": "dryout_effect.png",
+    "icon": "dryout_effect",
     "color": {
       "value": -65536,
       "falpha": 0.0
@@ -18,6 +18,9 @@
     "modifiers": [],
     "onActiveTick": {
       "name": "DetachedOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "DetachedEffectExpires"
     }
   }
 }

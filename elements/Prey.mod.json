@@ -18,6 +18,9 @@
     "modifiers": [],
     "onActiveTick": {
       "name": "PreyOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "PreyEffectExpires"
     }
   }
 }

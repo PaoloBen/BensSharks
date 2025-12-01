@@ -16,8 +16,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
@@ -50,7 +48,6 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobType;
@@ -97,6 +94,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(NurseSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(NurseSharkEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(NurseSharkEntity.class, EntityDataSerializers.STRING);
+	public static final EntityDataAccessor<Boolean> DATA_Sprinting = SynchedEntityData.defineId(NurseSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private boolean swinging;
 	private boolean lastloop;
@@ -153,6 +151,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
 		this.entityData.define(TEXTURE, "nurse");
+		this.entityData.define(DATA_Sprinting, false);
 	}
 
 	public void setTexture(String texture) {
@@ -229,69 +228,9 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		});
 		this.targetSelector.addGoal(7, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(8, new RandomSwimmingGoal(this, 1, 40));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Squid.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Squid.class, true, false));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, LivingEntity.class, true, false) {
 			@Override
 			public boolean canUse() {
@@ -374,6 +313,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
+		compound.putBoolean("DataSprinting", this.entityData.get(DATA_Sprinting));
 	}
 
 	@Override
@@ -381,6 +321,8 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("Texture"))
 			this.setTexture(compound.getString("Texture"));
+		if (compound.contains("DataSprinting"))
+			this.entityData.set(DATA_Sprinting, compound.getBoolean("DataSprinting"));
 	}
 
 	@Override
@@ -428,9 +370,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		double z = this.getZ();
 		Entity entity = this;
 		Level world = this.level();
-
-		NurseSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
-		return retval;
+		return NurseSharkRightClickedOnEntityProcedure.execute(world, x, y, z, entity, sourceentity);
 	}
 
 	@Override
@@ -485,8 +425,6 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(BenssharksModEntities.NURSE_SHARK.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER)));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

@@ -25,9 +25,15 @@ public class BarracudaOnEntityTickUpdateProcedure {
 			if (entity instanceof LivingEntity _entity)
 				_entity.removeEffect(BenssharksModMobEffects.DRYOUT_EFFECT.get());
 		}
-		if (entity instanceof BarracudaEntity && !entity.isInWaterRainOrBubble() && entity instanceof LivingEntity _livEnt9 && _livEnt9.hasEffect(BenssharksModMobEffects.FRENZY.get())) {
-			if (entity instanceof BarracudaEntity) {
-				((BarracudaEntity) entity).setAnimation("sprint");
+		if (entity instanceof BarracudaEntity && entity.isInWaterOrBubble()) {
+			if (entity.getPersistentData().getBoolean("Sprinting") == true) {
+				if (entity instanceof BarracudaEntity) {
+					((BarracudaEntity) entity).setAnimation("sprint");
+				}
+			} else {
+				if (entity instanceof BarracudaEntity) {
+					((BarracudaEntity) entity).setAnimation("empty");
+				}
 			}
 		}
 	}

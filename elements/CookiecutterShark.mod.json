@@ -188,7 +188,7 @@
       4,
       2
     ],
-    "spawnThisMob": true,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": true,
     "spawningCondition": {
       "name": "GoblinSharkNaturalEntitySpawningCondition"

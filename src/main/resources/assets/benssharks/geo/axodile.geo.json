@@ -18,7 +18,7 @@
 				{
 					"name": "Head",
 					"parent": "Axodile",
-					"pivot": [0, 4.5, -9]
+					"pivot": [0, 4.5, -11]
 				},
 				{
 					"name": "Skull",
@@ -59,8 +59,13 @@
 					]
 				},
 				{
-					"name": "LeftFin",
+					"name": "Fins",
 					"parent": "Shell",
+					"pivot": [-4, 0.5, -1.5]
+				},
+				{
+					"name": "LeftFin",
+					"parent": "Fins",
 					"pivot": [-4, 0.5, -1.5],
 					"cubes": [
 						{"origin": [-15, 0, -4], "size": [12, 1, 5], "uv": [65, 0]}
@@ -68,7 +73,7 @@
 				},
 				{
 					"name": "RightFin",
-					"parent": "Shell",
+					"parent": "Fins",
 					"pivot": [4, 0.5, -1.5],
 					"cubes": [
 						{"origin": [3, 0, -4], "size": [12, 1, 5], "uv": [0, 65]}

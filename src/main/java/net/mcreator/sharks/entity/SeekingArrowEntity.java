@@ -74,7 +74,7 @@ public class SeekingArrowEntity extends AbstractArrow implements ItemSupplier {
 	@Override
 	public void playerTouch(Player entity) {
 		super.playerTouch(entity);
-		SeekingArrowProjectileHitsPlayerProcedure.execute(this.level(), entity, this);
+		SeekingArrowProjectileHitsPlayerProcedure.execute();
 	}
 
 	@Override

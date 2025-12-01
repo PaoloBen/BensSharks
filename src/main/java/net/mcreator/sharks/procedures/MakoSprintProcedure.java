@@ -41,17 +41,11 @@ public class MakoSprintProcedure {
 							&& !((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
 						if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 							_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.FRENZY.get(), 60, 2, true, false));
-						if (entity instanceof MakoSharkEntity) {
-							((MakoSharkEntity) entity).setAnimation("sprint");
-						}
 						BenssharksMod.queueServerWork(60, () -> {
 							if (entity instanceof LivingEntity _entity)
 								_entity.removeEffect(BenssharksModMobEffects.FRENZY.get());
 						});
 					} else {
-						if (entity instanceof MakoSharkEntity) {
-							((MakoSharkEntity) entity).setAnimation("empty");
-						}
 						if (entity instanceof LivingEntity _entity)
 							_entity.removeEffect(BenssharksModMobEffects.FRENZY.get());
 					}

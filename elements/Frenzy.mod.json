@@ -13,9 +13,17 @@
     "renderStatusInInventory": true,
     "renderStatusInHUD": true,
     "isCuredByMilk": true,
-    "isProtectedByTotem": true,
+    "isProtectedByTotem": false,
     "isCuredbyHoney": false,
-    "modifiers": [],
+    "modifiers": [
+      {
+        "attribute": {
+          "value": "SWIM_SPEED"
+        },
+        "amount": 1.7,
+        "operation": "ADD_VALUE"
+      }
+    ],
     "onStarted": {
       "name": "FrenzyEffectStartedapplied"
     },
