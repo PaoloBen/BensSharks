@@ -2,6 +2,6 @@
   "_fv": 73,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">entity_attacked</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_entity_compare\"><field name=\"entity\">CUSTOM:Thalassoger</field><value name=\"compareTo\"><block type=\"entity_from_deps\"></block></value></block></value><statement name=\"DO0\"><block type=\"play_newgeckoanim\"><field name=\"name\">CUSTOM:Thalassoger</field><value name=\"entity\"><block type=\"entity_from_deps\"></block></value><value name=\"animation\"><block type=\"text\"><field name=\"TEXT\">hurt</field></block></value></block></statement></block></next></block></xml>"
+    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">entity_attacked</field></block><block type=\"controls_if\" x=\"46\" y=\"152\"><value name=\"IF0\"><block type=\"logic_entity_compare\"><field name=\"entity\">CUSTOM:Thalassoger</field><value name=\"compareTo\"><block type=\"entity_from_deps\"></block></value></block></value><statement name=\"DO0\"><block type=\"play_newgeckoanim\"><field name=\"name\">CUSTOM:Thalassoger</field><value name=\"entity\"><block type=\"entity_from_deps\"></block></value><value name=\"animation\"><block type=\"text\"><field name=\"TEXT\">hurt</field></block></value></block></statement></block></xml>"
   }
 }

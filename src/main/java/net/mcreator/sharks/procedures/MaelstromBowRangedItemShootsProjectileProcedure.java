@@ -46,24 +46,57 @@ public class MaelstromBowRangedItemShootsProjectileProcedure {
 				}
 			}
 		}
-		if (world instanceof ServerLevel _level)
-			_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 3, 0.25, 0.25, 0.25, 0.25);
-		if (world instanceof ServerLevel _level)
-			_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 3, 1, 1, 1, 0.5);
-		if (world instanceof ServerLevel _level)
-			_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 1, 0, 0, 0, 0.075);
-		if (world instanceof Level _level) {
-			if (!_level.isClientSide()) {
-				_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.ambient.short")), SoundSource.NEUTRAL, 2, 1);
-			} else {
-				_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.ambient.short")), SoundSource.NEUTRAL, 2, 1, false);
+		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.MAELSTROM_BOW.get()
+				&& EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0
+				|| (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.MAELSTROM_BOW.get()
+						&& EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY)) != 0) {
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.FLAME, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 5, 0.25, 0.25, 0.25, 0.25);
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.FLAME, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 5, 1, 1, 1, 0.5);
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.FLASH, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 1, 0, 0, 0, 0.075);
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wither.shoot")), SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wither.shoot")), SoundSource.NEUTRAL, 1, 1, false);
+				}
 			}
-		}
-		if (world instanceof Level _level) {
-			if (!_level.isClientSide()) {
-				_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2);
-			} else {
-				_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2, false);
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.firework_rocket.large_blast")), SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.firework_rocket.large_blast")), SoundSource.NEUTRAL, 1, 1, false);
+				}
+			}
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2);
+				} else {
+					_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2, false);
+				}
+			}
+		} else {
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 3, 0.25, 0.25, 0.25, 0.25);
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 3, 1, 1, 1, 0.5);
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (entity.getX()), (entity.getY() + 1.5), (entity.getZ()), 1, 0, 0, 0, 0.075);
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.ambient.short")), SoundSource.NEUTRAL, 2, 1);
+				} else {
+					_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.ambient.short")), SoundSource.NEUTRAL, 2, 1, false);
+				}
+			}
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, BlockPos.containing(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2);
+				} else {
+					_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.elder_guardian.curse")), SoundSource.NEUTRAL, (float) 0.25, 2, false);
+				}
 			}
 		}
 	}

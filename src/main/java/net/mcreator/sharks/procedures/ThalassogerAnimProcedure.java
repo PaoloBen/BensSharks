@@ -46,13 +46,14 @@ public class ThalassogerAnimProcedure {
 		double fromY = 0;
 		BlockState clickedBlock = Blocks.AIR.defaultBlockState();
 		if (!world.getEntitiesOfClass(SeekerSharkProjectileEntity.class, AABB.ofSize(new Vec3((sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ())), 4, 4, 4), e -> true).isEmpty()) {
-			if (sourceentity instanceof ThalassogerEntity) {
-				((ThalassogerEntity) sourceentity).setAnimation("shoot");
-			}
 			if (sourceentity instanceof LivingEntity _entity)
 				_entity.swing(InteractionHand.MAIN_HAND, true);
 			if (sourceentity instanceof ThalassogerEntity animatable)
-				animatable.setTexture("thalassoger");
+				animatable.setTexture("thalassoger2");
+			BenssharksMod.queueServerWork(40, () -> {
+				if (sourceentity instanceof ThalassogerEntity animatable)
+					animatable.setTexture("thalassoger1");
+			});
 		} else if (sourceentity instanceof ThalassogerEntity) {
 			if (sourceentity instanceof ThalassogerEntity animatable)
 				animatable.setTexture("thalassoger_glow");
@@ -67,23 +68,7 @@ public class ThalassogerAnimProcedure {
 			}
 			BenssharksMod.queueServerWork(20, () -> {
 				if (sourceentity instanceof ThalassogerEntity animatable)
-					animatable.setTexture("thalassoger");
-			});
-			BenssharksMod.queueServerWork(40, () -> {
-				if (sourceentity instanceof ThalassogerEntity animatable)
-					animatable.setTexture("thalassoger");
-			});
-			BenssharksMod.queueServerWork(60, () -> {
-				if (sourceentity instanceof ThalassogerEntity animatable)
-					animatable.setTexture("thalassoger");
-			});
-			BenssharksMod.queueServerWork(80, () -> {
-				if (sourceentity instanceof ThalassogerEntity animatable)
-					animatable.setTexture("thalassoger");
-			});
-			BenssharksMod.queueServerWork(100, () -> {
-				if (sourceentity instanceof ThalassogerEntity animatable)
-					animatable.setTexture("thalassoger");
+					animatable.setTexture("thalassoger2");
 			});
 		}
 	}

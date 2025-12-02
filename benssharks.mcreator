@@ -4120,12 +4120,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/HurtAnimProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7765,6 +7760,25 @@
           "src/main/java/net/mcreator/sharks/procedures/SaturationProcedure.java"
         ],
         "dependencies": []
+      }
+    },
+    {
+      "name": "WhaleSharkEntityVisualScale",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "whale_shark_entity_visual_scale",
+      "metadata": {
+        "return_type": "number",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/WhaleSharkEntityVisualScaleProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
       }
     }
   ],

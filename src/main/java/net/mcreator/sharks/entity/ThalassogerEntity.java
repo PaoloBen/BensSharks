@@ -84,7 +84,7 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 		super.defineSynchedData();
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
-		this.entityData.define(TEXTURE, "thalassoger");
+		this.entityData.define(TEXTURE, "thalassoger1");
 	}
 
 	public void setTexture(String texture) {
@@ -106,15 +106,16 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 6, 1, 1.2));
-		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 6, 1, 1.2));
+		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 6, 1, 1));
+		this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 6, 1, 1));
+		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 6, 1, 1));
 		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, IronGolem.class, true, true));
 		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Player.class, true, true));
 		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Villager.class, true, true));
 		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, WanderingTrader.class, true, true));
 		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, LandSharkEntity.class, true, true));
-		this.goalSelector.addGoal(12, new FloatGoal(this));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, SharkMinionEntity.class, true, true));
+		this.goalSelector.addGoal(13, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new ThalassogerEntity.RangedAttackGoal(this, 1.25, 60, 64f) {
 			@Override
 			public boolean canContinueToUse() {
@@ -301,11 +302,8 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 		if (this.animationprocedure.equals("empty")) {
 			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F))
 
-					&& !this.isAggressive()) {
+			) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
-			}
-			if (this.isAggressive() && event.isMoving()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("cast"));
 			}
 			return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
 		}

@@ -7,7 +7,8 @@
     "mobModelTexture": "whaleshark.png",
     "mobModelGlowTexture": "",
     "visualScale": {
-      "fixedValue": 1.0
+      "fixedValue": 1.0,
+      "name": "WhaleSharkEntityVisualScale"
     },
     "boundingBoxScale": {
       "fixedValue": 2.5
@@ -126,7 +127,7 @@
     },
     "hasAI": true,
     "aiBase": "(none)",
-    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"follow_item_in_hands\"><field name=\"speed\">1</field><field name=\"scared\">FALSE</field><field name=\"condition\">null,null</field><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:KrillItem</field></block></value><next><block type=\"attack_entity\"><field name=\"insight\">TRUE</field><field name=\"nearby\">TRUE</field><field name=\"entity\">CUSTOM:Krill</field><field name=\"condition\">null,null</field><next><block type=\"follow_entity\"><field name=\"speed\">1</field><field name=\"maxrange\">512</field><field name=\"followarea\">5</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:Megalodon</field><field name=\"radius\">32</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:Remora</field><field name=\"radius\">16</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:CookiecutterShark</field><field name=\"radius\">16</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"swim\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"panic_when_attacked\"><field name=\"speed\">1.2</field><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"breed\"><field name=\"speed\">2</field><field name=\"condition\">null,null</field><next><block type=\"follow_parent\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"follow_item_in_hands\"><field name=\"speed\">1</field><field name=\"scared\">FALSE</field><field name=\"condition\">null,null</field><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:KrillItem</field></block></value><next><block type=\"attack_entity\"><field name=\"insight\">TRUE</field><field name=\"nearby\">TRUE</field><field name=\"entity\">CUSTOM:Krill</field><field name=\"condition\">null,null</field><next><block type=\"follow_entity\"><field name=\"speed\">1</field><field name=\"maxrange\">512</field><field name=\"followarea\">5</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:Megalodon</field><field name=\"radius\">32</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:Remora</field><field name=\"radius\">16</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"avoid_entity\"><field name=\"entity\">CUSTOM:CookiecutterShark</field><field name=\"radius\">16</field><field name=\"farspeed\">1</field><field name=\"nearspeed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"swim\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"panic_when_attacked\"><field name=\"speed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"java_code\"><field name=\"CODE\">} // &lt;--- YOU WERE MISSING THIS CLOSING BRACKET!&amp;#10;&amp;#10;    // --- BREEDING COLLISION FIX ---&amp;#10;    @Override&amp;#10;    public boolean isPushable() {&amp;#10;        // If trying to breed, disable pushing so they don't shove each other away&amp;#10;        return !this.isInLove() &amp;&amp; super.isPushable();&amp;#10;    </field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
     "model": "whaleshark.geo.json",
     "groupName": "",
     "animation1": "land",
@@ -148,12 +149,16 @@
     "enable8": false,
     "enable9": false,
     "enable10": false,
-    "breedable": false,
+    "breedable": true,
     "tameable": false,
     "disableDeathRotation": false,
     "headMovement": false,
     "eyeHeight": false,
-    "breedTriggerItems": [],
+    "breedTriggerItems": [
+      {
+        "value": "CUSTOM:KrillItem"
+      }
+    ],
     "ranged": false,
     "rangedAttackItem": {
       "value": ""

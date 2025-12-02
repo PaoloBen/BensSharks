@@ -44,7 +44,7 @@ public class SHARKMINIONEATDROPPEDITEMProcedure {
 			return;
 		if (entity instanceof SharkMinionEntity) {
 			if (entity.getPersistentData().getDouble("SharkHunger") == 0) {
-				if (entity.getPersistentData().getDouble("Storage") < 64) {
+				if (entity.getPersistentData().getDouble("SharkStorage") < 64) {
 					if (!world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).isEmpty()) {
 						if ((((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).stream().sorted(new Object() {
 							Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
@@ -127,7 +127,7 @@ public class SHARKMINIONEATDROPPEDITEMProcedure {
 												_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.eat")), SoundSource.NEUTRAL, 1, 1, false);
 											}
 										}
-										entity.getPersistentData().putDouble("Storage", (entity.getPersistentData().getDouble("Storage") + 1));
+										entity.getPersistentData().putDouble("SharkStorage", (entity.getPersistentData().getDouble("SharkStorage") + 1));
 										entity.getPersistentData().putDouble("SharkHunger", 20);
 									}
 								}

@@ -59,7 +59,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 		}
 		if (sourceentity instanceof Player && entity instanceof SharkMinionEntity && (entity instanceof TamableAnimal _tamIsTamedBy && sourceentity instanceof LivingEntity _livEnt ? _tamIsTamedBy.isOwnedBy(_livEnt) : false)) {
 			if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.BUCKET) {
-				if (entity.getPersistentData().getDouble("Storage") > 0) {
+				if (entity.getPersistentData().getDouble("SharkStorage") > 0) {
 					if (!entity.getPersistentData().getBoolean("canBeMilked")) {
 						if (entity instanceof LivingEntity _entity)
 							_entity.swing(InteractionHand.MAIN_HAND, true);
@@ -89,7 +89,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 										_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.burp")), SoundSource.NEUTRAL, 1, 1, false);
 									}
 								}
-								entity.getPersistentData().putDouble("Storage", (entity.getPersistentData().getDouble("Storage") - 1));
+								entity.getPersistentData().putDouble("SharkStorage", (entity.getPersistentData().getDouble("SharkStorage") - 1));
 								if (world instanceof ServerLevel _level) {
 									ItemEntity entityToSpawn = new ItemEntity(_level, (entity.getX()), (entity.getY()), (entity.getZ()), new ItemStack(BenssharksModItems.FISH_BUCKET.get()));
 									entityToSpawn.setPickUpDelay(10);
@@ -99,7 +99,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 							});
 						}
 					}
-				} else if (entity.getPersistentData().getDouble("Storage") < 1) {
+				} else if (entity.getPersistentData().getDouble("SharkStorage") < 1) {
 					if (!entity.getPersistentData().getBoolean("canBeMilked")) {
 						if (entity instanceof LivingEntity _entity)
 							_entity.swing(InteractionHand.MAIN_HAND, true);
@@ -139,7 +139,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 					}
 				}
 			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Items.BUCKET) {
-				if (entity.getPersistentData().getDouble("Storage") > 0) {
+				if (entity.getPersistentData().getDouble("SharkStorage") > 0) {
 					if (!entity.getPersistentData().getBoolean("canBeMilked")) {
 						if (entity instanceof LivingEntity _entity)
 							_entity.swing(InteractionHand.MAIN_HAND, true);
@@ -167,7 +167,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 									_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.burp")), SoundSource.NEUTRAL, 1, 1, false);
 								}
 							}
-							entity.getPersistentData().putDouble("Storage", (entity.getPersistentData().getDouble("Storage") - 1));
+							entity.getPersistentData().putDouble("SharkStorage", (entity.getPersistentData().getDouble("SharkStorage") - 1));
 							if (world instanceof ServerLevel _level) {
 								ItemEntity entityToSpawn = new ItemEntity(_level, (entity.getX()), (entity.getY()), (entity.getZ()), new ItemStack(BenssharksModItems.FISH_BUCKET.get()));
 								entityToSpawn.setPickUpDelay(10);
@@ -176,7 +176,7 @@ public class SharkMinionRightClickedOnEntityProcedure {
 							entity.getPersistentData().putBoolean("canBeMilked", false);
 						});
 					}
-				} else if (entity.getPersistentData().getDouble("Storage") < 1) {
+				} else if (entity.getPersistentData().getDouble("SharkStorage") < 1) {
 					if (!entity.getPersistentData().getBoolean("canBeMilked")) {
 						if (entity instanceof LivingEntity _entity)
 							_entity.swing(InteractionHand.MAIN_HAND, true);

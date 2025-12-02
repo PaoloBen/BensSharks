@@ -8,10 +8,16 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 
+import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SeaLionEntity;
+import net.mcreator.sharks.entity.NurseSharkEntity;
+import net.mcreator.sharks.entity.LeopardSharkEntity;
+import net.mcreator.sharks.entity.LemonSharkEntity;
 import net.mcreator.sharks.entity.LandSharkEntity;
+import net.mcreator.sharks.entity.BonnetheadSharkEntity;
+import net.mcreator.sharks.entity.BlacktipReefSharkEntity;
 
 import javax.annotation.Nullable;
 
@@ -63,6 +69,60 @@ public class EntityTextureVariationsProcedure {
 			} else {
 				if (entity instanceof SharkMinionEntity animatable)
 					animatable.setTexture("sharkminion");
+			}
+		}
+		if (entity instanceof BonnetheadSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt18 && _livEnt18.isBaby()) {
+				if (entity instanceof BonnetheadSharkEntity animatable)
+					animatable.setTexture("bonnethead_baby");
+			} else {
+				if (entity instanceof BonnetheadSharkEntity animatable)
+					animatable.setTexture("bonnet");
+			}
+		}
+		if (entity instanceof BlacktipReefSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt22 && _livEnt22.isBaby()) {
+				if (entity instanceof BlacktipReefSharkEntity animatable)
+					animatable.setTexture("blacktip_baby");
+			} else {
+				if (entity instanceof BlacktipReefSharkEntity animatable)
+					animatable.setTexture("blacktip");
+			}
+		}
+		if (entity instanceof NurseSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt26 && _livEnt26.isBaby()) {
+				if (entity instanceof NurseSharkEntity animatable)
+					animatable.setTexture("nurse_baby");
+			} else {
+				if (entity instanceof NurseSharkEntity animatable)
+					animatable.setTexture("nurse");
+			}
+		}
+		if (entity instanceof LeopardSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt30 && _livEnt30.isBaby()) {
+				if (entity instanceof LeopardSharkEntity animatable)
+					animatable.setTexture("leopardshark_baby");
+			} else {
+				if (entity instanceof LeopardSharkEntity animatable)
+					animatable.setTexture("leopardshark");
+			}
+		}
+		if (entity instanceof LemonSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt34 && _livEnt34.isBaby()) {
+				if (entity instanceof LemonSharkEntity animatable)
+					animatable.setTexture("lemonshark_baby");
+			} else {
+				if (entity instanceof LemonSharkEntity animatable)
+					animatable.setTexture("lemonshark");
+			}
+		}
+		if (entity instanceof WhaleSharkEntity) {
+			if (entity instanceof LivingEntity _livEnt38 && _livEnt38.isBaby()) {
+				if (entity instanceof WhaleSharkEntity animatable)
+					animatable.setTexture("whaleshark_baby");
+			} else {
+				if (entity instanceof WhaleSharkEntity animatable)
+					animatable.setTexture("whaleshark");
 			}
 		}
 	}

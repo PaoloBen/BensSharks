@@ -22,31 +22,35 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -64,7 +68,9 @@ import net.mcreator.sharks.init.BenssharksModEntities;
 
 import javax.annotation.Nullable;
 
-public class WhaleSharkEntity extends PathfinderMob implements GeoEntity {
+import java.util.List;
+
+public class WhaleSharkEntity extends Animal implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(WhaleSharkEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(WhaleSharkEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(WhaleSharkEntity.class, EntityDataSerializers.STRING);
@@ -149,13 +155,23 @@ public class WhaleSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.KRILL_ITEM.get()), false));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, KrillEntity.class, true, true));
-		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, CookiecutterSharkEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(7, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(8, new PanicGoal(this, 1.2));
+		this.goalSelector.addGoal(1, new BreedGoal(this, 2));
+		this.goalSelector.addGoal(2, new FollowParentGoal(this, 1));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.KRILL_ITEM.get()), false));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, KrillEntity.class, true, true));
+		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(7, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(8, new AvoidEntityGoal<>(this, CookiecutterSharkEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(9, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(10, new PanicGoal(this, 1.2));
+	} // <--- YOU WERE MISSING THIS CLOSING BRACKET!
+	// --- BREEDING COLLISION FIX ---
+
+	@Override
+	public boolean isPushable() {
+		// If trying to breed, disable pushing so they don't shove each other away
+		return !this.isInLove() && super.isPushable();
+
 	}
 
 	@Override
@@ -235,6 +251,18 @@ public class WhaleSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public EntityDimensions getDimensions(Pose p_33597_) {
 		return super.getDimensions(p_33597_).scale((float) 2.5);
+	}
+
+	@Override
+	public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageable) {
+		WhaleSharkEntity retval = BenssharksModEntities.WHALE_SHARK.get().create(serverWorld);
+		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null, null);
+		return retval;
+	}
+
+	@Override
+	public boolean isFood(ItemStack stack) {
+		return List.of(BenssharksModItems.KRILL_ITEM.get()).contains(stack.getItem());
 	}
 
 	@Override

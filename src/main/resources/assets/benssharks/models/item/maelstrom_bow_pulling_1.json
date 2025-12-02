@@ -1,0 +1,6 @@
+{
+  "parent": "benssharks:item/maelstrom_bow",
+  "textures": {
+    "layer0": "benssharks:item/maelstrombow2"
+  }
+}
