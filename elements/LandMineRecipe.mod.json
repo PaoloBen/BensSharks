@@ -3,7 +3,7 @@
   "_type": "recipe",
   "definition": {
     "recipeType": "Crafting",
-    "recipeRetstackSize": 1,
+    "recipeRetstackSize": 3,
     "group": "",
     "cookingBookCategory": "MISC",
     "xpReward": 0.0,

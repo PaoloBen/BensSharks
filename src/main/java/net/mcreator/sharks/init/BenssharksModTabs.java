@@ -43,6 +43,7 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.SAWSHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SEA_LION_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SHARK_MINION_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.THRESHER_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.TIGER_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.THALASSOGER_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.WHALE_SHARK_SPAWN_EGG.get());

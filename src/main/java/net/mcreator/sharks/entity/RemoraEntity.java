@@ -169,26 +169,27 @@ public class RemoraEntity extends PathfinderMob implements GeoEntity {
 		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, BullSharkEntity.class, true, true));
 		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, true, true));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, SawsharkEntity.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.goalSelector.addGoal(18, new MeleeAttackGoal(this, 1.2, false) {
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, ThresherSharkEntity.class, true, true));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, true, true));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, SawsharkEntity.class, true, true));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
+		this.goalSelector.addGoal(19, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return 0;
 			}
 		});
-		this.goalSelector.addGoal(20, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(22, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
-		this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(24, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(25, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(26, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(27, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
-		this.goalSelector.addGoal(28, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
-		this.goalSelector.addGoal(29, new PanicGoal(this, 1.2));
+		this.goalSelector.addGoal(21, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
+		this.goalSelector.addGoal(24, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(25, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(26, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(27, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(28, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
+		this.goalSelector.addGoal(29, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
+		this.goalSelector.addGoal(30, new PanicGoal(this, 1.2));
 	}
 
 	@Override

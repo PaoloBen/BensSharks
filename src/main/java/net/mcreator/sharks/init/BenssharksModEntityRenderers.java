@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.mcreator.sharks.client.renderer.WhitetipSharkRenderer;
 import net.mcreator.sharks.client.renderer.WhaleSharkRenderer;
 import net.mcreator.sharks.client.renderer.TigerSharkRenderer;
+import net.mcreator.sharks.client.renderer.ThresherSharkRenderer;
 import net.mcreator.sharks.client.renderer.ThalassogerRenderer;
 import net.mcreator.sharks.client.renderer.ShrakRenderer;
 import net.mcreator.sharks.client.renderer.SharkMinionRenderer;
@@ -79,5 +80,6 @@ public class BenssharksModEntityRenderers {
 		event.registerEntityRenderer(BenssharksModEntities.SHARK_MINION.get(), SharkMinionRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.MUTATED_EGG_PROJECTILE.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.SEA_LION.get(), SeaLionRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.THRESHER_SHARK.get(), ThresherSharkRenderer::new);
 	}
 }

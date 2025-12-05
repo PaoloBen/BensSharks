@@ -15,6 +15,7 @@ import net.minecraft.core.registries.Registries;
 import net.mcreator.sharks.init.BenssharksModMobEffects;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
@@ -48,7 +49,8 @@ public class SharkBleedProcedure {
 			return;
 		if ((entity instanceof ShrakEntity || entity instanceof TigerSharkEntity || entity instanceof BlueSharkEntity || entity instanceof MakoSharkEntity || entity instanceof BonnetheadSharkEntity || entity instanceof BlacktipReefSharkEntity
 				|| entity instanceof BullSharkEntity || entity instanceof MegalodonEntity || entity instanceof LemonSharkEntity || entity instanceof BaskingSharkEntity || entity instanceof GreenlandSharkEntity || entity instanceof WhitetipSharkEntity
-				|| entity instanceof LandSharkEntity || entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity) && entity instanceof LivingEntity _livEnt15 && _livEnt15.hasEffect(BenssharksModMobEffects.BLEEDING.get())) {
+				|| entity instanceof LandSharkEntity || entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity || entity instanceof ThresherSharkEntity) && entity instanceof LivingEntity _livEnt16
+				&& _livEnt16.hasEffect(BenssharksModMobEffects.BLEEDING.get())) {
 			if (!entity.getPersistentData().getBoolean("bleed")) {
 				entity.getPersistentData().putBoolean("bleed", true);
 				entity.hurt(new DamageSource(world.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.GENERIC_KILL)), 1);

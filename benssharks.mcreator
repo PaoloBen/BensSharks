@@ -7255,12 +7255,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BleedingEffectExpiresProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7273,12 +7268,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SealingPotionEffectExpiresProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7291,12 +7281,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/DetachedEffectExpiresProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7309,12 +7294,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/PreyEffectExpiresProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7327,12 +7307,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/DryoutEffectEffectExpiresProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7780,6 +7755,129 @@
           }
         ]
       }
+    },
+    {
+      "name": "ThresherShark",
+      "type": "animatedentity",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "thresher_shark",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/entity/model/ThresherSharkModel.java",
+          "src/main/resources/assets/benssharks/models/item/thresher_shark_spawn_egg.json",
+          "src/main/java/net/mcreator/sharks/client/renderer/ThresherSharkRenderer.java",
+          "src/main/java/net/mcreator/sharks/entity/ThresherSharkEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "ThresherSharkOnEntityTickUpdate",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "thresher_shark_on_entity_tick_update",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ThresherSharkOnEntityTickUpdateProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ThresherSharkOnInitialEntitySpawn",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "thresher_shark_on_initial_entity_spawn",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ThresherSharkOnInitialEntitySpawnProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ThresherSharkRightClickedOnEntity",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "thresher_shark_right_clicked_on_entity",
+      "metadata": {
+        "return_type": "actionresulttype",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ThresherSharkRightClickedOnEntityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ThresherRiptideAbility",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "thresher_riptide_ability",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ThresherRiptideAbilityProcedure.java"
+        ],
+        "dependencies": []
+      }
     }
   ],
   "variable_elements": [
@@ -7912,6 +8010,7 @@
       "Sawshark",
       "SeaLion",
       "SharkMinion",
+      "ThresherShark",
       "TigerShark",
       "Thalassoger",
       "WhaleShark",
@@ -7959,8 +8058,8 @@
   "language_map": {
     "en_us": {
       "item.minecraft.splash_potion.effect.jaws_potion": "Splash Potion of Jaws",
-      "item.benssharks.bull_shark_spawn_egg": "Bull Shark Spawn Egg",
       "item.benssharks.land_shark_spawn_egg": "Land Shark Spawn Egg",
+      "item.benssharks.bull_shark_spawn_egg": "Bull Shark Spawn Egg",
       "item.benssharks.starch": "Starch",
       "item.sharks.dent": "Dent",
       "entity.benssharks.krill": "Krill",
@@ -8014,6 +8113,7 @@
       "item.benssharks.axoleather": "Axoleather",
       "gamerule.aggressiveSharks": "Aggressive Sharks",
       "item.benssharks.remora_spawn_egg": "Remora Spawn Egg",
+      "entity.benssharks.thresher_shark": "Thresher Shark",
       "entity.benssharks.goblin_shark": "Goblin Shark",
       "item.benssharks.mako_shark_spawn_egg": "Mako Shark Spawn Egg",
       "item.benssharks.jagged_leggings": "Jagged Leggings",
@@ -8045,6 +8145,7 @@
       "block.sharks.land_mine_stepped_on": "Land Mine",
       "entity.benssharks.land_shark": "Land Shark",
       "item.benssharks.goblin_shark_spawn_egg": "Goblin Shark Spawn Egg",
+      "item.benssharks.thresher_shark_spawn_egg": "Thresher Shark Spawn Egg",
       "item.benssharks.egg_capsule": "Egg Capsule",
       "entity.benssharks.nurse_shark": "Nurse Shark",
       "item.benssharks.mutated_egg": "Mutated Egg",
@@ -8127,8 +8228,8 @@
     },
     "es_es": {
       "item.minecraft.splash_potion.effect.jaws_potion": "Poción arrojadiza de mandíbulas",
-      "item.benssharks.land_shark_spawn_egg": "Generar tiburón terrestre",
       "item.benssharks.bull_shark_spawn_egg": "Generar tiburón toro",
+      "item.benssharks.land_shark_spawn_egg": "Generar tiburón terrestre",
       "item.benssharks.starch": "Almidón",
       "item.sharks.dent": "Punta de tridente",
       "entity.benssharks.krill": "Krill",
@@ -8182,6 +8283,7 @@
       "item.benssharks.axoleather": "Axocuero",
       "gamerule.aggressiveSharks": "Tiburones agresivos",
       "item.benssharks.remora_spawn_egg": "Generar remora",
+      "entity.benssharks.thresher_shark": "Thresher Shark",
       "entity.benssharks.goblin_shark": "Tiburón duende",
       "item.benssharks.mako_shark_spawn_egg": "Generar tiburón mako",
       "item.benssharks.jagged_leggings": "Grebas dentadas",
@@ -8213,6 +8315,7 @@
       "block.sharks.land_mine_stepped_on": "Mina terrestre",
       "entity.benssharks.land_shark": "Tiburón terrestre",
       "item.benssharks.goblin_shark_spawn_egg": "Generar tiburón duende",
+      "item.benssharks.thresher_shark_spawn_egg": "Thresher Shark Spawn Egg",
       "item.benssharks.egg_capsule": "Cápsula de huevo",
       "entity.benssharks.nurse_shark": "Tiburón nodriza",
       "item.benssharks.mutated_egg": "Huevo mutado",

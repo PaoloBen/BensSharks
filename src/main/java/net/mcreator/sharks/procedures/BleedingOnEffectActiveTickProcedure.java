@@ -18,6 +18,7 @@ import net.minecraft.core.registries.Registries;
 import net.mcreator.sharks.init.BenssharksModMobEffects;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
@@ -53,8 +54,8 @@ public class BleedingOnEffectActiveTickProcedure {
 					if ((entityiterator instanceof ShrakEntity || entityiterator instanceof TigerSharkEntity || entityiterator instanceof BlueSharkEntity || entityiterator instanceof MakoSharkEntity || entityiterator instanceof BonnetheadSharkEntity
 							|| entityiterator instanceof BlacktipReefSharkEntity || entityiterator instanceof BullSharkEntity || entityiterator instanceof MegalodonEntity || entityiterator instanceof LemonSharkEntity
 							|| entityiterator instanceof CookiecutterSharkEntity || entityiterator instanceof GreenlandSharkEntity || entityiterator instanceof WhitetipSharkEntity || entityiterator instanceof LandSharkEntity
-							|| entityiterator instanceof GoblinSharkEntity || entityiterator instanceof SawsharkEntity || entityiterator instanceof SharkMinionEntity) && !(entityiterator instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)
-							&& !(entityiterator == entity)) {
+							|| entityiterator instanceof GoblinSharkEntity || entityiterator instanceof SawsharkEntity || entityiterator instanceof SharkMinionEntity || entityiterator instanceof ThresherSharkEntity)
+							&& !(entityiterator instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false) && !(entityiterator == entity)) {
 						if (!((entityiterator instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) instanceof LivingEntity)) {
 							if (entityiterator instanceof Mob _entity && entity instanceof LivingEntity _ent)
 								_entity.setTarget(_ent);

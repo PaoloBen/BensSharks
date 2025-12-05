@@ -318,9 +318,10 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 		this.goalSelector.addGoal(86, new LeapAtTargetGoal(this, (float) 0.5));
 		this.goalSelector.addGoal(87, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1.2));
 		this.goalSelector.addGoal(88, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(89, new AvoidEntityGoal<>(this, BaskingSharkEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(90, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(91, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(89, new AvoidEntityGoal<>(this, WhaleSharkEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(90, new AvoidEntityGoal<>(this, BaskingSharkEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(91, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(92, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 32, 1, 1.2));
 	}
 
 	@Override

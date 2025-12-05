@@ -161,7 +161,7 @@ public class MegalodonEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 15, false) {
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
@@ -210,9 +210,8 @@ public class MegalodonEntity extends PathfinderMob implements GeoEntity {
 		});
 		this.goalSelector.addGoal(24, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 64));
 		this.goalSelector.addGoal(25, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 32, 16, 16));
-		this.goalSelector.addGoal(26, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 64, 1, 1));
-		this.goalSelector.addGoal(27, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(28, new TryFindWaterGoal(this));
+		this.goalSelector.addGoal(26, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(27, new TryFindWaterGoal(this));
 	}
 
 	@Override

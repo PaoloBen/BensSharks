@@ -205,8 +205,7 @@ public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1));
-		this.goalSelector.addGoal(23, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(22, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override

@@ -227,8 +227,7 @@ public class BonnetheadSharkEntity extends Animal implements GeoEntity {
 		this.goalSelector.addGoal(28, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(29, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(30, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(31, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 16, 1, 1));
-		this.goalSelector.addGoal(32, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(31, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override

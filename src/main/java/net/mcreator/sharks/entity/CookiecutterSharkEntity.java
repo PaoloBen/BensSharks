@@ -21,7 +21,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.animal.Dolphin;
@@ -33,7 +32,6 @@ import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -216,16 +214,15 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 			}
 		});
 		this.goalSelector.addGoal(31, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(32, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 512, 1, 1.2));
-		this.goalSelector.addGoal(34, new LookAtPlayerGoal(this, MegalodonEntity.class, (float) 6));
-		this.goalSelector.addGoal(35, new LookAtPlayerGoal(this, BaskingSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(36, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
-		this.goalSelector.addGoal(37, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(38, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(39, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(40, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(41, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
-		this.goalSelector.addGoal(42, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
+		this.goalSelector.addGoal(33, new LookAtPlayerGoal(this, MegalodonEntity.class, (float) 6));
+		this.goalSelector.addGoal(34, new LookAtPlayerGoal(this, BaskingSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(35, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
+		this.goalSelector.addGoal(36, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(37, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(38, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(39, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(40, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
+		this.goalSelector.addGoal(41, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
 	}
 
 	@Override

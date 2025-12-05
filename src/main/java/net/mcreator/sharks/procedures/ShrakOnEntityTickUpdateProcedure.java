@@ -16,9 +16,6 @@ public class ShrakOnEntityTickUpdateProcedure {
 		double speed = 0;
 		double Yaw = 0;
 		if (entity instanceof ShrakEntity && !entity.isInWaterOrBubble()) {
-			if (entity instanceof ShrakEntity) {
-				((ShrakEntity) entity).setAnimation("land");
-			}
 			BenssharksMod.queueServerWork(600, () -> {
 				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.DRYOUT_EFFECT.get(), 600, 0, true, false));

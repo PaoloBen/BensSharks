@@ -24,6 +24,7 @@ import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEnchantments;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
@@ -58,9 +59,18 @@ public class BleedingGlobalProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, DamageSource damagesource, Entity entity, Entity sourceentity) {
 		if (damagesource == null || entity == null || sourceentity == null)
 			return;
+		// Check if attacker is Thresher Shark
+		if (sourceentity instanceof net.mcreator.sharks.entity.ThresherSharkEntity shark) {
+			// If "WhipHitFrame" is TRUE, it means we are currently running the code inside the
+			// "timer == 5" block in the tick update. This is Whip Damage.
+			if (shark.getPersistentData().getBoolean("WhipHitFrame")) {
+				return; // Stop. Do NOT apply bleeding.
+			}
+		}
 		if (sourceentity instanceof ShrakEntity || sourceentity instanceof TigerSharkEntity || sourceentity instanceof BlueSharkEntity || sourceentity instanceof MakoSharkEntity || sourceentity instanceof BonnetheadSharkEntity
 				|| sourceentity instanceof BlacktipReefSharkEntity || sourceentity instanceof BullSharkEntity || sourceentity instanceof MegalodonEntity || sourceentity instanceof LemonSharkEntity || sourceentity instanceof GreenlandSharkEntity
-				|| sourceentity instanceof WhitetipSharkEntity || sourceentity instanceof LandSharkEntity || sourceentity instanceof GoblinSharkEntity || sourceentity instanceof SawsharkEntity || sourceentity instanceof SharkMinionEntity) {
+				|| sourceentity instanceof WhitetipSharkEntity || sourceentity instanceof LandSharkEntity || sourceentity instanceof GoblinSharkEntity || sourceentity instanceof SawsharkEntity || sourceentity instanceof SharkMinionEntity
+				|| sourceentity instanceof ThresherSharkEntity) {
 			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 				_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.BLEEDING.get(), 200, 0, true, false));
 		}

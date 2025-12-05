@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ThalassogerEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
@@ -174,6 +175,10 @@ public class BenssharksModEntities {
 			EntityType.Builder.<SeaLionEntity>of(SeaLionEntity::new, MobCategory.CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SeaLionEntity::new)
 
 					.sized(0.85f, 0.67f));
+	public static final RegistryObject<EntityType<ThresherSharkEntity>> THRESHER_SHARK = register("thresher_shark",
+			EntityType.Builder.<ThresherSharkEntity>of(ThresherSharkEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ThresherSharkEntity::new)
+
+					.sized(1.35f, 0.875f));
 
 	// Start of user code block custom entities
 	// End of user code block custom entities
@@ -213,6 +218,7 @@ public class BenssharksModEntities {
 			SawsharkEntity.init();
 			SharkMinionEntity.init();
 			SeaLionEntity.init();
+			ThresherSharkEntity.init();
 		});
 	}
 
@@ -247,5 +253,6 @@ public class BenssharksModEntities {
 		event.put(SAWSHARK.get(), SawsharkEntity.createAttributes().build());
 		event.put(SHARK_MINION.get(), SharkMinionEntity.createAttributes().build());
 		event.put(SEA_LION.get(), SeaLionEntity.createAttributes().build());
+		event.put(THRESHER_SHARK.get(), ThresherSharkEntity.createAttributes().build());
 	}
 }

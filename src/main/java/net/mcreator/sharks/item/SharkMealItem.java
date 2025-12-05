@@ -16,7 +16,7 @@ import net.mcreator.sharks.procedures.SharkMealRightclickedProcedure;
 
 public class SharkMealItem extends Item {
 	public SharkMealItem() {
-		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.4f).meat().build()));
+		super(new Item.Properties().stacksTo(16).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.4f).meat().build()));
 	}
 
 	@Override

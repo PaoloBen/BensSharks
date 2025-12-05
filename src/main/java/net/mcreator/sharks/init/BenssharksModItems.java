@@ -56,7 +56,7 @@ import net.mcreator.sharks.BenssharksMod;
 
 public class BenssharksModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, BenssharksMod.MODID);
-	public static final RegistryObject<Item> GREATWHITE_SHARK_SPAWN_EGG = REGISTRY.register("greatwhite_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.GREATWHITE_SHARK, -9667702, -3089945, new Item.Properties()));
+	public static final RegistryObject<Item> GREATWHITE_SHARK_SPAWN_EGG = REGISTRY.register("greatwhite_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.GREATWHITE_SHARK, -9275781, -3089945, new Item.Properties()));
 	public static final RegistryObject<Item> SHARK_FIN_SOUP = REGISTRY.register("shark_fin_soup", () -> new SharkFinSoupItem());
 	public static final RegistryObject<Item> NURSE_SHARK_SPAWN_EGG = REGISTRY.register("nurse_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.NURSE_SHARK, -7179158, -1911862, new Item.Properties()));
 	public static final RegistryObject<Item> FISH_BUCKET = REGISTRY.register("fish_bucket", () -> new SharkMealItem());
@@ -128,6 +128,7 @@ public class BenssharksModItems {
 	public static final RegistryObject<Item> SAWSHARK_BUCKET = REGISTRY.register("sawshark_bucket", () -> new SawsharkBucketItem());
 	public static final RegistryObject<Item> SHARK_MINION_SPAWN_EGG = REGISTRY.register("shark_minion_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.SHARK_MINION, -6840401, -10915167, new Item.Properties()));
 	public static final RegistryObject<Item> SEA_LION_SPAWN_EGG = REGISTRY.register("sea_lion_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.SEA_LION, -10991290, -12962765, new Item.Properties()));
+	public static final RegistryObject<Item> THRESHER_SHARK_SPAWN_EGG = REGISTRY.register("thresher_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.THRESHER_SHARK, -13082245, -5851198, new Item.Properties()));
 	// Start of user code block custom items
 	// End of user code block custom items
 }

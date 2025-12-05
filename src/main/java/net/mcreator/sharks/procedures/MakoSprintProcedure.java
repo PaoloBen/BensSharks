@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
 
 import net.mcreator.sharks.init.BenssharksModMobEffects;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
 import net.mcreator.sharks.BenssharksMod;
 
@@ -34,7 +35,7 @@ public class MakoSprintProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity instanceof MakoSharkEntity) {
+		if (entity instanceof MakoSharkEntity || entity instanceof ThresherSharkEntity) {
 			if (entity.isInWaterOrBubble()) {
 				if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) instanceof LivingEntity) {
 					if (!world.getEntitiesOfClass(LivingEntity.class, AABB.ofSize(new Vec3(x, y, z), 24, 24, 24), e -> true).isEmpty() && (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isAlive()

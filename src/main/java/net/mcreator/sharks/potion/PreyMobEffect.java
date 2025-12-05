@@ -27,7 +27,7 @@ public class PreyMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
 		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		PreyEffectExpiresProcedure.execute(entity);
+		PreyEffectExpiresProcedure.execute();
 	}
 
 	@Override

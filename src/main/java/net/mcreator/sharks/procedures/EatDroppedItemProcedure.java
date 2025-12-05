@@ -25,6 +25,7 @@ import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
@@ -59,7 +60,7 @@ public class EatDroppedItemProcedure {
 			return;
 		if (entity instanceof AxodileEntity || entity instanceof BlacktipReefSharkEntity || entity instanceof BlueSharkEntity || entity instanceof BonnetheadSharkEntity || entity instanceof LemonSharkEntity || entity instanceof MakoSharkEntity
 				|| entity instanceof NurseSharkEntity || entity instanceof LeopardSharkEntity || entity instanceof TigerSharkEntity || entity instanceof GreenlandSharkEntity || entity instanceof BullSharkEntity
-				|| entity instanceof WhitetipSharkEntity || entity instanceof GreaterAxodileEntity || entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity) {
+				|| entity instanceof WhitetipSharkEntity || entity instanceof GreaterAxodileEntity || entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity || entity instanceof ThresherSharkEntity) {
 			if (entity.getPersistentData().getDouble("SharkHunger") == 0) {
 				if (!world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).isEmpty()) {
 					if ((((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).stream().sorted(new Object() {
