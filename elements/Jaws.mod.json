@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Jaws",
-    "icon": "jawsicon.png",
+    "icon": "jawsicon",
     "color": {
       "value": -7491127,
       "falpha": 0.0

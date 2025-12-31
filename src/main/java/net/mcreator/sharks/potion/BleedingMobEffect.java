@@ -22,7 +22,7 @@ public class BleedingMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
 		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		BleedingEffectExpiresProcedure.execute(entity);
+		BleedingEffectExpiresProcedure.execute();
 	}
 
 	@Override

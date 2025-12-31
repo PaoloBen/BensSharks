@@ -16,8 +16,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,7 +47,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -60,7 +59,6 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -71,15 +69,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.BonnetheadSharkRightClickedOnEntityProcedure;
-import net.mcreator.sharks.procedures.BonnetheadSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.BonnetheadSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.BonnetheadSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -227,8 +222,7 @@ public class BonnetheadSharkEntity extends Animal implements GeoEntity {
 		this.goalSelector.addGoal(28, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(29, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(30, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(31, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 16, 1, 1));
-		this.goalSelector.addGoal(32, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(31, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override
@@ -242,8 +236,8 @@ public class BonnetheadSharkEntity extends Animal implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -254,19 +248,6 @@ public class BonnetheadSharkEntity extends Animal implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		BonnetheadSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		BonnetheadSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class DryoutEffectMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
 		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		DryoutEffectEffectExpiresProcedure.execute(entity);
+		DryoutEffectEffectExpiresProcedure.execute();
 	}
 
 	@Override

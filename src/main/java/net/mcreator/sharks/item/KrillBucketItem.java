@@ -6,6 +6,6 @@ import net.minecraft.world.item.Item;
 
 public class KrillBucketItem extends Item {
 	public KrillBucketItem() {
-		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
+		super(new Item.Properties().stacksTo(16).rarity(Rarity.COMMON));
 	}
 }

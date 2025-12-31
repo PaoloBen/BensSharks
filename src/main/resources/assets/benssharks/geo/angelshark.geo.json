@@ -1,0 +1,136 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Shark",
+					"pivot": [0, 0, -1]
+				},
+				{
+					"name": "Torso",
+					"parent": "Shark",
+					"pivot": [0, 3, -10]
+				},
+				{
+					"name": "Torso2",
+					"parent": "Torso",
+					"pivot": [0, 7, -10]
+				},
+				{
+					"name": "Torso3",
+					"parent": "Torso2",
+					"pivot": [0, 4, -10]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso3",
+					"pivot": [0, 4, -10],
+					"cubes": [
+						{"origin": [-5, 0, -10], "size": [10, 4, 15], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "Thorax",
+					"parent": "Torso2",
+					"pivot": [0, 1, 5],
+					"cubes": [
+						{"origin": [-3, 0, 5], "size": [6, 3, 10], "uv": [0, 37]}
+					]
+				},
+				{
+					"name": "DorsalFin",
+					"parent": "Thorax",
+					"pivot": [0, 3, 9],
+					"rotation": [10, 0, 0],
+					"cubes": [
+						{"origin": [-0.005, -11.36618, 24.05536], "size": [0.01, 6, 4], "pivot": [0, 18.63382, 36.75536], "rotation": [-37.5, 0, 0], "uv": [50, 0]}
+					]
+				},
+				{
+					"name": "bone",
+					"parent": "Thorax",
+					"pivot": [3, 0, 5],
+					"cubes": [
+						{"origin": [5, 0.005, 1.6], "size": [10, 0.01, 9], "pivot": [3, 0, 2], "rotation": [0, -52.5, 0], "uv": [29, 35]}
+					]
+				},
+				{
+					"name": "bone2",
+					"parent": "Thorax",
+					"pivot": [-3, 0, 5],
+					"cubes": [
+						{"origin": [-15, 0.005, 1.6], "size": [10, 0.01, 9], "pivot": [-3, 0, 2], "rotation": [0, 52.5, 0], "uv": [29, 35], "mirror": true}
+					]
+				},
+				{
+					"name": "Abdomen",
+					"parent": "Thorax",
+					"pivot": [0, 2, 15],
+					"cubes": [
+						{"origin": [-1, 1, 15], "size": [2, 1.9, 9], "uv": [32, 44]}
+					]
+				},
+				{
+					"name": "Dorsal2",
+					"parent": "Abdomen",
+					"pivot": [0, 3, 16],
+					"rotation": [-42.5, 0, 0],
+					"cubes": [
+						{"origin": [-0.005, 2.53624, 11.23595], "size": [0.01, 5, 3], "pivot": [0, 29.53624, 15.23595], "rotation": [10, 0, 0], "uv": [50, 10]}
+					]
+				},
+				{
+					"name": "Tail",
+					"parent": "Abdomen",
+					"pivot": [0, 2, 24],
+					"cubes": [
+						{"origin": [-0.005, -1.08348, 23], "size": [0.01, 7, 7], "uv": [0, 50]}
+					]
+				},
+				{
+					"name": "under",
+					"parent": "Thorax",
+					"pivot": [0, 2, 16]
+				},
+				{
+					"name": "RightFin",
+					"parent": "Torso2",
+					"pivot": [-5, 1, -9],
+					"cubes": [
+						{"origin": [-18, 0.01, -10], "size": [11, 1, 8], "pivot": [-5, 2, -13], "rotation": [0, 42.5, 0], "uv": [0, 19]}
+					]
+				},
+				{
+					"name": "LeftFin",
+					"parent": "Torso2",
+					"pivot": [5, 1, -9],
+					"cubes": [
+						{"origin": [7, 0.01, -10], "size": [11, 1, 8], "pivot": [5, 2, -13], "rotation": [0, -42.5, 0], "uv": [0, 28]}
+					]
+				},
+				{
+					"name": "Head",
+					"parent": "Shark",
+					"pivot": [0, 2, -10]
+				},
+				{
+					"name": "skull2",
+					"parent": "Head",
+					"pivot": [0, 1.5, -12.5],
+					"cubes": [
+						{"origin": [-4, 0, -15], "size": [8, 3, 5], "uv": [38, 26]}
+					]
+				}
+			]
+		}
+	]
+}

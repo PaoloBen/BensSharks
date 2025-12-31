@@ -27,7 +27,7 @@ public class DetachedMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
 		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		DetachedEffectExpiresProcedure.execute(entity);
+		DetachedEffectExpiresProcedure.execute();
 	}
 
 	@Override

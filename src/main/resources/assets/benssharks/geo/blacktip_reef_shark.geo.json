@@ -39,7 +39,12 @@
 				{
 					"name": "Torso",
 					"parent": "Shark",
-					"pivot": [0, 2, -3],
+					"pivot": [0, 2, -3]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso",
+					"pivot": [0, -2, -8],
 					"cubes": [
 						{"origin": [-3, -0.25, -8], "size": [6, 5, 11], "uv": [0, 0]}
 					]
@@ -63,7 +68,7 @@
 					]
 				},
 				{
-					"name": "Dorsal",
+					"name": "DorsalFin",
 					"parent": "Torso",
 					"pivot": [0, 5, -2],
 					"cubes": [

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#benssharks:sharks",
+    "benssharks:barracuda",
+    "benssharks:krill",
+    "benssharks:pilot_fish",
+    "benssharks:remora",
+    "benssharks:sardine"
+  ]
+}

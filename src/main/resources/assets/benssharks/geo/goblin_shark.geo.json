@@ -6,9 +6,9 @@
 				"identifier": "geometry.goblin_shark",
 				"texture_width": 128,
 				"texture_height": 128,
-				"visible_bounds_width": 7,
-				"visible_bounds_height": 2.5,
-				"visible_bounds_offset": [0, 0.75, 0]
+				"visible_bounds_width": 8,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [0, 0.5, 0]
 			},
 			"bones": [
 				{

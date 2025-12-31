@@ -65,5 +65,23 @@
         "stream": false
       }
     ]
+  },
+  "shoot": {
+    "subtitle": "subtitles.shoot",
+    "sounds": [
+      {
+        "name": "benssharks:shoot",
+        "stream": false
+      }
+    ]
+  },
+  "landing_impact": {
+    "subtitle": "subtitles.landing_impact",
+    "sounds": [
+      {
+        "name": "benssharks:landingimpact",
+        "stream": false
+      }
+    ]
   }
 }

@@ -29,7 +29,7 @@ public class LandSharkEntityIsHurtProcedure {
 			return;
 		if (entity instanceof LandSharkEntity && !entity.isInWaterOrBubble()) {
 			if (entity instanceof LandSharkEntity) {
-				((LandSharkEntity) entity).setAnimation("hurt");
+				((LandSharkEntity) entity).setAnimation("walk");
 			}
 		}
 	}

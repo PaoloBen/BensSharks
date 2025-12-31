@@ -21,7 +21,9 @@ import net.mcreator.sharks.item.SharkMealItem;
 import net.mcreator.sharks.item.SharkFinSoupItem;
 import net.mcreator.sharks.item.SharkFinItem;
 import net.mcreator.sharks.item.SawsharkBucketItem;
+import net.mcreator.sharks.item.SardineBucketItem;
 import net.mcreator.sharks.item.RemoraBucketItem;
+import net.mcreator.sharks.item.RawSardineItem;
 import net.mcreator.sharks.item.RawPilotFishItem;
 import net.mcreator.sharks.item.RawBarracudaItem;
 import net.mcreator.sharks.item.PilotFishBucketItem;
@@ -41,6 +43,7 @@ import net.mcreator.sharks.item.EggCapsuleItem;
 import net.mcreator.sharks.item.DentItem;
 import net.mcreator.sharks.item.CookiecutterSharkLiveItem;
 import net.mcreator.sharks.item.CookiecutterSharkBucketItem;
+import net.mcreator.sharks.item.CookedSardineItem;
 import net.mcreator.sharks.item.CookedPilotFishItem;
 import net.mcreator.sharks.item.CookedBarracudaItem;
 import net.mcreator.sharks.item.CellophaneNoodlesItem;
@@ -56,11 +59,11 @@ import net.mcreator.sharks.BenssharksMod;
 
 public class BenssharksModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, BenssharksMod.MODID);
-	public static final RegistryObject<Item> GREATWHITE_SHARK_SPAWN_EGG = REGISTRY.register("greatwhite_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.GREATWHITE_SHARK, -9667702, -3089945, new Item.Properties()));
+	public static final RegistryObject<Item> GREATWHITE_SHARK_SPAWN_EGG = REGISTRY.register("greatwhite_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.GREATWHITE_SHARK, -9275781, -3089945, new Item.Properties()));
 	public static final RegistryObject<Item> SHARK_FIN_SOUP = REGISTRY.register("shark_fin_soup", () -> new SharkFinSoupItem());
 	public static final RegistryObject<Item> NURSE_SHARK_SPAWN_EGG = REGISTRY.register("nurse_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.NURSE_SHARK, -7179158, -1911862, new Item.Properties()));
 	public static final RegistryObject<Item> FISH_BUCKET = REGISTRY.register("fish_bucket", () -> new SharkMealItem());
-	public static final RegistryObject<Item> REMORA_SPAWN_EGG = REGISTRY.register("remora_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.REMORA, -14210244, -7495501, new Item.Properties()));
+	public static final RegistryObject<Item> REMORA_SPAWN_EGG = REGISTRY.register("remora_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.REMORA, -7362387, -9798010, new Item.Properties()));
 	public static final RegistryObject<Item> SHARK_TOOTH = REGISTRY.register("shark_tooth", () -> new SharkToothItem());
 	public static final RegistryObject<Item> REMORA_BUCKET = REGISTRY.register("remora_bucket", () -> new RemoraBucketItem());
 	public static final RegistryObject<Item> SUCKER = REGISTRY.register("sucker", () -> new SuckerItem());
@@ -96,7 +99,7 @@ public class BenssharksModItems {
 	public static final RegistryObject<Item> SHARK_FIN = REGISTRY.register("shark_fin", () -> new SharkFinItem());
 	public static final RegistryObject<Item> THALASSOGER_SPAWN_EGG = REGISTRY.register("thalassoger_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.THALASSOGER, -6972517, -12820585, new Item.Properties()));
 	public static final RegistryObject<Item> SOUP_SHARKFIN = REGISTRY.register("soup_sharkfin", () -> new SoupSharkfinItem());
-	public static final RegistryObject<Item> KRILL_SPAWN_EGG = REGISTRY.register("krill_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.KRILL, -2195122, -8827080, new Item.Properties()));
+	public static final RegistryObject<Item> KRILL_SPAWN_EGG = REGISTRY.register("krill_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.KRILL, -2199730, -8827080, new Item.Properties()));
 	public static final RegistryObject<Item> KRILL_ITEM = REGISTRY.register("krill_item", () -> new KrillItemItem());
 	public static final RegistryObject<Item> WHALE_SHARK_SPAWN_EGG = REGISTRY.register("whale_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.WHALE_SHARK, -12762287, -5189411, new Item.Properties()));
 	public static final RegistryObject<Item> LAND_MINE_PRIMED = REGISTRY.register(BenssharksModBlocks.LAND_MINE_PRIMED.getId().getPath(), () -> new LandMinePrimedDisplayItem(BenssharksModBlocks.LAND_MINE_PRIMED.get(), new Item.Properties()));
@@ -128,6 +131,13 @@ public class BenssharksModItems {
 	public static final RegistryObject<Item> SAWSHARK_BUCKET = REGISTRY.register("sawshark_bucket", () -> new SawsharkBucketItem());
 	public static final RegistryObject<Item> SHARK_MINION_SPAWN_EGG = REGISTRY.register("shark_minion_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.SHARK_MINION, -6840401, -10915167, new Item.Properties()));
 	public static final RegistryObject<Item> SEA_LION_SPAWN_EGG = REGISTRY.register("sea_lion_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.SEA_LION, -10991290, -12962765, new Item.Properties()));
+	public static final RegistryObject<Item> THRESHER_SHARK_SPAWN_EGG = REGISTRY.register("thresher_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.THRESHER_SHARK, -13082245, -5851198, new Item.Properties()));
+	public static final RegistryObject<Item> SARDINE_SPAWN_EGG = REGISTRY.register("sardine_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.SARDINE, -4932399, -10063732, new Item.Properties()));
+	public static final RegistryObject<Item> RAW_SARDINE = REGISTRY.register("raw_sardine", () -> new RawSardineItem());
+	public static final RegistryObject<Item> COOKED_SARDINE = REGISTRY.register("cooked_sardine", () -> new CookedSardineItem());
+	public static final RegistryObject<Item> SARDINE_BUCKET = REGISTRY.register("sardine_bucket", () -> new SardineBucketItem());
+	public static final RegistryObject<Item> MEGAMOUTH_SHARK_SPAWN_EGG = REGISTRY.register("megamouth_shark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.MEGAMOUTH_SHARK, -12699071, -6579811, new Item.Properties()));
+	public static final RegistryObject<Item> ANGELSHARK_SPAWN_EGG = REGISTRY.register("angelshark_spawn_egg", () -> new ForgeSpawnEggItem(BenssharksModEntities.ANGELSHARK, -2966396, -6322085, new Item.Properties()));
 	// Start of user code block custom items
 	// End of user code block custom items
 }

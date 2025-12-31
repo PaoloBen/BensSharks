@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -51,7 +51,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -65,7 +64,6 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -76,15 +74,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.BlacktipReefSharkRightClickedOnEntityProcedure;
-import net.mcreator.sharks.procedures.BlacktipReefSharkOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.BlacktipReefSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.BlacktipReefSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -192,16 +186,17 @@ public class BlacktipReefSharkEntity extends Animal implements GeoEntity {
 		this.goalSelector.addGoal(4, new PanicGoal(this, 1));
 		this.targetSelector.addGoal(7, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Cod.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Salmon.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, Frog.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, Tadpole.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
-		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, SardineEntity.class, true, true));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Cod.class, true, true));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, Salmon.class, true, true));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, Frog.class, true, true));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Tadpole.class, true, true));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
+		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = BlacktipReefSharkEntity.this.getX();
@@ -222,21 +217,20 @@ public class BlacktipReefSharkEntity extends Animal implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(19, new LeapAtTargetGoal(this, (float) 0.5));
-		this.goalSelector.addGoal(20, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
-		this.goalSelector.addGoal(22, new LookAtPlayerGoal(this, BonnetheadSharkEntity.class, (float) 16));
-		this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 16));
-		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, ElderGuardian.class, (float) 64, 16, 16));
-		this.goalSelector.addGoal(25, new AvoidEntityGoal<>(this, Guardian.class, (float) 64, 16, 16));
-		this.goalSelector.addGoal(26, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(27, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(28, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(29, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(30, new AvoidEntityGoal<>(this, BlueSharkEntity.class, (float) 8, 16, 16));
-		this.goalSelector.addGoal(31, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(32, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(33, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(34, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1));
+		this.goalSelector.addGoal(20, new LeapAtTargetGoal(this, (float) 0.5));
+		this.goalSelector.addGoal(21, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
+		this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, BonnetheadSharkEntity.class, (float) 16));
+		this.goalSelector.addGoal(24, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 16));
+		this.goalSelector.addGoal(25, new AvoidEntityGoal<>(this, ElderGuardian.class, (float) 64, 16, 16));
+		this.goalSelector.addGoal(26, new AvoidEntityGoal<>(this, Guardian.class, (float) 64, 16, 16));
+		this.goalSelector.addGoal(27, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(28, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(29, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(30, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(31, new AvoidEntityGoal<>(this, BlueSharkEntity.class, (float) 8, 16, 16));
+		this.goalSelector.addGoal(32, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(33, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(34, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(35, new RandomSwimmingGoal(this, 1, 40));
 	}
 
@@ -251,8 +245,8 @@ public class BlacktipReefSharkEntity extends Animal implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -263,19 +257,6 @@ public class BlacktipReefSharkEntity extends Animal implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		BlacktipReefSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		BlacktipReefSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -322,7 +303,6 @@ public class BlacktipReefSharkEntity extends Animal implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		BlacktipReefSharkOnEntityTickUpdateProcedure.execute(this.level(), this);
 		this.refreshDimensions();
 	}
 

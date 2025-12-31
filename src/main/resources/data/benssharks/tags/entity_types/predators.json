@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "benssharks:blacktip_reef_shark",
+    "benssharks:blue_shark",
+    "benssharks:bonnethead_shark",
+    "benssharks:bull_shark",
+    "benssharks:cookiecutter_shark",
+    "benssharks:goblin_shark",
+    "benssharks:greenland_shark",
+    "benssharks:land_shark",
+    "benssharks:lemon_shark",
+    "benssharks:leopard_shark",
+    "benssharks:mako_shark",
+    "benssharks:megalodon",
+    "benssharks:nurse_shark",
+    "benssharks:sawshark",
+    "benssharks:shark_minion",
+    "benssharks:greatwhite_shark",
+    "benssharks:thresher_shark",
+    "benssharks:tiger_shark",
+    "benssharks:whitetip_shark",
+    "benssharks:angelshark"
+  ]
+}

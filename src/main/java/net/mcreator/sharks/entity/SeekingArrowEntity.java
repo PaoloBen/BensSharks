@@ -92,17 +92,17 @@ public class SeekingArrowEntity extends AbstractArrow implements ItemSupplier {
 	@Override
 	public void tick() {
 		super.tick();
-		SeekingArrowWhileProjectileFlyingTickProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this.getOwner(), this);
+		SeekingArrowWhileProjectileFlyingTickProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
 		if (this.inGround)
 			this.discard();
 	}
 
 	public static SeekingArrowEntity shoot(Level world, LivingEntity entity, RandomSource source) {
-		return shoot(world, entity, source, 2f, 12, 2);
+		return shoot(world, entity, source, 2f, 4.5, 2);
 	}
 
 	public static SeekingArrowEntity shoot(Level world, LivingEntity entity, RandomSource source, float pullingPower) {
-		return shoot(world, entity, source, pullingPower * 2f, 12, 2);
+		return shoot(world, entity, source, pullingPower * 2f, 4.5, 2);
 	}
 
 	public static SeekingArrowEntity shoot(Level world, LivingEntity entity, RandomSource random, float power, double damage, int knockback) {
@@ -124,7 +124,7 @@ public class SeekingArrowEntity extends AbstractArrow implements ItemSupplier {
 		double dz = target.getZ() - entity.getZ();
 		entityarrow.shoot(dx, dy - entityarrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 2f * 2, 12.0F);
 		entityarrow.setSilent(true);
-		entityarrow.setBaseDamage(12);
+		entityarrow.setBaseDamage(4.5);
 		entityarrow.setKnockback(2);
 		entityarrow.setCritArrow(false);
 		entity.level().addFreshEntity(entityarrow);

@@ -7,15 +7,18 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ThalassogerEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.ShoalEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SeaLionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
-import net.mcreator.sharks.entity.RollParticleEntity;
+import net.mcreator.sharks.entity.SardineEntity;
 import net.mcreator.sharks.entity.RemoraEntity;
 import net.mcreator.sharks.entity.PilotFishEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
+import net.mcreator.sharks.entity.MegamouthSharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
 import net.mcreator.sharks.entity.LeopardSharkEntity;
@@ -33,6 +36,7 @@ import net.mcreator.sharks.entity.BlacktipReefSharkEntity;
 import net.mcreator.sharks.entity.BaskingSharkEntity;
 import net.mcreator.sharks.entity.BarracudaEntity;
 import net.mcreator.sharks.entity.AxodileEntity;
+import net.mcreator.sharks.entity.AngelsharkEntity;
 
 @Mod.EventBusSubscriber
 public class EntityAnimationFactory {
@@ -179,13 +183,6 @@ public class EntityAnimationFactory {
 					syncable.animationprocedure = animation;
 				}
 			}
-			if (event.getEntity() instanceof RollParticleEntity syncable) {
-				String animation = syncable.getSyncedAnimation();
-				if (!animation.equals("undefined")) {
-					syncable.setAnimation("undefined");
-					syncable.animationprocedure = animation;
-				}
-			}
 			if (event.getEntity() instanceof GreenlandSharkEntity syncable) {
 				String animation = syncable.getSyncedAnimation();
 				if (!animation.equals("undefined")) {
@@ -236,6 +233,41 @@ public class EntityAnimationFactory {
 				}
 			}
 			if (event.getEntity() instanceof SeaLionEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof ThresherSharkEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof SardineEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof ShoalEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof MegamouthSharkEntity syncable) {
+				String animation = syncable.getSyncedAnimation();
+				if (!animation.equals("undefined")) {
+					syncable.setAnimation("undefined");
+					syncable.animationprocedure = animation;
+				}
+			}
+			if (event.getEntity() instanceof AngelsharkEntity syncable) {
 				String animation = syncable.getSyncedAnimation();
 				if (!animation.equals("undefined")) {
 					syncable.setAnimation("undefined");

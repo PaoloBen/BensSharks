@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -40,11 +40,9 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.GlowSquid;
@@ -54,7 +52,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -64,16 +61,13 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.BlueSharkRightClickedOnEntityProcedure;
-import net.mcreator.sharks.procedures.BlueSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.BlueSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.BlueSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(BlueSharkEntity.class, EntityDataSerializers.BOOLEAN);
@@ -170,10 +164,11 @@ public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 		this.targetSelector.addGoal(3, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
 		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, SardineEntity.class, true, true));
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = BlueSharkEntity.this.getX();
@@ -194,18 +189,17 @@ public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(10, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
-		this.goalSelector.addGoal(12, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
-		this.goalSelector.addGoal(13, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(14, new AvoidEntityGoal<>(this, ElderGuardian.class, (float) 64, 16, 16));
-		this.goalSelector.addGoal(15, new AvoidEntityGoal<>(this, Guardian.class, (float) 64, 16, 16));
-		this.goalSelector.addGoal(16, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 8, 16, 16));
-		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 8, 16, 16));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1));
+		this.goalSelector.addGoal(11, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
+		this.goalSelector.addGoal(13, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
+		this.goalSelector.addGoal(14, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(15, new AvoidEntityGoal<>(this, ElderGuardian.class, (float) 64, 16, 16));
+		this.goalSelector.addGoal(16, new AvoidEntityGoal<>(this, Guardian.class, (float) 64, 16, 16));
+		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 8, 16, 16));
+		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 8, 16, 16));
+		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
 		this.goalSelector.addGoal(23, new RandomSwimmingGoal(this, 1, 40));
 	}
 
@@ -220,8 +214,8 @@ public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -232,19 +226,6 @@ public class BlueSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		BlueSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		BlueSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override

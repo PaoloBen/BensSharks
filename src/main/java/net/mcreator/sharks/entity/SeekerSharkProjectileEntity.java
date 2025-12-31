@@ -7,13 +7,10 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.util.RandomSource;
@@ -22,9 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 
-import net.mcreator.sharks.procedures.SeekerSharkProjectileProjectileHitsPlayerProcedure;
-import net.mcreator.sharks.procedures.SeekerSharkProjectileProjectileHitsLivingEntityProcedure;
-import net.mcreator.sharks.procedures.SeekerSharkProjectileProjectileHitsBlockProcedure;
 import net.mcreator.sharks.procedures.SeekerSharkHomingProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
@@ -72,27 +66,9 @@ public class SeekerSharkProjectileEntity extends AbstractArrow implements ItemSu
 	}
 
 	@Override
-	public void playerTouch(Player entity) {
-		super.playerTouch(entity);
-		SeekerSharkProjectileProjectileHitsPlayerProcedure.execute(this.level(), entity, this);
-	}
-
-	@Override
-	public void onHitEntity(EntityHitResult entityHitResult) {
-		super.onHitEntity(entityHitResult);
-		SeekerSharkProjectileProjectileHitsLivingEntityProcedure.execute(this.level(), entityHitResult.getEntity(), this);
-	}
-
-	@Override
-	public void onHitBlock(BlockHitResult blockHitResult) {
-		super.onHitBlock(blockHitResult);
-		SeekerSharkProjectileProjectileHitsBlockProcedure.execute(this.level(), this);
-	}
-
-	@Override
 	public void tick() {
 		super.tick();
-		SeekerSharkHomingProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this.getOwner(), this);
+		SeekerSharkHomingProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
 		if (this.inGround)
 			this.discard();
 	}
@@ -113,7 +89,7 @@ public class SeekerSharkProjectileEntity extends AbstractArrow implements ItemSu
 		entityarrow.setBaseDamage(damage);
 		entityarrow.setKnockback(knockback);
 		world.addFreshEntity(entityarrow);
-		world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")), SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+		world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks:shoot")), SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
 		return entityarrow;
 	}
 
@@ -128,7 +104,7 @@ public class SeekerSharkProjectileEntity extends AbstractArrow implements ItemSu
 		entityarrow.setKnockback(1);
 		entityarrow.setCritArrow(false);
 		entity.level().addFreshEntity(entityarrow);
-		entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.evoker.cast_spell")), SoundSource.PLAYERS, 1, 1f / (RandomSource.create().nextFloat() * 0.5f + 1));
+		entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks:shoot")), SoundSource.PLAYERS, 1, 1f / (RandomSource.create().nextFloat() * 0.5f + 1));
 		return entityarrow;
 	}
 }

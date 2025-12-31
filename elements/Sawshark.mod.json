@@ -98,7 +98,7 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.tropical_fish.ambient"
+      "value": ""
     },
     "hurtSound": {
       "value": "entity.tropical_fish.hurt"
@@ -112,17 +112,8 @@
     "raidCelebrationSound": {
       "value": ""
     },
-    "whenMobIsHurt": {
-      "name": "SawsharkEntityIsHurt"
-    },
     "onRightClickedOn": {
       "name": "SawsharkRightClickedOnEntity"
-    },
-    "onMobTickUpdate": {
-      "name": "SawsharkOnEntityTickUpdate"
-    },
-    "onInitialSpawn": {
-      "name": "SawsharkOnInitialEntitySpawn"
     },
     "hasAI": true,
     "aiBase": "(none)",

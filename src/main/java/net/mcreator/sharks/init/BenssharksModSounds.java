@@ -22,4 +22,6 @@ public class BenssharksModSounds {
 	public static final RegistryObject<SoundEvent> SEA_LION_AMBIENT = REGISTRY.register("sea_lion.ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("benssharks", "sea_lion.ambient")));
 	public static final RegistryObject<SoundEvent> SEA_LION_HURT = REGISTRY.register("sea_lion.hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("benssharks", "sea_lion.hurt")));
 	public static final RegistryObject<SoundEvent> SEA_LION_DEATH = REGISTRY.register("sea_lion.death", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("benssharks", "sea_lion.death")));
+	public static final RegistryObject<SoundEvent> SHOOT = REGISTRY.register("shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("benssharks", "shoot")));
+	public static final RegistryObject<SoundEvent> LANDING_IMPACT = REGISTRY.register("landing_impact", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("benssharks", "landing_impact")));
 }

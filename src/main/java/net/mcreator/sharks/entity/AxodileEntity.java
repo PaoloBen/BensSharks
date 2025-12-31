@@ -1,4 +1,3 @@
-
 package net.mcreator.sharks.entity;
 
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -16,9 +15,11 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.npc.Villager;
@@ -87,16 +88,13 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.GlowSquid;
@@ -104,8 +102,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -114,13 +112,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
-import net.mcreator.sharks.procedures.AxodileOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.AxodileOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(AxodileEntity.class, EntityDataSerializers.BOOLEAN);
@@ -142,11 +137,18 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 		setNoAi(false);
 		setMaxUpStep(0.6f);
 		this.setPathfindingMalus(BlockPathTypes.WATER, 0);
+		
 		this.moveControl = new MoveControl(this) {
 			@Override
 			public void tick() {
+				// MODIFICATION: Stop moving if custom animation is playing
+				if (!AxodileEntity.this.animationprocedure.equals("empty")) {
+					return;
+				}
+
 				if (AxodileEntity.this.isInWater())
 					AxodileEntity.this.setDeltaMovement(AxodileEntity.this.getDeltaMovement().add(0, 0.005, 0));
+				
 				if (this.operation == MoveControl.Operation.MOVE_TO && !AxodileEntity.this.getNavigation().isDone()) {
 					double dx = this.wantedX - AxodileEntity.this.getX();
 					double dy = this.wantedY - AxodileEntity.this.getY();
@@ -180,7 +182,7 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(SHOOT, false);
-		this.entityData.define(ANIMATION, "undefined");
+		this.entityData.define(ANIMATION, "empty");
 		this.entityData.define(TEXTURE, "axodile");
 	}
 
@@ -190,6 +192,18 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 
 	public String getTexture() {
 		return this.entityData.get(TEXTURE);
+	}
+	
+	public String getAnimation() {
+		return this.entityData.get(ANIMATION);
+	}
+
+	public void setAnimation(String animation) {
+		this.entityData.set(ANIMATION, animation);
+	}
+
+	public String getSyncedAnimation() {
+		return this.entityData.get(ANIMATION);
 	}
 
 	@Override
@@ -205,122 +219,53 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return 4;
 			}
 		});
+		
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Turtle.class, (float) 256));
-		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Player.class, true, true));
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, PolarBear.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Wolf.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Fox.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Pufferfish.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, MakoSharkEntity.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, BlueSharkEntity.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, GoblinSharkEntity.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, BullSharkEntity.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
-		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, true, true));
-		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, SawsharkEntity.class, true, true));
-		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, true, true));
-		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, true, true));
-		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, SeaLionEntity.class, true, true));
-		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Salmon.class, true, true));
-		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, Cod.class, true, true));
-		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, Axolotl.class, true, true));
-		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, RemoraEntity.class, true, true));
-		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, PilotFishEntity.class, true, true));
-		this.targetSelector.addGoal(31, new NearestAttackableTargetGoal(this, Allay.class, true, true));
-		this.targetSelector.addGoal(32, new NearestAttackableTargetGoal(this, Bee.class, true, true));
-		this.targetSelector.addGoal(33, new NearestAttackableTargetGoal(this, Blaze.class, true, true));
-		this.targetSelector.addGoal(34, new NearestAttackableTargetGoal(this, Camel.class, true, true));
-		this.targetSelector.addGoal(35, new NearestAttackableTargetGoal(this, Cat.class, true, true));
-		this.targetSelector.addGoal(36, new NearestAttackableTargetGoal(this, SkeletonHorse.class, true, true));
-		this.targetSelector.addGoal(37, new NearestAttackableTargetGoal(this, ZombieHorse.class, true, true));
-		this.targetSelector.addGoal(38, new NearestAttackableTargetGoal(this, Husk.class, true, true));
-		this.targetSelector.addGoal(39, new NearestAttackableTargetGoal(this, Illusioner.class, true, true));
-		this.targetSelector.addGoal(40, new NearestAttackableTargetGoal(this, Llama.class, true, true));
-		this.targetSelector.addGoal(41, new NearestAttackableTargetGoal(this, Mule.class, true, true));
-		this.targetSelector.addGoal(42, new NearestAttackableTargetGoal(this, Parrot.class, true, true));
-		this.targetSelector.addGoal(43, new NearestAttackableTargetGoal(this, Phantom.class, true, true));
-		this.targetSelector.addGoal(44, new NearestAttackableTargetGoal(this, Pig.class, true, true));
-		this.targetSelector.addGoal(45, new NearestAttackableTargetGoal(this, Piglin.class, true, true));
-		this.targetSelector.addGoal(46, new NearestAttackableTargetGoal(this, PiglinBrute.class, true, true));
-		this.targetSelector.addGoal(47, new NearestAttackableTargetGoal(this, Pillager.class, true, true));
-		this.targetSelector.addGoal(48, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
-		this.targetSelector.addGoal(49, new NearestAttackableTargetGoal(this, Sheep.class, true, true));
-		this.targetSelector.addGoal(50, new NearestAttackableTargetGoal(this, Silverfish.class, true, true));
-		this.targetSelector.addGoal(51, new NearestAttackableTargetGoal(this, Skeleton.class, true, true));
-		this.targetSelector.addGoal(52, new NearestAttackableTargetGoal(this, SnowGolem.class, true, true));
-		this.targetSelector.addGoal(53, new NearestAttackableTargetGoal(this, Spider.class, true, true));
-		this.targetSelector.addGoal(54, new NearestAttackableTargetGoal(this, Stray.class, true, true));
-		this.targetSelector.addGoal(55, new NearestAttackableTargetGoal(this, Tadpole.class, true, true));
-		this.targetSelector.addGoal(56, new NearestAttackableTargetGoal(this, TraderLlama.class, true, true));
-		this.targetSelector.addGoal(57, new NearestAttackableTargetGoal(this, TropicalFish.class, true, true));
-		this.targetSelector.addGoal(58, new NearestAttackableTargetGoal(this, Vex.class, true, true));
-		this.targetSelector.addGoal(59, new NearestAttackableTargetGoal(this, ThalassogerEntity.class, true, true));
-		this.targetSelector.addGoal(60, new NearestAttackableTargetGoal(this, Villager.class, true, true));
-		this.targetSelector.addGoal(61, new NearestAttackableTargetGoal(this, Vindicator.class, true, true));
-		this.targetSelector.addGoal(62, new NearestAttackableTargetGoal(this, WanderingTrader.class, true, true));
-		this.targetSelector.addGoal(63, new NearestAttackableTargetGoal(this, Witch.class, true, true));
-		this.targetSelector.addGoal(64, new NearestAttackableTargetGoal(this, WitherSkeleton.class, true, true));
-		this.targetSelector.addGoal(65, new NearestAttackableTargetGoal(this, Zoglin.class, true, true));
-		this.targetSelector.addGoal(66, new NearestAttackableTargetGoal(this, ZombifiedPiglin.class, true, true));
-		this.targetSelector.addGoal(67, new NearestAttackableTargetGoal(this, Zombie.class, true, true));
-		this.targetSelector.addGoal(68, new NearestAttackableTargetGoal(this, Ocelot.class, true, true));
-		this.targetSelector.addGoal(69, new NearestAttackableTargetGoal(this, CaveSpider.class, true, true));
-		this.targetSelector.addGoal(70, new NearestAttackableTargetGoal(this, EnderMan.class, true, true));
-		this.targetSelector.addGoal(71, new NearestAttackableTargetGoal(this, Endermite.class, true, true));
-		this.targetSelector.addGoal(72, new NearestAttackableTargetGoal(this, Evoker.class, true, true));
-		this.targetSelector.addGoal(73, new NearestAttackableTargetGoal(this, Frog.class, true, true));
-		this.targetSelector.addGoal(74, new NearestAttackableTargetGoal(this, Goat.class, true, true));
-		this.targetSelector.addGoal(75, new NearestAttackableTargetGoal(this, Hoglin.class, true, true));
-		this.targetSelector.addGoal(76, new NearestAttackableTargetGoal(this, Horse.class, true, true));
-		this.targetSelector.addGoal(77, new NearestAttackableTargetGoal(this, Donkey.class, true, true));
-		this.targetSelector.addGoal(78, new NearestAttackableTargetGoal(this, Drowned.class, true, true));
-		this.targetSelector.addGoal(79, new NearestAttackableTargetGoal(this, Zombie.class, true, true));
-		this.targetSelector.addGoal(80, new NearestAttackableTargetGoal(this, Skeleton.class, true, true));
-		this.targetSelector.addGoal(81, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
-		this.targetSelector.addGoal(82, new NearestAttackableTargetGoal(this, Bat.class, true, true));
-		this.targetSelector.addGoal(83, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(84, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(85, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
-			@Override
-			public boolean canUse() {
-				double x = AxodileEntity.this.getX();
-				double y = AxodileEntity.this.getY();
-				double z = AxodileEntity.this.getZ();
-				Entity entity = AxodileEntity.this;
-				Level world = AxodileEntity.this.level();
-				return super.canUse() && AggressiveSharksProcedureProcedure.execute(world);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = AxodileEntity.this.getX();
-				double y = AxodileEntity.this.getY();
-				double z = AxodileEntity.this.getZ();
-				Entity entity = AxodileEntity.this;
-				Level world = AxodileEntity.this.level();
-				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
-			}
-		});
-		this.goalSelector.addGoal(86, new LeapAtTargetGoal(this, (float) 0.5));
-		this.goalSelector.addGoal(87, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(88, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(89, new AvoidEntityGoal<>(this, BaskingSharkEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(90, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(91, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 32, 1, 1.2));
+		
+		// Modded Targets
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, MakoSharkEntity.class, false, false));
+		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, ThresherSharkEntity.class, false, false));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, BlueSharkEntity.class, false, false));
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, GoblinSharkEntity.class, false, false));
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, BullSharkEntity.class, false, false));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, false, false));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, false, false));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, false, false));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, false, false));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, SawsharkEntity.class, false, false));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, false, false));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, false, false));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, SeaLionEntity.class, false, false));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, SardineEntity.class, false, false));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, BarracudaEntity.class, false, false));
+		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, RemoraEntity.class, false, false));
+		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, PilotFishEntity.class, false, false));
+		
+		// Vanilla Targets
+		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Player.class, true, false));
+		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, Drowned.class, true, false));
+		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Zombie.class, true, false));
+		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Skeleton.class, true, false));
+		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Squid.class, true, false));
+		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false));
+		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, Cod.class, true, false));
+		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, Salmon.class, true, false));
+		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, TropicalFish.class, true, false));
+		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, Turtle.class, true, false));
+		
+		this.goalSelector.addGoal(31, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(32, new LookAtPlayerGoal(this, Player.class, (float) 6));
+		
+		this.goalSelector.addGoal(33, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(34, new AvoidEntityGoal<>(this, WhaleSharkEntity.class, (float) 32, 1, 1.2));
 	}
 
 	@Override
@@ -339,6 +284,11 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+        this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
+    }
+    
+	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.turtle.hurt"));
 	}
@@ -346,13 +296,6 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.turtle.death"));
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		AxodileOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -369,9 +312,21 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+		if (this.level().isClientSide()) {
+			this.animationprocedure = this.entityData.get(ANIMATION);
+			// FIX: Prevent "undefined" animation spam
+			if (this.animationprocedure == null || this.animationprocedure.equals("undefined")) {
+				this.animationprocedure = "empty";
+			}
+		}
+	}
+
+	@Override
 	public void baseTick() {
 		super.baseTick();
-		AxodileOnEntityTickUpdateProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
+		AxodileOnEntityTickUpdateProcedure.execute(this.level(), this);
 		this.refreshDimensions();
 	}
 
@@ -397,8 +352,95 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 
 	@Override
 	public void aiStep() {
+		// 1. Run Phasing Logic BEFORE standard movement is calculated
+		handleIcePhasing();
+		
 		super.aiStep();
 		this.updateSwingTime();
+	}
+
+	/**
+	 * Scans the entity's hitbox for ice. 
+	 * If ice is found AND we are mid-leap OR falling, it disables physics (Vex Mode) AND breaks the ice.
+	 */
+	private void handleIcePhasing() {
+		if (this.level().isClientSide()) return; // Server side logic only
+
+		// === RESTRICTION: NOCLIP IF LEAPING OR FALLING ===
+		// We check if:
+		// 1. "JumpTimer" > 0 (Currently performing a leap attack)
+		// 2. Vertical Speed < -0.1 (Falling significantly, e.g. onto ice)
+		
+		double jumpTimer = this.getPersistentData().getDouble("JumpTimer");
+		boolean isFalling = this.getDeltaMovement().y < -0.1;
+
+		if (jumpTimer <= 0 && !isFalling) {
+			this.noPhysics = false;
+			return;
+		}
+
+		boolean touchingIce = false;
+		boolean touchingSolid = false;
+		
+		// Get hitbox and inflate slightly to detect blocks we are about to hit
+		int minX = Mth.floor(this.getBoundingBox().minX + 0.1);
+		int maxX = Mth.ceil(this.getBoundingBox().maxX - 0.1);
+		int minY = Mth.floor(this.getBoundingBox().minY + 0.1);
+		int maxY = Mth.ceil(this.getBoundingBox().maxY - 0.1);
+		int minZ = Mth.floor(this.getBoundingBox().minZ + 0.1);
+		int maxZ = Mth.ceil(this.getBoundingBox().maxZ - 0.1);
+
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+
+		for (int x = minX; x < maxX; x++) {
+			for (int y = minY; y < maxY; y++) {
+				for (int z = minZ; z < maxZ; z++) {
+					pos.set(x, y, z);
+					BlockState state = this.level().getBlockState(pos);
+
+					if (!state.isAir()) {
+						if (isBreakableIce(state)) {
+							touchingIce = true;
+							
+							// BREAK ICE LOGIC
+							BlockPos belowPos = pos.below();
+							BlockState belowState = this.level().getBlockState(belowPos);
+							
+							// Play break sound/particles
+							this.level().levelEvent(2001, pos, Block.getId(state));
+
+							// Convert to Water (if above liquid) or destroy
+							if (!belowState.getFluidState().isEmpty() || belowState.is(Blocks.BUBBLE_COLUMN)) {
+								this.level().setBlock(pos, Blocks.WATER.defaultBlockState(), 3);
+							} else {
+								this.level().destroyBlock(pos, false);
+							}
+						} 
+						// COMPILATION FIX: Use modern checks for Solidity
+						// We check if the block shape is NOT empty (it has a collider) AND it is NOT a liquid.
+						else if (!state.getCollisionShape(this.level(), pos).isEmpty() && state.getFluidState().isEmpty()) {
+							touchingSolid = true;
+						}
+					}
+				}
+			}
+		}
+
+		// LOGIC: If touching ice AND NOT touching a solid wall/floor
+		// Enable "noPhysics" (Vex Mode) to ghost through the ice we just broke.
+		if (touchingIce && !touchingSolid) {
+			this.noPhysics = true;
+		} else {
+			this.noPhysics = false;
+		}
+	}
+
+	private boolean isBreakableIce(BlockState state) {
+		return state.is(BlockTags.ICE) || 
+			   state.getBlock() == Blocks.PACKED_ICE || 
+			   state.getBlock() == Blocks.BLUE_ICE || 
+			   state.getBlock() == Blocks.FROSTED_ICE ||
+			   state.getBlock() == Blocks.ICE;
 	}
 
 	public static void init() {
@@ -407,8 +449,8 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 1.5);
-		builder = builder.add(Attributes.MAX_HEALTH, 20);
-		builder = builder.add(Attributes.ARMOR, 20);
+		builder = builder.add(Attributes.MAX_HEALTH, 30);
+		builder = builder.add(Attributes.ARMOR, 7);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 24);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.4);
@@ -418,6 +460,11 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 
 	private PlayState movementPredicate(AnimationState event) {
 		if (this.animationprocedure.equals("empty")) {
+			// FALLING LOGIC: Play landjump immediately when airborne
+			if (!this.onGround() && !this.isInWater()) {
+				return event.setAndContinue(RawAnimation.begin().thenLoop("landjump"));
+			}
+			
 			if (this.isInWaterOrBubble()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
 			}
@@ -447,7 +494,8 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 	String prevAnim = "empty";
 
 	private PlayState procedurePredicate(AnimationState event) {
-		if (!animationprocedure.equals("empty") && event.getController().getAnimationState() == AnimationController.State.STOPPED || (!this.animationprocedure.equals(prevAnim) && !this.animationprocedure.equals("empty"))) {
+		// FIX: Added checks for "undefined" to prevent log spam
+		if (!animationprocedure.equals("empty") && !animationprocedure.equals("undefined") && event.getController().getAnimationState() == AnimationController.State.STOPPED || (!this.animationprocedure.equals(prevAnim) && !this.animationprocedure.equals("empty") && !this.animationprocedure.equals("undefined"))) {
 			if (!this.animationprocedure.equals(prevAnim))
 				event.getController().forceAnimationReset();
 			event.getController().setAnimation(RawAnimation.begin().thenPlay(this.animationprocedure));
@@ -455,7 +503,7 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 				this.animationprocedure = "empty";
 				event.getController().forceAnimationReset();
 			}
-		} else if (animationprocedure.equals("empty")) {
+		} else if (animationprocedure.equals("empty") || animationprocedure.equals("undefined")) {
 			prevAnim = "empty";
 			return PlayState.STOP;
 		}
@@ -472,17 +520,10 @@ public class AxodileEntity extends PathfinderMob implements GeoEntity {
 		}
 	}
 
-	public String getSyncedAnimation() {
-		return this.entityData.get(ANIMATION);
-	}
-
-	public void setAnimation(String animation) {
-		this.entityData.set(ANIMATION, animation);
-	}
-
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar data) {
-		data.add(new AnimationController<>(this, "movement", 3, this::movementPredicate));
+		// MODIFICATION: Set movement transition to 0 for instant falling check
+		data.add(new AnimationController<>(this, "movement", 0, this::movementPredicate));
 		data.add(new AnimationController<>(this, "attacking", 3, this::attackingPredicate));
 		data.add(new AnimationController<>(this, "procedure", 3, this::procedurePredicate));
 	}

@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.mcreator.sharks.init.BenssharksModMobEffects;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SeaLionEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
@@ -65,8 +66,8 @@ public class BarracudaSprintProcedure {
 						|| !world.getEntitiesOfClass(WhitetipSharkEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()
 						|| !world.getEntitiesOfClass(GreaterAxodileEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()
 						|| !world.getEntitiesOfClass(LemonSharkEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty() || !world.getEntitiesOfClass(ShrakEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()
-						|| !world.getEntitiesOfClass(BlueSharkEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()
-						|| !world.getEntitiesOfClass(SeaLionEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()) {
+						|| !world.getEntitiesOfClass(BlueSharkEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty() || !world.getEntitiesOfClass(SeaLionEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()
+						|| !world.getEntitiesOfClass(ThresherSharkEntity.class, AABB.ofSize(new Vec3(x, y, z), 6, 6, 6), e -> true).isEmpty()) {
 					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 						_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.FRENZY.get(), 60, 2, true, false));
 					BenssharksMod.queueServerWork(60, () -> {

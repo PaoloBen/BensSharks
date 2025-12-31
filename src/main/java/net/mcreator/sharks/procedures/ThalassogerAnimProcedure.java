@@ -48,6 +48,8 @@ public class ThalassogerAnimProcedure {
 		if (!world.getEntitiesOfClass(SeekerSharkProjectileEntity.class, AABB.ofSize(new Vec3((sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ())), 4, 4, 4), e -> true).isEmpty()) {
 			if (sourceentity instanceof LivingEntity _entity)
 				_entity.swing(InteractionHand.MAIN_HAND, true);
+			if (world instanceof ServerLevel _level)
+				_level.sendParticles(ParticleTypes.FLASH, (sourceentity.getX()), (sourceentity.getY()), (sourceentity.getZ()), 1, 0, 0, 0, 0);
 			if (sourceentity instanceof ThalassogerEntity animatable)
 				animatable.setTexture("thalassoger2");
 			BenssharksMod.queueServerWork(40, () -> {

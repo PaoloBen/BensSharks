@@ -12,11 +12,13 @@ import net.minecraft.world.entity.Entity;
 import net.mcreator.sharks.entity.WhitetipSharkEntity;
 import net.mcreator.sharks.entity.WhaleSharkEntity;
 import net.mcreator.sharks.entity.TigerSharkEntity;
+import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
 import net.mcreator.sharks.entity.RemoraEntity;
 import net.mcreator.sharks.entity.PilotFishEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
+import net.mcreator.sharks.entity.MegamouthSharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
 import net.mcreator.sharks.entity.LeopardSharkEntity;
@@ -33,6 +35,7 @@ import net.mcreator.sharks.entity.BlacktipReefSharkEntity;
 import net.mcreator.sharks.entity.BaskingSharkEntity;
 import net.mcreator.sharks.entity.BarracudaEntity;
 import net.mcreator.sharks.entity.AxodileEntity;
+import net.mcreator.sharks.entity.AngelsharkEntity;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +57,7 @@ public class StopRidingBoatProcedure {
 				|| entity instanceof TigerSharkEntity || entity instanceof CookiecutterSharkEntity || entity instanceof MakoSharkEntity || entity instanceof BlacktipReefSharkEntity || entity instanceof BaskingSharkEntity
 				|| entity instanceof BullSharkEntity || entity instanceof MegalodonEntity || entity instanceof LemonSharkEntity || entity instanceof KrillEntity || entity instanceof WhaleSharkEntity || entity instanceof PilotFishEntity
 				|| entity instanceof GreaterAxodileEntity || entity instanceof GreenlandSharkEntity || entity instanceof WhitetipSharkEntity || entity instanceof BarracudaEntity || entity instanceof LeopardSharkEntity
-				|| entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity) {
+				|| entity instanceof GoblinSharkEntity || entity instanceof SawsharkEntity || entity instanceof ThresherSharkEntity || entity instanceof MegamouthSharkEntity || entity instanceof AngelsharkEntity) {
 			if (entity.isPassenger() && ((entity.getVehicle()) instanceof Boat || (entity.getVehicle()) instanceof ChestBoat)) {
 				entity.stopRiding();
 			}

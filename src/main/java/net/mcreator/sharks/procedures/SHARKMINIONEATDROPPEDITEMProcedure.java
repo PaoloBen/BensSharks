@@ -42,6 +42,7 @@ public class SHARKMINIONEATDROPPEDITEMProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
+		ItemStack found_fish = ItemStack.EMPTY;
 		if (entity instanceof SharkMinionEntity) {
 			if (entity.getPersistentData().getDouble("SharkHunger") == 0) {
 				if (entity.getPersistentData().getDouble("SharkStorage") < 64) {
@@ -70,8 +71,18 @@ public class SHARKMINIONEATDROPPEDITEMProcedure {
 											Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 												return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 											}
-										}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_BARRACUDA.get())) {
-							if ((entity instanceof SharkMinionEntity _datEntL19 && _datEntL19.getEntityData().get(SharkMinionEntity.DATA_Sitting)) == false) {
+										}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_BARRACUDA.get()
+										|| (((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).stream().sorted(new Object() {
+											Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+												return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+											}
+										}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_SARDINE.get()
+										|| (((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).stream().sorted(new Object() {
+											Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+												return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+											}
+										}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == Items.TROPICAL_FISH)) {
+							if ((entity instanceof SharkMinionEntity _datEntL25 && _datEntL25.getEntityData().get(SharkMinionEntity.DATA_Sitting)) == false) {
 								if (entity instanceof Mob _entity)
 									_entity.getNavigation().moveTo((((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 8, 8, 8), e -> true).stream().sorted(new Object() {
 										Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
@@ -112,7 +123,26 @@ public class SHARKMINIONEATDROPPEDITEMProcedure {
 												Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 													return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 												}
-											}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_BARRACUDA.get()) {
+											}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_BARRACUDA.get()
+											|| (((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 2.5, 2.5, 2.5), e -> true).stream().sorted(new Object() {
+												Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+													return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+												}
+											}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.RAW_SARDINE.get()
+											|| (((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 2.5, 2.5, 2.5), e -> true).stream().sorted(new Object() {
+												Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+													return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+												}
+											}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).getItem() == Items.TROPICAL_FISH) {
+										found_fish = (((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 2.5, 2.5, 2.5), e -> true).stream().sorted(new Object() {
+											Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+												return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+											}
+										}.compareDistOf(x, y, z)).findFirst().orElse(null)) instanceof ItemEntity _itemEnt ? _itemEnt.getItem() : ItemStack.EMPTY).copy();
+										if (world instanceof net.minecraft.server.level.ServerLevel _level) {
+											_level.sendParticles(new net.minecraft.core.particles.ItemParticleOption(net.minecraft.core.particles.ParticleTypes.ITEM, found_fish), entity.getX(), entity.getY() + 0.5, entity.getZ(), 5, 0.1, 0.1, 0.1,
+													0.05);
+										}
 										if (entity instanceof LivingEntity _entity)
 											_entity.swing(InteractionHand.MAIN_HAND, true);
 										(((Entity) world.getEntitiesOfClass(ItemEntity.class, AABB.ofSize(new Vec3(x, y, z), 2.5, 2.5, 2.5), e -> true).stream().sorted(new Object() {

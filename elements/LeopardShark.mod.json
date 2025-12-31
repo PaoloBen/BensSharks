@@ -99,7 +99,7 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.tropical_fish.ambient"
+      "value": ""
     },
     "hurtSound": {
       "value": "entity.tropical_fish.hurt"
@@ -113,20 +113,11 @@
     "raidCelebrationSound": {
       "value": ""
     },
-    "whenMobIsHurt": {
-      "name": "LeopardSharkEntityIsHurt"
-    },
     "onRightClickedOn": {
       "name": "LeopardSharkRightClickedOnEntity"
     },
-    "onMobTickUpdate": {
-      "name": "LeopardSharkOnEntityTickUpdate"
-    },
     "onPlayerCollidesWith": {
       "name": "NurseSharkPlayerCollidesWithThisEntity"
-    },
-    "onInitialSpawn": {
-      "name": "LeopardSharkOnInitialEntitySpawn"
     },
     "hasAI": true,
     "aiBase": "(none)",

@@ -28,9 +28,23 @@
 				{
 					"name": "Torso3",
 					"parent": "Torso2",
-					"pivot": [0, 2, -10],
+					"pivot": [0, 2, -10]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso3",
+					"pivot": [0, 4, -10],
 					"cubes": [
 						{"origin": [-3, 0, -10], "size": [6, 4, 19], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "DorsalFin",
+					"parent": "Belly",
+					"pivot": [0, 4, 0],
+					"rotation": [12.5, 0, 0],
+					"cubes": [
+						{"origin": [0, -16.80726, 16.24014], "size": [0, 7, 5], "pivot": [0, 13.16904, 30.45658], "rotation": [-47.5, 0, 0], "uv": [0, 33]}
 					]
 				},
 				{
@@ -72,15 +86,6 @@
 					"parent": "Thorax",
 					"pivot": [0, 3, 16],
 					"rotation": [42.5, 0, 0]
-				},
-				{
-					"name": "Dorsal",
-					"parent": "Torso2",
-					"pivot": [0, 4, 0],
-					"rotation": [12.5, 0, 0],
-					"cubes": [
-						{"origin": [0, -16.80726, 16.24014], "size": [0, 7, 5], "pivot": [0, 13.16904, 30.45658], "rotation": [-47.5, 0, 0], "uv": [0, 33]}
-					]
 				},
 				{
 					"name": "bone",

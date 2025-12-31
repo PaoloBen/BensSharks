@@ -7,7 +7,7 @@
     },
     "showParticles": false,
     "actionSound": {
-      "value": "entity.evocation_illager.cast_spell"
+      "value": "CUSTOM:shoot"
     },
     "igniteFire": false,
     "power": 0.5,
@@ -17,15 +17,6 @@
     "customModelTexture": "seekershark.png",
     "modelWidth": 0.25,
     "modelHeight": 0.25,
-    "onHitsBlock": {
-      "name": "SeekerSharkProjectileProjectileHitsBlock"
-    },
-    "onHitsPlayer": {
-      "name": "SeekerSharkProjectileProjectileHitsPlayer"
-    },
-    "onHitsEntity": {
-      "name": "SeekerSharkProjectileProjectileHitsLivingEntity"
-    },
     "onFlyingTick": {
       "name": "SeekerSharkHoming"
     }

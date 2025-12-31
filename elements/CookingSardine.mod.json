@@ -1,0 +1,22 @@
+{
+  "_fv": 73,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Smoking",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "FOOD",
+    "xpReward": 1.0,
+    "cookingTime": 100,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "smokingInputStack": {
+      "value": "CUSTOM:RawSardine"
+    },
+    "smokingReturnStack": {
+      "value": "CUSTOM:CookedSardine"
+    },
+    "name": "cooking_sardine",
+    "namespace": "mod"
+  }
+}

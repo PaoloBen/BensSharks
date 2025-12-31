@@ -99,7 +99,7 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.tropical_fish.ambient"
+      "value": ""
     },
     "hurtSound": {
       "value": "entity.tropical_fish.hurt"
@@ -116,20 +116,11 @@
     "onStruckByLightning": {
       "name": "NurseSharkItIsStruckByLightning"
     },
-    "whenMobIsHurt": {
-      "name": "NurseSharkEntityIsHurt"
-    },
     "onRightClickedOn": {
       "name": "NurseSharkRightClickedOnEntity"
     },
-    "onMobTickUpdate": {
-      "name": "NurseSharkOnEntityTickUpdate"
-    },
     "onPlayerCollidesWith": {
       "name": "NurseSharkPlayerCollidesWithThisEntity"
-    },
-    "onInitialSpawn": {
-      "name": "NurseSharkOnInitialEntitySpawn"
     },
     "hasAI": true,
     "aiBase": "(none)",

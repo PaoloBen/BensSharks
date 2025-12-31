@@ -7,8 +7,8 @@
 				"texture_width": 256,
 				"texture_height": 256,
 				"visible_bounds_width": 10,
-				"visible_bounds_height": 4,
-				"visible_bounds_offset": [0, 1, 0]
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 1.5, 0]
 			},
 			"bones": [
 				{
@@ -35,8 +35,18 @@
 					]
 				},
 				{
-					"name": "Jaw",
+					"name": "Jaw3",
 					"parent": "Head",
+					"pivot": [0, 7, -27]
+				},
+				{
+					"name": "Jaw2",
+					"parent": "Jaw3",
+					"pivot": [0, 7, -27]
+				},
+				{
+					"name": "Jaw",
+					"parent": "Jaw2",
 					"pivot": [0, 7, -27],
 					"cubes": [
 						{"origin": [-4, 1.5, -38.5], "size": [8, 2, 12], "uv": [168, 63]},
@@ -65,7 +75,7 @@
 						{"origin": [-16, 4, -20], "size": [6, 12, 24], "uv": [58, 123]},
 						{"origin": [10, 4, -20], "size": [6, 12, 24], "uv": [118, 123]},
 						{"origin": [-8, -0.5, -19], "size": [16, 4.5, 28], "uv": [0, 48]},
-						{"origin": [0, 15, -19], "size": [0, 11, 36], "uv": [0, 80]},
+						{"origin": [-0.005, 15, -19], "size": [0.01, 11, 36], "uv": [0, 80]},
 						{"origin": [8, 12, -22], "size": [0, 12, 31], "pivot": [8, 10, -6], "rotation": [0, 0, 90], "uv": [102, 0]},
 						{"origin": [-8, 12, -22], "size": [0, 12, 31], "pivot": [-8, 10, -6], "rotation": [0, 0, -90], "uv": [102, 0], "mirror": true}
 					]
@@ -87,8 +97,13 @@
 					]
 				},
 				{
-					"name": "Thorax",
+					"name": "Thorax2",
 					"parent": "Shell",
+					"pivot": [0, 7, 9]
+				},
+				{
+					"name": "Thorax",
+					"parent": "Thorax2",
 					"pivot": [0, 7, 9],
 					"cubes": [
 						{"origin": [-7, 0.1, 7], "size": [14, 15, 19], "uv": [102, 43]},
@@ -96,8 +111,13 @@
 					]
 				},
 				{
-					"name": "Butt",
+					"name": "Butt2",
 					"parent": "Thorax",
+					"pivot": [0, 6, 26]
+				},
+				{
+					"name": "Butt",
+					"parent": "Butt2",
 					"pivot": [0, 6, 26],
 					"cubes": [
 						{"origin": [-3.5, 0.2, 24], "size": [7, 12, 16], "uv": [126, 159]},
@@ -105,12 +125,17 @@
 					]
 				},
 				{
-					"name": "Tail",
+					"name": "Tail2",
 					"parent": "Butt",
+					"pivot": [0, 4, 40]
+				},
+				{
+					"name": "Tail",
+					"parent": "Tail2",
 					"pivot": [0, 4, 40],
 					"cubes": [
 						{"origin": [-1.5, 0.3, 38], "size": [3, 7, 15], "uv": [46, 171]},
-						{"origin": [0, 0.3, 40], "size": [0, 15, 29], "uv": [0, 121]}
+						{"origin": [-0.005, 0.3, 40], "size": [0.01, 15, 29], "uv": [0, 121]}
 					]
 				}
 			]

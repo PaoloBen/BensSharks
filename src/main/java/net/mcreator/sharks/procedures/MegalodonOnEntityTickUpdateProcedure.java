@@ -1,26 +1,50 @@
 package net.mcreator.sharks.procedures;
 
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
-
 import net.mcreator.sharks.init.BenssharksModMobEffects;
 import net.mcreator.sharks.entity.MegalodonEntity;
-import net.mcreator.sharks.BenssharksMod;
 
+@Mod.EventBusSubscriber
 public class MegalodonOnEntityTickUpdateProcedure {
-	public static void execute(LevelAccessor world, Entity entity) {
-		if (entity == null)
-			return;
-		if (entity instanceof MegalodonEntity && !entity.isInWaterOrBubble()) {
-			BenssharksMod.queueServerWork(600, () -> {
-				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-					_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.DRYOUT_EFFECT.get(), 600, 0, true, false));
-			});
-		} else if (entity.isInWaterOrBubble()) {
-			if (entity instanceof LivingEntity _entity)
-				_entity.removeEffect(BenssharksModMobEffects.DRYOUT_EFFECT.get());
-		}
-	}
+    @SubscribeEvent
+    public static void onEntityTick(LivingEvent.LivingTickEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof MegalodonEntity) {
+            execute(entity);
+        }
+    }
+
+    public static void execute(Entity entity) {
+        if (entity == null) return;
+        MegalodonEntity shark = (MegalodonEntity) entity;
+
+        if (!entity.level().isClientSide()) {
+            if (!entity.isInWaterOrBubble()) {
+                double dryTimer = entity.getPersistentData().getDouble("DryTime") + 1;
+                entity.getPersistentData().putDouble("DryTime", dryTimer);
+                if (dryTimer > 300 && dryTimer % 20 == 0) entity.hurt(entity.damageSources().dryOut(), 4.0F);
+            } else {
+                entity.getPersistentData().putDouble("DryTime", 0);
+            }
+
+            boolean active = false;
+            if (entity.isInWaterOrBubble()) {
+                LivingEntity target = shark.getTarget();
+                if (target != null && target.isAlive() && shark.distanceTo(target) <= 64) active = true;
+            }
+            shark.getEntityData().set(MegalodonEntity.DATA_Sprinting, active);
+            if (active) shark.addEffect(new MobEffectInstance(BenssharksModMobEffects.FRENZY.get(), 10, 1, false, false));
+        }
+
+        if (shark.getEntityData().get(MegalodonEntity.DATA_Sprinting)) {
+            shark.animationprocedure = "sprint";
+        } else {
+            if (shark.animationprocedure.equals("sprint")) shark.animationprocedure = "empty";
+        }
+    }
 }

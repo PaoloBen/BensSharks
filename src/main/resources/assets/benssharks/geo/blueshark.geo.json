@@ -45,11 +45,23 @@
 				{
 					"name": "Torso2",
 					"parent": "Torso",
-					"pivot": [0, 4, -2],
+					"pivot": [0, 4, -2]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso2",
+					"pivot": [0, 4, -13],
 					"cubes": [
-						{"origin": [-4, 0, -13], "size": [8, 8, 22], "uv": [0, 0]},
-						{"origin": [-1, 5.64199, -0.16284], "size": [1, 11, 6], "pivot": [-1, 7, 0], "rotation": [-25, 0, 0], "uv": [0, 5]},
-						{"origin": [0, 5.64199, -0.16284], "size": [1, 11, 6], "pivot": [1, 7, 0], "rotation": [-25, 0, 0], "uv": [0, 5], "mirror": true}
+						{"origin": [-4, 0, -13], "size": [8, 8, 22], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "DorsalFin",
+					"parent": "Belly",
+					"pivot": [-1, 7, 0],
+					"cubes": [
+						{"origin": [0, 5.64199, -0.16284], "size": [1, 11, 6], "pivot": [1, 7, 0], "rotation": [-25, 0, 0], "uv": [0, 5], "mirror": true},
+						{"origin": [-1, 5.64199, -0.16284], "size": [1, 11, 6], "pivot": [-1, 7, 0], "rotation": [-25, 0, 0], "uv": [0, 5]}
 					]
 				},
 				{

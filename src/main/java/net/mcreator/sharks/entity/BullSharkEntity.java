@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -65,11 +65,9 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.GlowSquid;
@@ -79,7 +77,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -89,17 +86,13 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.BullSharkRightClickedOnEntityProcedure;
 import net.mcreator.sharks.procedures.BullSharkPlayerCollidesWithThisEntityProcedure;
-import net.mcreator.sharks.procedures.BullSharkOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.BullSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.BullSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(BullSharkEntity.class, EntityDataSerializers.BOOLEAN);
@@ -194,44 +187,45 @@ public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 		});
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, Ravager.class, true, true));
-		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, ThalassogerEntity.class, true, true));
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Pillager.class, true, true));
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, Vindicator.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Evoker.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Hoglin.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Zoglin.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Sniffer.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Horse.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, Donkey.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, Mule.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, Cow.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, MushroomCow.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Pig.class, true, true));
-		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, TraderLlama.class, true, true));
-		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, Llama.class, true, true));
-		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, Sheep.class, true, true));
-		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Camel.class, true, true));
-		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, Goat.class, true, true));
-		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Wolf.class, true, true));
-		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Ocelot.class, true, true));
-		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Cat.class, true, true));
-		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
-		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
-		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, AxodileEntity.class, true, true));
-		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, Drowned.class, true, true));
-		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
-		this.targetSelector.addGoal(31, new NearestAttackableTargetGoal(this, ElderGuardian.class, true, true));
-		this.targetSelector.addGoal(32, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(33, new NearestAttackableTargetGoal(this, SeaLionEntity.class, true, true));
-		this.targetSelector.addGoal(34, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
-		this.targetSelector.addGoal(35, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.targetSelector.addGoal(36, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(37, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(38, new NearestAttackableTargetGoal(this, Cod.class, true, true));
-		this.targetSelector.addGoal(39, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, true, true));
-		this.targetSelector.addGoal(40, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, true, true));
-		this.targetSelector.addGoal(41, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, SardineEntity.class, true, true));
+		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, Ravager.class, true, true));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, ThalassogerEntity.class, true, true));
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, Pillager.class, true, true));
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Vindicator.class, true, true));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Evoker.class, true, true));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Hoglin.class, true, true));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Zoglin.class, true, true));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Sniffer.class, true, true));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, Horse.class, true, true));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, Donkey.class, true, true));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, Mule.class, true, true));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, Cow.class, true, true));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, MushroomCow.class, true, true));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, Pig.class, true, true));
+		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, TraderLlama.class, true, true));
+		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, Llama.class, true, true));
+		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Sheep.class, true, true));
+		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, Camel.class, true, true));
+		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Goat.class, true, true));
+		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Wolf.class, true, true));
+		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Ocelot.class, true, true));
+		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, Cat.class, true, true));
+		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, Rabbit.class, true, true));
+		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, Chicken.class, true, true));
+		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, AxodileEntity.class, true, true));
+		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, Drowned.class, true, true));
+		this.targetSelector.addGoal(31, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
+		this.targetSelector.addGoal(32, new NearestAttackableTargetGoal(this, ElderGuardian.class, true, true));
+		this.targetSelector.addGoal(33, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
+		this.targetSelector.addGoal(34, new NearestAttackableTargetGoal(this, SeaLionEntity.class, true, true));
+		this.targetSelector.addGoal(35, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
+		this.targetSelector.addGoal(36, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
+		this.targetSelector.addGoal(37, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(38, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(39, new NearestAttackableTargetGoal(this, Cod.class, true, true));
+		this.targetSelector.addGoal(40, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, true, true));
+		this.targetSelector.addGoal(41, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, true, true));
+		this.targetSelector.addGoal(42, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = BullSharkEntity.this.getX();
@@ -252,13 +246,12 @@ public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(43, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
-		this.goalSelector.addGoal(44, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
-		this.goalSelector.addGoal(45, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 256, 16, 16));
-		this.goalSelector.addGoal(46, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 256, 16, 16));
-		this.goalSelector.addGoal(47, new AvoidEntityGoal<>(this, Dolphin.class, (float) 256, 16, 16));
-		this.goalSelector.addGoal(48, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 256, 16, 16));
-		this.goalSelector.addGoal(49, new AvoidEntityGoal<>(this, WaterAnimal.class, (float) 512, 1, 1));
+		this.goalSelector.addGoal(44, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
+		this.goalSelector.addGoal(45, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
+		this.goalSelector.addGoal(46, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 256, 16, 16));
+		this.goalSelector.addGoal(47, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 256, 16, 16));
+		this.goalSelector.addGoal(48, new AvoidEntityGoal<>(this, Dolphin.class, (float) 256, 16, 16));
+		this.goalSelector.addGoal(49, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 256, 16, 16));
 		this.goalSelector.addGoal(50, new RandomSwimmingGoal(this, 1, 40));
 	}
 
@@ -273,8 +266,8 @@ public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -285,19 +278,6 @@ public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		BullSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		BullSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -332,7 +312,6 @@ public class BullSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		BullSharkOnEntityTickUpdateProcedure.execute(this.level(), this);
 		this.refreshDimensions();
 	}
 

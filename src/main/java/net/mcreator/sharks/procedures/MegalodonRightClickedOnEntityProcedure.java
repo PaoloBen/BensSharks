@@ -1,6 +1,7 @@
 package net.mcreator.sharks.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
@@ -39,12 +40,16 @@ public class MegalodonRightClickedOnEntityProcedure {
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.MAIN_HAND, true);
-					if (sourceentity instanceof LivingEntity _entity) {
-						ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
-						_setstack.setCount(1);
-						_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-						if (_entity instanceof Player _player)
-							_player.getInventory().setChanged();
+					if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getCount() > 0 && !(sourceentity instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
+						if (sourceentity instanceof Player _player) {
+							ItemStack _stktoremove = new ItemStack(BenssharksModItems.FISH_BUCKET.get());
+							_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+						}
+						if (sourceentity instanceof Player _player) {
+							ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
+							_setstack.setCount(1);
+							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+						}
 					}
 					entity.getPersistentData().putBoolean("canBeMilked", true);
 					if (world instanceof Level _level) {
@@ -62,7 +67,7 @@ public class MegalodonRightClickedOnEntityProcedure {
 						_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1, true, false));
 					if (world instanceof ServerLevel _level)
 						_level.sendParticles(ParticleTypes.CRIT, x, y, z, 5, 1, 1, 1, 1);
-					BenssharksMod.queueServerWork(6000, () -> {
+					BenssharksMod.queueServerWork(20, () -> {
 						entity.getPersistentData().putBoolean("canBeMilked", false);
 					});
 				}
@@ -72,12 +77,16 @@ public class MegalodonRightClickedOnEntityProcedure {
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.OFF_HAND, true);
-					if (sourceentity instanceof LivingEntity _entity) {
-						ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
-						_setstack.setCount(1);
-						_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-						if (_entity instanceof Player _player)
-							_player.getInventory().setChanged();
+					if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getCount() > 0 && !(sourceentity instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
+						if (sourceentity instanceof Player _player) {
+							ItemStack _stktoremove = new ItemStack(BenssharksModItems.FISH_BUCKET.get());
+							_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+						}
+						if (sourceentity instanceof Player _player) {
+							ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
+							_setstack.setCount(1);
+							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+						}
 					}
 					entity.getPersistentData().putBoolean("canBeMilked", true);
 					if (world instanceof Level _level) {
@@ -95,13 +104,13 @@ public class MegalodonRightClickedOnEntityProcedure {
 						_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1, true, false));
 					if (world instanceof ServerLevel _level)
 						_level.sendParticles(ParticleTypes.CRIT, x, y, z, 5, 1, 1, 1, 1);
-					BenssharksMod.queueServerWork(6000, () -> {
+					BenssharksMod.queueServerWork(20, () -> {
 						entity.getPersistentData().putBoolean("canBeMilked", false);
 					});
 				}
 			}
 			if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
-				if (!entity.getPersistentData().getBoolean("canBeMilked")) {
+				if (!entity.getPersistentData().getBoolean("Fertilizeable")) {
 					if (entity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
@@ -110,7 +119,7 @@ public class MegalodonRightClickedOnEntityProcedure {
 						ItemStack _stktoremove = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
 						_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 					}
-					entity.getPersistentData().putBoolean("canBeMilked", true);
+					entity.getPersistentData().putBoolean("Fertilizeable", true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.ravager.attack")), SoundSource.NEUTRAL, 1, 1);
@@ -136,13 +145,13 @@ public class MegalodonRightClickedOnEntityProcedure {
 					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 						_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.FERTILIZED.get(), 13000, 0, true, false));
 					BenssharksMod.queueServerWork(13000, () -> {
-						entity.getPersistentData().putBoolean("canBeMilked", false);
+						entity.getPersistentData().putBoolean("Fertilizeable", false);
 						if (entity instanceof LivingEntity _entity)
 							_entity.removeEffect(BenssharksModMobEffects.FERTILIZED.get());
 					});
 				}
 			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
-				if (!entity.getPersistentData().getBoolean("canBeMilked")) {
+				if (!entity.getPersistentData().getBoolean("Fertilizeable")) {
 					if (entity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
@@ -151,7 +160,7 @@ public class MegalodonRightClickedOnEntityProcedure {
 						ItemStack _stktoremove = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY);
 						_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 					}
-					entity.getPersistentData().putBoolean("canBeMilked", true);
+					entity.getPersistentData().putBoolean("Fertilizeable", true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.ravager.attack")), SoundSource.NEUTRAL, 1, 1);
@@ -177,18 +186,16 @@ public class MegalodonRightClickedOnEntityProcedure {
 					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 						_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.FERTILIZED.get(), 13000, 0, true, false));
 					BenssharksMod.queueServerWork(13000, () -> {
-						entity.getPersistentData().putBoolean("canBeMilked", false);
+						entity.getPersistentData().putBoolean("Fertilizeable", false);
 						if (entity instanceof LivingEntity _entity)
 							_entity.removeEffect(BenssharksModMobEffects.FERTILIZED.get());
 					});
 				}
 			}
-			if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.FISH_BUCKET.get()
-					|| (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
+			if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
 				if (sourceentity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(Component.literal("Feeding on Cooldown"), true);
-			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.FISH_BUCKET.get()
-					|| (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
+			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.EGG_CAPSULE.get()) {
 				if (sourceentity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(Component.literal("Feeding on Cooldown"), true);
 			}
