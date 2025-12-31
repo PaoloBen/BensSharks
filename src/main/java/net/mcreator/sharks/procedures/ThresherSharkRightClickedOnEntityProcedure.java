@@ -46,35 +46,28 @@ public class ThresherSharkRightClickedOnEntityProcedure {
 							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
 						}
 					}
-					entity.getPersistentData().putBoolean("canBeMilked", true);// 1. ADD 3 CHARGES
-					double currentCharges = sourceentity.getPersistentData().getDouble("ThresherRiptideCharges");
-					double newTotal = currentCharges + 3;
-					sourceentity.getPersistentData().putDouble("ThresherRiptideCharges", newTotal);
-					// 2. PLAY SOUND
-					if (world instanceof net.minecraft.world.level.Level _level) {
+					entity.getPersistentData().putBoolean("canBeMilked", true);// 1. ADD 3 CHARGES TO VARIABLE
+					{
+						double _setval = (sourceentity.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+								.orElse(new net.mcreator.sharks.network.BenssharksModVariables.PlayerVariables())).ThresherRiptideCharges + 3;
+						sourceentity.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.ThresherRiptideCharges = _setval;
+							capability.syncPlayerVariables(sourceentity);
+						});
+					}
+					// 2. VISUALS
+					if (world instanceof net.minecraft.server.level.ServerLevel _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, sourceentity.blockPosition(), net.minecraftforge.registries.ForgeRegistries.SOUND_EVENTS.getValue(new net.minecraft.resources.ResourceLocation("block.conduit.activate")),
 									net.minecraft.sounds.SoundSource.PLAYERS, 1, 1);
-						} else {
-							_level.playLocalSound(sourceentity.getX(), sourceentity.getY(), sourceentity.getZ(),
-									net.minecraftforge.registries.ForgeRegistries.SOUND_EVENTS.getValue(new net.minecraft.resources.ResourceLocation("block.conduit.activate")), net.minecraft.sounds.SoundSource.PLAYERS, 1, 1, false);
 						}
-					}
-					// 3. VISUALS: ABSORPTION EFFECT ON PLAYER
-					if (world instanceof net.minecraft.server.level.ServerLevel _level) {
 						for (int i = 0; i < 20; i++) {
-							// Calculate random position around the PLAYER
 							double offsetX = (Math.random() - 0.5) * 3.0;
-							double offsetY = (Math.random() - 0.5) * 3.0 + 1.0; // +1.0 to center on Player's chest
+							double offsetY = (Math.random() - 0.5) * 3.0 + 1.0;
 							double offsetZ = (Math.random() - 0.5) * 3.0;
-							// Spawn particles around SOURCEENTITY (Player) moving inwards
 							_level.sendParticles(net.minecraft.core.particles.ParticleTypes.NAUTILUS, sourceentity.getX() + offsetX, sourceentity.getY() + offsetY, sourceentity.getZ() + offsetZ, 0, -offsetX * 0.1, -offsetY * 0.1, -offsetZ * 0.1,
 									1.0);
 						}
-					}
-					// 4. SHOW STATUS MESSAGE
-					if (sourceentity instanceof net.minecraft.world.entity.player.Player _player && !_player.level().isClientSide()) {
-						_player.displayClientMessage(net.minecraft.network.chat.Component.literal("\u00A7bThresher Charges: " + (int) newTotal), true);
 					}
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
@@ -108,35 +101,28 @@ public class ThresherSharkRightClickedOnEntityProcedure {
 							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
 						}
 					}
-					entity.getPersistentData().putBoolean("canBeMilked", true);// 1. ADD 3 CHARGES
-					double currentCharges = sourceentity.getPersistentData().getDouble("ThresherRiptideCharges");
-					double newTotal = currentCharges + 3;
-					sourceentity.getPersistentData().putDouble("ThresherRiptideCharges", newTotal);
-					// 2. PLAY SOUND
-					if (world instanceof net.minecraft.world.level.Level _level) {
+					entity.getPersistentData().putBoolean("canBeMilked", true);// 1. ADD 3 CHARGES TO VARIABLE
+					{
+						double _setval = (sourceentity.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+								.orElse(new net.mcreator.sharks.network.BenssharksModVariables.PlayerVariables())).ThresherRiptideCharges + 3;
+						sourceentity.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.ThresherRiptideCharges = _setval;
+							capability.syncPlayerVariables(sourceentity);
+						});
+					}
+					// 2. VISUALS
+					if (world instanceof net.minecraft.server.level.ServerLevel _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, sourceentity.blockPosition(), net.minecraftforge.registries.ForgeRegistries.SOUND_EVENTS.getValue(new net.minecraft.resources.ResourceLocation("block.conduit.activate")),
 									net.minecraft.sounds.SoundSource.PLAYERS, 1, 1);
-						} else {
-							_level.playLocalSound(sourceentity.getX(), sourceentity.getY(), sourceentity.getZ(),
-									net.minecraftforge.registries.ForgeRegistries.SOUND_EVENTS.getValue(new net.minecraft.resources.ResourceLocation("block.conduit.activate")), net.minecraft.sounds.SoundSource.PLAYERS, 1, 1, false);
 						}
-					}
-					// 3. VISUALS: ABSORPTION EFFECT ON PLAYER
-					if (world instanceof net.minecraft.server.level.ServerLevel _level) {
 						for (int i = 0; i < 20; i++) {
-							// Calculate random position around the PLAYER
 							double offsetX = (Math.random() - 0.5) * 3.0;
-							double offsetY = (Math.random() - 0.5) * 3.0 + 1.0; // +1.0 to center on Player's chest
+							double offsetY = (Math.random() - 0.5) * 3.0 + 1.0;
 							double offsetZ = (Math.random() - 0.5) * 3.0;
-							// Spawn particles around SOURCEENTITY (Player) moving inwards
 							_level.sendParticles(net.minecraft.core.particles.ParticleTypes.NAUTILUS, sourceentity.getX() + offsetX, sourceentity.getY() + offsetY, sourceentity.getZ() + offsetZ, 0, -offsetX * 0.1, -offsetY * 0.1, -offsetZ * 0.1,
 									1.0);
 						}
-					}
-					// 4. SHOW STATUS MESSAGE
-					if (sourceentity instanceof net.minecraft.world.entity.player.Player _player && !_player.level().isClientSide()) {
-						_player.displayClientMessage(net.minecraft.network.chat.Component.literal("\u00A7bThresher Charges: " + (int) newTotal), true);
 					}
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {

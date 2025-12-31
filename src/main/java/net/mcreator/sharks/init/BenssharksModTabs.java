@@ -18,6 +18,7 @@ public class BenssharksModTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BenssharksMod.MODID);
 	public static final RegistryObject<CreativeModeTab> BENS_SHARKS = REGISTRY.register("bens_sharks",
 			() -> CreativeModeTab.builder().title(Component.translatable("item_group.benssharks.bens_sharks")).icon(() -> new ItemStack(BenssharksModBlocks.SHARK_PLUSH_BLOCK.get())).displayItems((parameters, tabData) -> {
+				tabData.accept(BenssharksModItems.ANGELSHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.AXODILE_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.BASKING_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.BARRACUDA_SPAWN_EGG.get());
@@ -36,10 +37,12 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.LEOPARD_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.MAKO_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.MEGALODON_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.MEGAMOUTH_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.NURSE_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.WHITETIP_SHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.PILOT_FISH_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.REMORA_SPAWN_EGG.get());
+				tabData.accept(BenssharksModItems.SARDINE_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SAWSHARK_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SEA_LION_SPAWN_EGG.get());
 				tabData.accept(BenssharksModItems.SHARK_MINION_SPAWN_EGG.get());
@@ -56,6 +59,7 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.LEOPARD_SHARK_BUCKET.get());
 				tabData.accept(BenssharksModItems.PILOT_FISH_BUCKET.get());
 				tabData.accept(BenssharksModItems.REMORA_BUCKET.get());
+				tabData.accept(BenssharksModItems.SARDINE_BUCKET.get());
 				tabData.accept(BenssharksModItems.SAWSHARK_BUCKET.get());
 				tabData.accept(BenssharksModItems.CELLOPHANE_NOODLES.get());
 				tabData.accept(BenssharksModItems.COOKIECUTTER_SHARK_LIVE.get());
@@ -79,6 +83,8 @@ public class BenssharksModTabs {
 				tabData.accept(BenssharksModItems.COOKED_BARRACUDA.get());
 				tabData.accept(BenssharksModItems.RAW_PILOT_FISH.get());
 				tabData.accept(BenssharksModItems.COOKED_PILOT_FISH.get());
+				tabData.accept(BenssharksModItems.RAW_SARDINE.get());
+				tabData.accept(BenssharksModItems.COOKED_SARDINE.get());
 				tabData.accept(BenssharksModItems.SHARK_FIN.get());
 				tabData.accept(BenssharksModBlocks.SHARK_PLUSH_BLOCK.get().asItem());
 				tabData.accept(BenssharksModItems.SHARK_TOOTH.get());

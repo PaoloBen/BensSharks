@@ -13,26 +13,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.tags.TagKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 
 import net.mcreator.sharks.init.BenssharksModMobEffects;
-import net.mcreator.sharks.entity.WhitetipSharkEntity;
-import net.mcreator.sharks.entity.TigerSharkEntity;
-import net.mcreator.sharks.entity.ThresherSharkEntity;
-import net.mcreator.sharks.entity.ShrakEntity;
-import net.mcreator.sharks.entity.SharkMinionEntity;
-import net.mcreator.sharks.entity.SawsharkEntity;
-import net.mcreator.sharks.entity.MegalodonEntity;
-import net.mcreator.sharks.entity.MakoSharkEntity;
-import net.mcreator.sharks.entity.LemonSharkEntity;
-import net.mcreator.sharks.entity.LandSharkEntity;
-import net.mcreator.sharks.entity.GreenlandSharkEntity;
-import net.mcreator.sharks.entity.GoblinSharkEntity;
-import net.mcreator.sharks.entity.CookiecutterSharkEntity;
-import net.mcreator.sharks.entity.BullSharkEntity;
-import net.mcreator.sharks.entity.BonnetheadSharkEntity;
-import net.mcreator.sharks.entity.BlueSharkEntity;
-import net.mcreator.sharks.entity.BlacktipReefSharkEntity;
 import net.mcreator.sharks.BenssharksMod;
 
 import java.util.List;
@@ -51,11 +36,7 @@ public class BleedingOnEffectActiveTickProcedure {
 				final Vec3 _center = new Vec3(x, y, z);
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(24 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).toList();
 				for (Entity entityiterator : _entfound) {
-					if ((entityiterator instanceof ShrakEntity || entityiterator instanceof TigerSharkEntity || entityiterator instanceof BlueSharkEntity || entityiterator instanceof MakoSharkEntity || entityiterator instanceof BonnetheadSharkEntity
-							|| entityiterator instanceof BlacktipReefSharkEntity || entityiterator instanceof BullSharkEntity || entityiterator instanceof MegalodonEntity || entityiterator instanceof LemonSharkEntity
-							|| entityiterator instanceof CookiecutterSharkEntity || entityiterator instanceof GreenlandSharkEntity || entityiterator instanceof WhitetipSharkEntity || entityiterator instanceof LandSharkEntity
-							|| entityiterator instanceof GoblinSharkEntity || entityiterator instanceof SawsharkEntity || entityiterator instanceof SharkMinionEntity || entityiterator instanceof ThresherSharkEntity)
-							&& !(entityiterator instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false) && !(entityiterator == entity)) {
+					if (entityiterator.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("benssharks:sharks"))) && !(entityiterator instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false) && !(entityiterator == entity)) {
 						if (!((entityiterator instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) instanceof LivingEntity)) {
 							if (entityiterator instanceof Mob _entity && entity instanceof LivingEntity _ent)
 								_entity.setTarget(_ent);

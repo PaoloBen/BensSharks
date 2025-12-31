@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "benssharks:raw_barracuda"
+    },
+    {
+      "item": "benssharks:raw_sardine"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "result": {
+    "item": "benssharks:fish_bucket",
+    "count": 1
+  }
+}

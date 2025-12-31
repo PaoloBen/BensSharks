@@ -17,15 +17,17 @@ import net.mcreator.sharks.client.renderer.TigerSharkRenderer;
 import net.mcreator.sharks.client.renderer.ThresherSharkRenderer;
 import net.mcreator.sharks.client.renderer.ThalassogerRenderer;
 import net.mcreator.sharks.client.renderer.ShrakRenderer;
+import net.mcreator.sharks.client.renderer.ShoalRenderer;
 import net.mcreator.sharks.client.renderer.SharkMinionRenderer;
 import net.mcreator.sharks.client.renderer.SeekingArrowRenderer;
 import net.mcreator.sharks.client.renderer.SeekerSharkProjectileRenderer;
 import net.mcreator.sharks.client.renderer.SeaLionRenderer;
 import net.mcreator.sharks.client.renderer.SawsharkRenderer;
-import net.mcreator.sharks.client.renderer.RollParticleRenderer;
+import net.mcreator.sharks.client.renderer.SardineRenderer;
 import net.mcreator.sharks.client.renderer.RemoraRenderer;
 import net.mcreator.sharks.client.renderer.PilotFishRenderer;
 import net.mcreator.sharks.client.renderer.NurseSharkRenderer;
+import net.mcreator.sharks.client.renderer.MegamouthSharkRenderer;
 import net.mcreator.sharks.client.renderer.MegalodonRenderer;
 import net.mcreator.sharks.client.renderer.MakoSharkRenderer;
 import net.mcreator.sharks.client.renderer.LeopardSharkRenderer;
@@ -43,6 +45,7 @@ import net.mcreator.sharks.client.renderer.BlacktipReefSharkRenderer;
 import net.mcreator.sharks.client.renderer.BaskingSharkRenderer;
 import net.mcreator.sharks.client.renderer.BarracudaRenderer;
 import net.mcreator.sharks.client.renderer.AxodileRenderer;
+import net.mcreator.sharks.client.renderer.AngelsharkRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class BenssharksModEntityRenderers {
@@ -70,7 +73,6 @@ public class BenssharksModEntityRenderers {
 		event.registerEntityRenderer(BenssharksModEntities.SEEKING_ARROW.get(), SeekingArrowRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.PILOT_FISH.get(), PilotFishRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.GREATER_AXODILE.get(), GreaterAxodileRenderer::new);
-		event.registerEntityRenderer(BenssharksModEntities.ROLL_PARTICLE.get(), RollParticleRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.GREENLAND_SHARK.get(), GreenlandSharkRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.WHITETIP_SHARK.get(), WhitetipSharkRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.BARRACUDA.get(), BarracudaRenderer::new);
@@ -81,5 +83,9 @@ public class BenssharksModEntityRenderers {
 		event.registerEntityRenderer(BenssharksModEntities.MUTATED_EGG_PROJECTILE.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.SEA_LION.get(), SeaLionRenderer::new);
 		event.registerEntityRenderer(BenssharksModEntities.THRESHER_SHARK.get(), ThresherSharkRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.SARDINE.get(), SardineRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.SHOAL.get(), ShoalRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.MEGAMOUTH_SHARK.get(), MegamouthSharkRenderer::new);
+		event.registerEntityRenderer(BenssharksModEntities.ANGELSHARK.get(), AngelsharkRenderer::new);
 	}
 }

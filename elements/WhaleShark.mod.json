@@ -99,7 +99,7 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.tropical_fish.ambient"
+      "value": ""
     },
     "hurtSound": {
       "value": "entity.elder_guardian.hurt_land"
@@ -108,22 +108,13 @@
       "value": "entity.tropical_fish.death"
     },
     "stepSound": {
-      "value": ""
+      "value": "intentionally_empty"
     },
     "raidCelebrationSound": {
       "value": ""
     },
-    "whenMobIsHurt": {
-      "name": "WhaleSharkEntityIsHurt"
-    },
     "onRightClickedOn": {
       "name": "WhaleSharkRightClickedOnEntity"
-    },
-    "onMobTickUpdate": {
-      "name": "WhaleSharkOnEntityTickUpdate"
-    },
-    "onInitialSpawn": {
-      "name": "WhaleSharkOnInitialEntitySpawn"
     },
     "hasAI": true,
     "aiBase": "(none)",

@@ -14,6 +14,9 @@ public class CookiecutterSharkOnEntityTickUpdateProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof CookiecutterSharkEntity && !entity.isInWaterOrBubble()) {
+			if (entity instanceof CookiecutterSharkEntity) {
+				((CookiecutterSharkEntity) entity).setAnimation("flop");
+			}
 			BenssharksMod.queueServerWork(600, () -> {
 				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.DRYOUT_EFFECT.get(), 600, 0, true, false));

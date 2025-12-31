@@ -48,13 +48,16 @@ public class EntityTextureVariationsProcedure {
 			if ((entity.getDisplayName().getString()).equals("Jeff")) {
 				if (entity instanceof LandSharkEntity animatable)
 					animatable.setTexture("jeff");
+			} else if ((entity.getDisplayName().getString()).equals("Tralalero Tralala")) {
+				if (entity instanceof LandSharkEntity animatable)
+					animatable.setTexture("tralalero");
 			} else {
 				if (entity instanceof LandSharkEntity animatable)
 					animatable.setTexture("land_shark");
 			}
 		}
 		if (entity instanceof SeaLionEntity) {
-			if (entity instanceof LivingEntity _livEnt9 && _livEnt9.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt11 && _livEnt11.isBaby()) {
 				if (entity instanceof SeaLionEntity animatable)
 					animatable.setTexture("sea_lion_baby");
 			} else {
@@ -72,7 +75,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof BonnetheadSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt18 && _livEnt18.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt20 && _livEnt20.isBaby()) {
 				if (entity instanceof BonnetheadSharkEntity animatable)
 					animatable.setTexture("bonnethead_baby");
 			} else {
@@ -81,7 +84,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof BlacktipReefSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt22 && _livEnt22.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt24 && _livEnt24.isBaby()) {
 				if (entity instanceof BlacktipReefSharkEntity animatable)
 					animatable.setTexture("blacktip_baby");
 			} else {
@@ -90,7 +93,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof NurseSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt26 && _livEnt26.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt28 && _livEnt28.isBaby()) {
 				if (entity instanceof NurseSharkEntity animatable)
 					animatable.setTexture("nurse_baby");
 			} else {
@@ -99,7 +102,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof LeopardSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt30 && _livEnt30.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt32 && _livEnt32.isBaby()) {
 				if (entity instanceof LeopardSharkEntity animatable)
 					animatable.setTexture("leopardshark_baby");
 			} else {
@@ -108,7 +111,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof LemonSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt34 && _livEnt34.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt36 && _livEnt36.isBaby()) {
 				if (entity instanceof LemonSharkEntity animatable)
 					animatable.setTexture("lemonshark_baby");
 			} else {
@@ -117,7 +120,7 @@ public class EntityTextureVariationsProcedure {
 			}
 		}
 		if (entity instanceof WhaleSharkEntity) {
-			if (entity instanceof LivingEntity _livEnt38 && _livEnt38.isBaby()) {
+			if (entity instanceof LivingEntity _livEnt40 && _livEnt40.isBaby()) {
 				if (entity instanceof WhaleSharkEntity animatable)
 					animatable.setTexture("whaleshark_baby");
 			} else {

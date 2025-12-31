@@ -1,4 +1,3 @@
-
 package net.mcreator.sharks.entity;
 
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -15,426 +14,764 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.npc.WanderingTrader;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.monster.warden.Warden;
-import net.minecraft.world.entity.monster.hoglin.Hoglin;
-import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.monster.Vindicator;
-import net.minecraft.world.entity.monster.Ravager;
-import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Guardian;
-import net.minecraft.world.entity.monster.Evoker;
-import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Drowned;
-import net.minecraft.world.entity.animal.sniffer.Sniffer;
-import net.minecraft.world.entity.animal.horse.ZombieHorse;
-import net.minecraft.world.entity.animal.horse.TraderLlama;
-import net.minecraft.world.entity.animal.horse.SkeletonHorse;
-import net.minecraft.world.entity.animal.horse.Mule;
-import net.minecraft.world.entity.animal.horse.Llama;
-import net.minecraft.world.entity.animal.horse.Horse;
-import net.minecraft.world.entity.animal.horse.Donkey;
-import net.minecraft.world.entity.animal.goat.Goat;
-import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.PolarBear;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Panda;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Dolphin;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity; 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.util.Mth;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 
-import net.mcreator.sharks.procedures.GreaterAxodileThisEntityKillsAnotherOneProcedure;
-import net.mcreator.sharks.procedures.GreaterAxodileOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.GreaterAxodileOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
 
-import javax.annotation.Nullable;
+import java.util.EnumSet;
+import net.minecraft.world.entity.animal.PolarBear;
 
 public class GreaterAxodileEntity extends PathfinderMob implements GeoEntity {
-	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.BOOLEAN);
-	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.STRING);
-	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.STRING);
-	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-	private boolean swinging;
-	private boolean lastloop;
-	private long lastSwing;
-	public String animationprocedure = "empty";
+    // --- SYNCED DATA ---
+    public static final EntityDataAccessor<Boolean> ROLLING = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.STRING);
+    public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(GreaterAxodileEntity.class, EntityDataSerializers.STRING);
 
-	public GreaterAxodileEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(BenssharksModEntities.GREATER_AXODILE.get(), world);
-	}
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    
+    // Logic Variables
+    private boolean swinging;
+    private long lastSwing;
+    public String animationprocedure = "empty"; 
+    
+    // State Flags
+    public boolean isBreaching = false;
 
-	public GreaterAxodileEntity(EntityType<GreaterAxodileEntity> type, Level world) {
-		super(type, world);
-		xpReward = 10;
-		setNoAi(false);
-		setMaxUpStep(1.6f);
-		this.setPathfindingMalus(BlockPathTypes.WATER, 0);
-		this.moveControl = new MoveControl(this) {
-			@Override
-			public void tick() {
-				if (GreaterAxodileEntity.this.isInWater())
-					GreaterAxodileEntity.this.setDeltaMovement(GreaterAxodileEntity.this.getDeltaMovement().add(0, 0.005, 0));
-				if (this.operation == MoveControl.Operation.MOVE_TO && !GreaterAxodileEntity.this.getNavigation().isDone()) {
-					double dx = this.wantedX - GreaterAxodileEntity.this.getX();
-					double dy = this.wantedY - GreaterAxodileEntity.this.getY();
-					double dz = this.wantedZ - GreaterAxodileEntity.this.getZ();
-					float f = (float) (Mth.atan2(dz, dx) * (double) (180 / Math.PI)) - 90;
-					float f1 = (float) (this.speedModifier * GreaterAxodileEntity.this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
-					GreaterAxodileEntity.this.setYRot(this.rotlerp(GreaterAxodileEntity.this.getYRot(), f, 10));
-					GreaterAxodileEntity.this.yBodyRot = GreaterAxodileEntity.this.getYRot();
-					GreaterAxodileEntity.this.yHeadRot = GreaterAxodileEntity.this.getYRot();
-					if (GreaterAxodileEntity.this.isInWater()) {
-						GreaterAxodileEntity.this.setSpeed((float) GreaterAxodileEntity.this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
-						float f2 = -(float) (Mth.atan2(dy, (float) Math.sqrt(dx * dx + dz * dz)) * (180 / Math.PI));
-						f2 = Mth.clamp(Mth.wrapDegrees(f2), -85, 85);
-						GreaterAxodileEntity.this.setXRot(this.rotlerp(GreaterAxodileEntity.this.getXRot(), f2, 5));
-						float f3 = Mth.cos(GreaterAxodileEntity.this.getXRot() * (float) (Math.PI / 180.0));
-						GreaterAxodileEntity.this.setZza(f3 * f1);
-						GreaterAxodileEntity.this.setYya((float) (f1 * dy));
-					} else {
-						GreaterAxodileEntity.this.setSpeed(f1 * 0.05F);
-					}
-				} else {
-					GreaterAxodileEntity.this.setSpeed(0);
-					GreaterAxodileEntity.this.setYya(0);
-					GreaterAxodileEntity.this.setZza(0);
-				}
-			}
-		};
-	}
+    // Custom Logic
+    private int stunTimer = 0;
+    public int rollCooldown = 0;
+    public int breachDelay = 0;
+    private boolean wasOnGround = false;
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(SHOOT, false);
-		this.entityData.define(ANIMATION, "undefined");
-		this.entityData.define(TEXTURE, "greateraxodile");
-	}
+    public GreaterAxodileEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(BenssharksModEntities.GREATER_AXODILE.get(), world);
+    }
 
-	public void setTexture(String texture) {
-		this.entityData.set(TEXTURE, texture);
-	}
+    public GreaterAxodileEntity(EntityType<GreaterAxodileEntity> type, Level world) {
+        super(type, world);
+        xpReward = 10;
+        setNoAi(false);
+        setMaxUpStep(1.0f); 
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0);
+        this.moveControl = new AxodileMoveControl(this);
+    }
 
-	public String getTexture() {
-		return this.entityData.get(TEXTURE);
-	}
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ROLLING, false);
+        this.entityData.define(STUNNED, false);
+        this.entityData.define(TEXTURE, "greateraxodile");
+        this.entityData.define(ANIMATION, "undefined");
+    }
 
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    // --- ACCESSORS ---
+    public String getTexture() { return this.entityData.get(TEXTURE); }
+    public void setTexture(String texture) { this.entityData.set(TEXTURE, texture); }
+    public static void init() {}
+    public String getSyncedAnimation() { return this.entityData.get(ANIMATION); }
+    public void setAnimation(String animation) { this.entityData.set(ANIMATION, animation); }
 
-	@Override
-	protected PathNavigation createNavigation(Level world) {
-		return new WaterBoundPathNavigation(this, world);
-	}
+    public void setRolling(boolean rolling) {
+        this.entityData.set(ROLLING, rolling);
+        this.refreshDimensions();
+    }
+    public boolean isRolling() { return this.entityData.get(ROLLING); }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
-			@Override
-			protected double getAttackReachSqr(LivingEntity entity) {
-				return 18.0625;
-			}
-		});
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, (float) 8));
-		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Turtle.class, (float) 16));
-		this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, ElderGuardian.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Warden.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, WhaleSharkEntity.class, true, true));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, BaskingSharkEntity.class, true, true));
-		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, GreenlandSharkEntity.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, ShrakEntity.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, TigerSharkEntity.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, Sniffer.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, Ravager.class, true, true));
-		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, IronGolem.class, true, true));
-		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, Hoglin.class, true, true));
-		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, PolarBear.class, true, true));
-		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Panda.class, true, true));
-		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, MakoSharkEntity.class, true, true));
-		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, BlueSharkEntity.class, true, true));
-		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, GoblinSharkEntity.class, true, true));
-		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, BullSharkEntity.class, true, true));
-		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, true, true));
-		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, true, true));
-		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
-		this.targetSelector.addGoal(30, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(31, new NearestAttackableTargetGoal(this, Camel.class, true, true));
-		this.targetSelector.addGoal(32, new NearestAttackableTargetGoal(this, Llama.class, true, true));
-		this.targetSelector.addGoal(33, new NearestAttackableTargetGoal(this, TraderLlama.class, true, true));
-		this.targetSelector.addGoal(34, new NearestAttackableTargetGoal(this, Horse.class, true, true));
-		this.targetSelector.addGoal(35, new NearestAttackableTargetGoal(this, ZombieHorse.class, true, true));
-		this.targetSelector.addGoal(36, new NearestAttackableTargetGoal(this, SkeletonHorse.class, true, true));
-		this.targetSelector.addGoal(37, new NearestAttackableTargetGoal(this, Donkey.class, true, true));
-		this.targetSelector.addGoal(38, new NearestAttackableTargetGoal(this, Mule.class, true, true));
-		this.targetSelector.addGoal(39, new NearestAttackableTargetGoal(this, Cow.class, true, true));
-		this.targetSelector.addGoal(40, new NearestAttackableTargetGoal(this, Sheep.class, true, true));
-		this.targetSelector.addGoal(41, new NearestAttackableTargetGoal(this, Goat.class, true, true));
-		this.targetSelector.addGoal(42, new NearestAttackableTargetGoal(this, Pig.class, true, true));
-		this.targetSelector.addGoal(43, new NearestAttackableTargetGoal(this, Zombie.class, true, true));
-		this.targetSelector.addGoal(44, new NearestAttackableTargetGoal(this, ZombieVillager.class, true, true));
-		this.targetSelector.addGoal(45, new NearestAttackableTargetGoal(this, Drowned.class, true, true));
-		this.targetSelector.addGoal(46, new NearestAttackableTargetGoal(this, WanderingTrader.class, true, true));
-		this.targetSelector.addGoal(47, new NearestAttackableTargetGoal(this, Pillager.class, true, true));
-		this.targetSelector.addGoal(48, new NearestAttackableTargetGoal(this, Evoker.class, true, true));
-		this.targetSelector.addGoal(49, new NearestAttackableTargetGoal(this, ThalassogerEntity.class, true, true));
-		this.targetSelector.addGoal(50, new NearestAttackableTargetGoal(this, Vindicator.class, true, true));
-		this.targetSelector.addGoal(51, new NearestAttackableTargetGoal(this, Witch.class, true, true));
-		this.targetSelector.addGoal(52, new NearestAttackableTargetGoal(this, Player.class, true, true));
-		this.targetSelector.addGoal(53, new NearestAttackableTargetGoal(this, Villager.class, true, true));
-		this.targetSelector.addGoal(54, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
-			@Override
-			public boolean canUse() {
-				double x = GreaterAxodileEntity.this.getX();
-				double y = GreaterAxodileEntity.this.getY();
-				double z = GreaterAxodileEntity.this.getZ();
-				Entity entity = GreaterAxodileEntity.this;
-				Level world = GreaterAxodileEntity.this.level();
-				return super.canUse() && AggressiveSharksProcedureProcedure.execute(world);
-			}
+    public void setStunned(boolean stunned) {
+        this.entityData.set(STUNNED, stunned);
+    }
+    public boolean isStunned() { return this.entityData.get(STUNNED); }
 
-			@Override
-			public boolean canContinueToUse() {
-				double x = GreaterAxodileEntity.this.getX();
-				double y = GreaterAxodileEntity.this.getY();
-				double z = GreaterAxodileEntity.this.getZ();
-				Entity entity = GreaterAxodileEntity.this;
-				Level world = GreaterAxodileEntity.this.level();
-				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
-			}
-		});
-	}
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.WATER;
-	}
+    // --- SOUNDS ---
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.TURTLE_AMBIENT_LAND; 
+    }
 
-	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.turtle.ambient_land"));
-	}
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.SHULKER_HURT; 
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.shulker.hurt_closed"));
-	}
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.SHULKER_DEATH;
+    }
 
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.shulker.death"));
-	}
+    // --- LOGIC ---
 
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof AbstractArrow)
-			return false;
-		return super.hurt(source, amount);
-	}
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        boolean flag = super.doHurtTarget(entity);
+        if (flag) {
+            this.swing(InteractionHand.MAIN_HAND);
+        }
+        return flag;
+    }
 
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		GreaterAxodileOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
-	}
+    // PASTE THE NEW HURT METHOD HERE
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        // In 1.20.1, we check tags to see if the damage is from a projectile
+        if (this.isRolling() && source.is(DamageTypeTags.IS_PROJECTILE)) {
+            this.playSound(SoundEvents.ARMOR_STAND_BREAK, 1.0F, 0.5F);
+            
+            if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.SMALL_FLAME, 
+                    this.getX(), this.getY() + 1, this.getZ(), 
+                    5, 0.2, 0.2, 0.2, 0.05);
+                
+                // --- RICOCHET LOGIC ---
+                // This physically bounces the projectile away if it exists
+                Entity projectile = source.getDirectEntity();
+                if (projectile != null) {
+                    Vec3 bounce = projectile.getDeltaMovement().scale(-0.5).add(0, 0.2, 0);
+                    projectile.setDeltaMovement(bounce);
+                }
+            }
+            return false; // Cancel damage
+        }
+        return super.hurt(source, amount);
+    }
 
-	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putString("Texture", this.getTexture());
-	}
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.updateSwingTime();
+    }
 
-	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		if (compound.contains("Texture"))
-			this.setTexture(compound.getString("Texture"));
-	}
+    @Override
+    public void tick() {
+        super.tick();
+        this.refreshDimensions();
+        
+        // Cooldowns
+        if (this.rollCooldown > 0) this.rollCooldown--;
+        if (this.breachDelay > 0) this.breachDelay--;
 
-	@Override
-	public void awardKillScore(Entity entity, int score, DamageSource damageSource) {
-		super.awardKillScore(entity, score, damageSource);
-		GreaterAxodileThisEntityKillsAnotherOneProcedure.execute(this);
-	}
+        // Stun Failsafe
+        if (this.stunTimer > 0) {
+            this.stunTimer--;
+        }
+        if (this.stunTimer <= 0 && this.isStunned()) {
+            this.setStunned(false);
+        }
 
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		GreaterAxodileOnEntityTickUpdateProcedure.execute(this.level(), this);
-		this.refreshDimensions();
-	}
+        // Rolling Rotation
+        if (this.isRolling()) {
+            this.yBodyRot = this.getYRot();
+            this.yHeadRot = this.getYRot();
+        }
 
-	@Override
-	public EntityDimensions getDimensions(Pose p_33597_) {
-		return super.getDimensions(p_33597_).scale((float) 3);
-	}
+        // --- LANDING SOUND LOGIC ---
+        boolean inWaterOrBubble = this.isInWater() || this.level().getBlockState(this.blockPosition()).is(Blocks.WATER);
+        
+        if (!this.wasOnGround && this.onGround() && !inWaterOrBubble) {
+            this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("benssharks", "landing_impact")), 2.0F, 1.0F);
+        }
+        this.wasOnGround = this.onGround();
 
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
-	}
+        // ICE BREAKING: STANDING
+        if (this.onGround()) {
+            BlockPos below = this.blockPosition().below();
+            breakIceInArea(below, 2, true); 
+        }
+    }
 
-	@Override
-	public boolean checkSpawnObstruction(LevelReader world) {
-		return world.isUnobstructed(this);
-	}
+    // --- ICE BREAKING HELPER ---
+    public void breakIceInArea(BlockPos center, int radius, boolean checkBelow) {
+        for (int x = -radius; x <= radius; x++) {
+            for (int z = -radius; z <= radius; z++) {
+                tryBreakIce(center.offset(x, 0, z), checkBelow);
+            }
+        }
+    }
 
-	@Override
-	public boolean isPushedByFluid() {
-		return false;
-	}
+    private void tryBreakIce(BlockPos pos, boolean checkBelow) {
+        BlockState state = this.level().getBlockState(pos);
+        if (state.is(Blocks.ICE) || state.is(Blocks.PACKED_ICE) || state.is(Blocks.BLUE_ICE) || state.is(Blocks.FROSTED_ICE)) {
+            
+            BlockState stateBelow = this.level().getBlockState(pos.below());
 
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		this.updateSwingTime();
-	}
+            if (checkBelow) {
+                if (!stateBelow.isAir() && !stateBelow.is(Blocks.WATER) && !stateBelow.is(Blocks.BUBBLE_COLUMN)) {
+                    return; 
+                }
+            }
 
-	public static void init() {
-	}
+            // Spawn Particles & Play Sound (Simulate break)
+            this.level().levelEvent(2001, pos, Block.getId(state));
 
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.9);
-		builder = builder.add(Attributes.MAX_HEALTH, 40);
-		builder = builder.add(Attributes.ARMOR, 40);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 18);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 5);
-		builder = builder.add(ForgeMod.SWIM_SPEED.get(), 0.9);
-		return builder;
-	}
+            // Replacement Logic
+            boolean surroundedByWater = stateBelow.is(Blocks.WATER);
+            if (!surroundedByWater) {
+                for (Direction dir : Direction.Plane.HORIZONTAL) {
+                    if (this.level().getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
+                        surroundedByWater = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Only replace with water if it is REGULAR ICE and surrounded by water
+            if (surroundedByWater && state.is(Blocks.ICE)) {
+                this.level().setBlock(pos, Blocks.WATER.defaultBlockState(), 3);
+            } else {
+                // Otherwise (Packed/Blue/Frosted), just destroy it (turn to air/drops)
+                this.level().destroyBlock(pos, true);
+            }
+        }
+    }
 
-	private PlayState movementPredicate(AnimationState event) {
-		if (this.animationprocedure.equals("empty")) {
-			if (this.isInWaterOrBubble()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
-			}
-			if (this.isVehicle() && event.isMoving()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("roll"));
-			}
-			return event.setAndContinue(RawAnimation.begin().thenLoop("idle_land"));
-		}
-		return PlayState.STOP;
-	}
+    // --- NAVIGATION ---
+    @Override
+    protected PathNavigation createNavigation(Level world) {
+        return new WaterBoundPathNavigation(this, world);
+    }
+    
+    static class AxodileMoveControl extends MoveControl {
+        private final GreaterAxodileEntity axodile;
 
-	private PlayState attackingPredicate(AnimationState event) {
-		double d1 = this.getX() - this.xOld;
-		double d0 = this.getZ() - this.zOld;
-		float velocity = (float) Math.sqrt(d1 * d1 + d0 * d0);
-		if (getAttackAnim(event.getPartialTick()) > 0f && !this.swinging) {
-			this.swinging = true;
-			this.lastSwing = level().getGameTime();
-		}
-		if (this.swinging && this.lastSwing + 7L <= level().getGameTime()) {
-			this.swinging = false;
-		}
-		if (this.swinging && event.getController().getAnimationState() == AnimationController.State.STOPPED) {
-			event.getController().forceAnimationReset();
-			return event.setAndContinue(RawAnimation.begin().thenPlay("bite"));
-		}
-		return PlayState.CONTINUE;
-	}
+        public AxodileMoveControl(GreaterAxodileEntity entity) {
+            super(entity);
+            this.axodile = entity;
+        }
 
-	String prevAnim = "empty";
+        @Override
+        public void tick() {
+            if (this.axodile.isStunned()) {
+                this.axodile.setSpeed(0);
+                return;
+            }
 
-	private PlayState procedurePredicate(AnimationState event) {
-		if (!animationprocedure.equals("empty") && event.getController().getAnimationState() == AnimationController.State.STOPPED || (!this.animationprocedure.equals(prevAnim) && !this.animationprocedure.equals("empty"))) {
-			if (!this.animationprocedure.equals(prevAnim))
-				event.getController().forceAnimationReset();
-			event.getController().setAnimation(RawAnimation.begin().thenPlay(this.animationprocedure));
-			if (event.getController().getAnimationState() == AnimationController.State.STOPPED) {
-				this.animationprocedure = "empty";
-				event.getController().forceAnimationReset();
-			}
-		} else if (animationprocedure.equals("empty")) {
-			prevAnim = "empty";
-			return PlayState.STOP;
-		}
-		prevAnim = this.animationprocedure;
-		return PlayState.CONTINUE;
-	}
+            if (this.axodile.isInWater()) {
+                this.axodile.setDeltaMovement(this.axodile.getDeltaMovement().add(0, 0.005, 0));
+                
+                if (this.operation == Operation.MOVE_TO && !this.axodile.getNavigation().isDone()) {
+                    double dx = this.wantedX - this.axodile.getX();
+                    double dy = this.wantedY - this.axodile.getY();
+                    double dz = this.wantedZ - this.axodile.getZ();
+                    
+                    double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                    if (dist < 0.1) {
+                        this.axodile.setZza(0.0F);
+                        return;
+                    }
+                    
+                    float speed = (float) (this.speedModifier * this.axodile.getAttributeValue(Attributes.MOVEMENT_SPEED)) * 2.5F;
+                    this.axodile.setSpeed(speed);
+                    
+                    float targetYRot = (float) (Mth.atan2(dz, dx) * (180F / Math.PI)) - 90.0F;
+                    this.axodile.setYRot(this.rotlerp(this.axodile.getYRot(), targetYRot, 10.0F));
+                    this.axodile.yBodyRot = this.axodile.getYRot();
+                    this.axodile.yHeadRot = this.axodile.getYRot();
 
-	@Override
-	protected void tickDeath() {
-		++this.deathTime;
-		if (this.deathTime == 20) {
-			this.remove(GreaterAxodileEntity.RemovalReason.KILLED);
-			this.dropExperience();
-		}
-	}
+                    float targetXRot = (float) -(Mth.atan2(dy, Math.sqrt(dx * dx + dz * dz)) * (180F / Math.PI));
+                    this.axodile.setXRot(this.rotlerp(this.axodile.getXRot(), targetXRot, 10.0F));
+                    
+                    float f3 = Mth.cos(this.axodile.getXRot() * ((float)Math.PI / 180F));
+                    float f4 = Mth.sin(this.axodile.getXRot() * ((float)Math.PI / 180F));
+                    
+                    this.axodile.setZza(f3 * speed);
+                    this.axodile.setYya(-f4 * speed);
+                } else {
+                    this.axodile.setSpeed(0);
+                    this.axodile.setYya(0);
+                    this.axodile.setZza(0);
+                }
+            } else {
+                if (this.operation == Operation.MOVE_TO && !this.axodile.getNavigation().isDone()) {
+                    if (this.axodile.isRolling()) return;
 
-	public String getSyncedAnimation() {
-		return this.entityData.get(ANIMATION);
-	}
+                    double dx = this.wantedX - this.axodile.getX();
+                    double dy = this.wantedY - this.axodile.getY();
+                    double dz = this.wantedZ - this.axodile.getZ();
+                    double distSqr = dx * dx + dy * dy + dz * dz;
 
-	public void setAnimation(String animation) {
-		this.entityData.set(ANIMATION, animation);
-	}
+                    if (distSqr < 2.5E-7D) {
+                        this.mob.setZza(0.0F);
+                        return;
+                    }
 
-	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar data) {
-		data.add(new AnimationController<>(this, "movement", 4, this::movementPredicate));
-		data.add(new AnimationController<>(this, "attacking", 4, this::attackingPredicate));
-		data.add(new AnimationController<>(this, "procedure", 4, this::procedurePredicate));
-	}
+                    float targetYaw = (float) (Mth.atan2(dz, dx) * (double) (180F / (float) Math.PI)) - 90.0F;
+                    this.axodile.setYRot(this.rotlerp(this.axodile.getYRot(), targetYaw, 30.0F)); 
+                    this.axodile.setYHeadRot(this.axodile.getYRot());
+                    this.axodile.setYBodyRot(this.axodile.getYRot());
 
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.cache;
-	}
+                    float speed = (float) (this.speedModifier * this.axodile.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    this.axodile.setSpeed(speed);
+                    
+                    double d4 = this.wantedY - this.axodile.getY();
+                    if (d4 > 0.0D && distSqr < 4.0D) { 
+                        this.axodile.getJumpControl().jump();
+                    }
+                } else {
+                    this.axodile.setZza(0.0F);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new AxodileStunGoal(this));
+        this.goalSelector.addGoal(1, new AxodileBreachGoal(this));
+        this.goalSelector.addGoal(2, new AxodileRollGoal(this));
+        
+        // Attack Range 1.3F
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false) {
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return (double)(this.mob.getBbWidth() * 1.3F * this.mob.getBbWidth() * 1.3F + entity.getBbWidth());
+            }
+        });
+        
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1, 40));
+        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        // Modded Targets
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, GreenlandSharkEntity.class, false, false));
+		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, ShrakEntity.class, false, false));
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, TigerSharkEntity.class, false, false));
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, MakoSharkEntity.class, false, false));
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, ThresherSharkEntity.class, false, false));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, BlueSharkEntity.class, false, false));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, GoblinSharkEntity.class, false, false));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, BullSharkEntity.class, false, false));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, false, false));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, false, false));
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, false, false));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, false, false));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, SawsharkEntity.class, false, false));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, false, false));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, false, false));
+		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, SeaLionEntity.class, false, false));
+		
+		// Vanilla Targets
+		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, PolarBear.class, true, false));
+		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Player.class, true, false));
+		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, Drowned.class, true, false));
+		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Zombie.class, true, false));
+		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Skeleton.class, true, false));
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.25);
+        builder = builder.add(ForgeMod.SWIM_SPEED.get(), 1.5); 
+        builder = builder.add(Attributes.MAX_HEALTH, 50);
+        builder = builder.add(Attributes.ARMOR, 17);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.8);
+        return builder;
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return super.getDimensions(pose).scale(3.0f);
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() { return true; }
+    @Override
+    public MobType getMobType() { return MobType.WATER; }
+
+    // --- ANIMATIONS ---
+
+    private PlayState movementPredicate(AnimationState event) {
+        if (this.isStunned()) {
+            return event.setAndContinue(RawAnimation.begin().thenLoop("idle_land"));
+        }
+        if (this.isRolling()) {
+            return event.setAndContinue(RawAnimation.begin().thenLoop("roll"));
+        }
+        if (!this.isInWater() && !this.onGround() && this.getDeltaMovement().y > 0.2) {
+             return event.setAndContinue(RawAnimation.begin().thenPlay("waterjump"));
+        }
+        if (!this.isInWater() && !this.onGround() && this.getDeltaMovement().y < -0.2) {
+             return event.setAndContinue(RawAnimation.begin().thenLoop("fall"));
+        }
+        if (this.isInWater()) {
+             if (this.getDeltaMovement().y > 0.1) {
+                 return event.setAndContinue(RawAnimation.begin().thenLoop("swimup"));
+             }
+             return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
+        }
+        if (event.isMoving()) {
+             return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
+        }
+        return event.setAndContinue(RawAnimation.begin().thenLoop("idle_land"));
+    }
+
+    private PlayState attackingPredicate(AnimationState event) {
+        double d1 = this.getX() - this.xOld;
+        double d0 = this.getZ() - this.zOld;
+        float velocity = (float) Math.sqrt(d1 * d1 + d0 * d0);
+        if (getAttackAnim(event.getPartialTick()) > 0f && !this.swinging) {
+            this.swinging = true;
+            this.lastSwing = level().getGameTime();
+        }
+        if (this.swinging && this.lastSwing + 7L <= level().getGameTime()) {
+            this.swinging = false;
+        }
+        if (this.swinging && event.getController().getAnimationState() == AnimationController.State.STOPPED) {
+            event.getController().forceAnimationReset();
+            return event.setAndContinue(RawAnimation.begin().thenPlay("bite"));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    String prevAnim = "empty";
+
+    private PlayState procedurePredicate(AnimationState event) {
+        String anim = this.getSyncedAnimation();
+        if (!anim.equals("undefined") && !anim.equals("empty")) {
+            return event.setAndContinue(RawAnimation.begin().thenPlay(anim));
+        }
+        return PlayState.STOP;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+        data.add(new AnimationController<>(this, "movement", 4, this::movementPredicate));
+        data.add(new AnimationController<>(this, "attacking", 4, this::attackingPredicate));
+        data.add(new AnimationController<>(this, "procedure", 4, this::procedurePredicate));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    // --- CUSTOM GOALS ---
+
+    static class AxodileStunGoal extends Goal {
+        private final GreaterAxodileEntity mob;
+        private int attackTimer;
+
+        public AxodileStunGoal(GreaterAxodileEntity mob) {
+            this.mob = mob;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
+        }
+        @Override
+        public boolean canUse() { return this.mob.isStunned(); }
+        
+        @Override
+        public void start() {
+            this.mob.getNavigation().stop();
+            this.attackTimer = 0;
+        }
+
+        @Override
+        public void tick() {
+            LivingEntity target = this.mob.getTarget();
+            if (target != null) {
+                this.mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+                if (this.mob.distanceToSqr(target) < 6.0D) {
+                    if (this.attackTimer <= 0) {
+                        this.mob.doHurtTarget(target);
+                        this.attackTimer = 20; 
+                    } else {
+                        this.attackTimer--;
+                    }
+                }
+            }
+        }
+    }
+
+    static class AxodileRollGoal extends Goal {
+        private final GreaterAxodileEntity mob;
+        private int rollDuration;
+        private int attackCooldown = 0;
+        private int soundTimer = 0;
+        private int warmupTimer = 0; 
+        private Vec3 rollDirection;
+
+        public AxodileRollGoal(GreaterAxodileEntity mob) {
+            this.mob = mob;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity target = this.mob.getTarget();
+            return target != null && !this.mob.isStunned() && !this.mob.isInWater() && this.mob.onGround() && this.mob.distanceToSqr(target) > 16.0D && this.mob.rollCooldown == 0;
+        }
+
+        @Override
+        public void start() {
+            this.mob.setRolling(true);
+            this.rollDuration = 0;
+            this.attackCooldown = 0;
+            this.warmupTimer = 3; 
+            
+            LivingEntity target = this.mob.getTarget();
+            if (target != null) {
+                Vec3 dir = target.position().subtract(this.mob.position()).normalize();
+                this.rollDirection = new Vec3(dir.x * 0.8, 0, dir.z * 0.8);
+                
+                float yRot = (float) (Mth.atan2(dir.z, dir.x) * (180F / Math.PI)) - 90.0F;
+                this.mob.setYRot(yRot);
+                this.mob.setYBodyRot(yRot); 
+                this.mob.setYHeadRot(yRot);
+            }
+        }
+
+        @Override
+        public void stop() {
+            this.mob.setRolling(false);
+            this.mob.setXRot(0f);
+            
+            this.mob.rollCooldown = 100; // 5s Cooldown
+            
+            if (this.mob.isInWater()) {
+                this.mob.breachDelay = 60; // 3s Breach Delay
+            }
+        }
+
+        @Override
+        public void tick() {
+            if (this.warmupTimer > 0) {
+                this.warmupTimer--;
+                return; 
+            }
+
+            this.rollDuration++;
+            
+            if (this.rollDirection != null) {
+                this.mob.setDeltaMovement(this.rollDirection.x, this.mob.getDeltaMovement().y, this.rollDirection.z);
+                
+                float yRot = (float) (Mth.atan2(this.rollDirection.z, this.rollDirection.x) * (180F / Math.PI)) - 90.0F;
+                this.mob.setYRot(yRot);
+                
+                // ICE BREAKING: ROLLING (Force Break)
+                Vec3 normDir = this.rollDirection.normalize();
+                for (int i = 1; i <= 3; i++) {
+                    BlockPos frontPos = BlockPos.containing(
+                        this.mob.getX() + normDir.x * i, 
+                        this.mob.getY() + 0.5, 
+                        this.mob.getZ() + normDir.z * i
+                    );
+                    this.mob.breakIceInArea(frontPos, 2, false); 
+                }
+            }
+
+            this.soundTimer++;
+            if (this.soundTimer >= 4) { 
+                this.mob.playSound(SoundEvents.DEEPSLATE_STEP, 2.5f, 0.1f); 
+                this.soundTimer = 0;
+            }
+
+            if (this.mob.horizontalCollision) {
+                triggerStun();
+                return;
+            }
+
+            if (this.attackCooldown > 0) {
+                this.attackCooldown--;
+            } else {
+                for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, this.mob.getBoundingBox().inflate(0.5))) {
+                    if (entity != this.mob) {
+                        
+                        if (entity instanceof Player player && player.isBlocking()) {
+                            this.mob.playSound(SoundEvents.SHIELD_BREAK, 1.0F, 1.0F);
+                            
+                            ItemStack shield = player.getUseItem();
+                            InteractionHand hand = player.getUsedItemHand();
+                            
+                            if (shield.isDamageableItem()) {
+                                shield.hurtAndBreak(40, player, (p) -> p.broadcastBreakEvent(hand));
+                            }
+                            
+                            player.disableShield(true);
+                            
+                        } else {
+                            this.mob.doHurtTarget(entity);
+                            this.mob.swing(InteractionHand.MAIN_HAND);
+                        }
+                        
+                        double dx = entity.getX() - this.mob.getX();
+                        double dz = entity.getZ() - this.mob.getZ();
+                        double dist = Math.sqrt(dx * dx + dz * dz);
+                        if (dist > 0.01) { dx /= dist; dz /= dist; } else { dx = 1.0; dz = 0.0; }
+                        
+                        double strength = 1.5;
+                        entity.setDeltaMovement(dx * strength, 0.4, dz * strength);
+                        entity.hasImpulse = true;
+                        
+                        if (this.mob.level() instanceof ServerLevel serverLevel) {
+                             serverLevel.sendParticles(ParticleTypes.CRIT, entity.getX(), entity.getY() + entity.getBbHeight() / 2.0, entity.getZ(), 15, 0.5, 0.5, 0.5, 0.1);
+                        }
+
+                        triggerStun();
+                        return; 
+                    }
+                }
+            }
+        }
+
+        private void triggerStun() {
+            this.mob.setStunned(true);
+            this.mob.stunTimer = 60; 
+            this.mob.setRolling(false);
+            Vec3 currentMotion = this.mob.getDeltaMovement();
+            this.mob.setDeltaMovement(currentMotion.scale(-0.5)); 
+            this.mob.playSound(SoundEvents.WITHER_BREAK_BLOCK, 1.0f, 1.0f);
+        }
+        
+        @Override
+        public boolean canContinueToUse() {
+            return !this.mob.isStunned() && !this.mob.isInWater() && this.rollDuration < 100;
+        }
+    }
+
+    static class AxodileBreachGoal extends Goal {
+        private final GreaterAxodileEntity mob;
+        private int cooldown = 0;
+        private int breachTimer = 0; // Failsafe timer
+
+        public AxodileBreachGoal(GreaterAxodileEntity mob) {
+            this.mob = mob;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (cooldown > 0) {
+                cooldown--;
+                return false;
+            }
+            if (this.mob.breachDelay > 0) return false;
+            
+            // Ensure there is actually water above to breach through
+            if (!this.mob.level().getBlockState(this.mob.blockPosition().above(1)).is(Blocks.WATER)) {
+                return false; 
+            }
+            if (!this.mob.level().getBlockState(this.mob.blockPosition().above()).is(Blocks.WATER)) {
+                return false;
+            }
+            
+            LivingEntity target = this.mob.getTarget();
+            return this.mob.isInWater() && target != null && target.getY() > this.mob.getY() + 1.5;
+        }
+
+        @Override
+        public void start() {
+            LivingEntity target = this.mob.getTarget();
+            if (target == null) return;
+
+            this.mob.isBreaching = true;
+            this.breachTimer = 0; // Reset timer
+
+            Vec3 dir = target.position().subtract(this.mob.position()).normalize();
+            // Strength 1.0H, 1.2V
+            Vec3 jumpForce = new Vec3(dir.x * 1.0, 1.2, dir.z * 1.0);
+            this.mob.setDeltaMovement(jumpForce);
+            
+            float yRot = (float) (Mth.atan2(dir.z, dir.x) * (180F / Math.PI)) - 90.0F;
+            this.mob.setYRot(yRot);
+            this.mob.setYBodyRot(yRot);
+            
+            this.mob.getNavigation().stop(); 
+            this.cooldown = 80;
+        }
+        
+        @Override
+        public void stop() {
+            this.mob.isBreaching = false;
+        }
+        
+        @Override
+        public boolean canContinueToUse() {
+            // FAILSAFE 1: Timeout (Prevent infinite loop if stuck)
+            if (this.breachTimer > 40) return false; 
+
+            // FAILSAFE 2: Vertical Collision (Hit a ceiling/block)
+            // If we hit something vertically and we aren't on the ground, we hit our head.
+            if (this.mob.verticalCollision && !this.mob.onGround()) return false;
+
+            // FAILSAFE 3: Lost Momentum Underwater
+            // If we are still in water but lost upward velocity, abort.
+            if (this.mob.isInWater() && this.mob.getDeltaMovement().y < 0.05) return false;
+
+            return this.mob.isBreaching && !this.mob.onGround() && (this.mob.isInWater() || this.mob.getDeltaMovement().y > -0.5);
+        }
+
+        @Override
+        public void tick() {
+            this.breachTimer++; // Increment timer
+
+            Vec3 motion = this.mob.getDeltaMovement();
+            if (motion.horizontalDistanceSqr() > 0.01) {
+                float yRot = (float) (Mth.atan2(motion.z, motion.x) * (180F / Math.PI)) - 90.0F;
+                this.mob.setYRot(yRot);
+                this.mob.setYBodyRot(yRot);
+                this.mob.setYHeadRot(yRot);
+            }
+            
+            BlockPos headPos = this.mob.blockPosition().above();
+            this.mob.breakIceInArea(headPos, 2, false);
+            this.mob.breakIceInArea(headPos.above(), 2, false);
+        }
+    }
 }

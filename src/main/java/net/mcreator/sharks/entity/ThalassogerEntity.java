@@ -1,4 +1,3 @@
-
 package net.mcreator.sharks.entity;
 
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -53,6 +51,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.mcreator.sharks.procedures.ThalassogerThisEntityKillsAnotherOneProcedure;
 import net.mcreator.sharks.procedures.ThalassogerOnEntityTickUpdateProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
+// Added import to access config
+import net.mcreator.sharks.configuration.SpawnsConfiguration;
 
 import javax.annotation.Nullable;
 
@@ -124,6 +124,7 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 		});
 	}
 
+	// --- MODIFIED RANGED ATTACK GOAL (SKELETON AI) ---
 	public class RangedAttackGoal extends Goal {
 		private final Mob mob;
 		private final RangedAttackMob rangedAttackMob;
@@ -136,6 +137,11 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 		private final int attackIntervalMax;
 		private final float attackRadius;
 		private final float attackRadiusSqr;
+
+		// New Strafe Variables
+		private boolean strafingClockwise;
+		private boolean strafingBackwards;
+		private int strafingTime = -1;
 
 		public RangedAttackGoal(RangedAttackMob p_25768_, double p_25769_, int p_25770_, float p_25771_) {
 			this(p_25768_, p_25769_, p_25770_, p_25770_, p_25771_);
@@ -174,6 +180,7 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 			this.target = null;
 			this.seeTime = 0;
 			this.attackTime = -1;
+			this.strafingTime = -1;
 			((ThalassogerEntity) rangedAttackMob).entityData.set(SHOOT, false);
 		}
 
@@ -189,12 +196,39 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 			} else {
 				this.seeTime = 0;
 			}
-			if (!(d0 > (double) this.attackRadiusSqr) && this.seeTime >= 5) {
+
+			// --- STRAFING LOGIC ---
+			if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 5) {
 				this.mob.getNavigation().stop();
+				++this.strafingTime;
 			} else {
 				this.mob.getNavigation().moveTo(this.target, this.speedModifier);
+				this.strafingTime = -1;
 			}
-			this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+
+			if (this.strafingTime >= 20) {
+				if ((double)this.mob.getRandom().nextFloat() < 0.3D) {
+					this.strafingClockwise = !this.strafingClockwise;
+				}
+				if ((double)this.mob.getRandom().nextFloat() < 0.3D) {
+					this.strafingBackwards = !this.strafingBackwards;
+				}
+				this.strafingTime = 0;
+			}
+
+			if (this.strafingTime > -1) {
+				if (d0 > (double)(this.attackRadiusSqr * 0.75F)) {
+					this.strafingBackwards = false;
+				} else if (d0 < (double)(this.attackRadiusSqr * 0.25F)) {
+					this.strafingBackwards = true;
+				}
+				this.mob.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
+				this.mob.lookAt(this.target, 30.0F, 30.0F);
+			} else {
+				this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+			}
+			// --- END STRAFING LOGIC ---
+
 			if (--this.attackTime == 0) {
 				if (!flag) {
 					((ThalassogerEntity) rangedAttackMob).entityData.set(SHOOT, false);
@@ -211,6 +245,7 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 				((ThalassogerEntity) rangedAttackMob).entityData.set(SHOOT, false);
 		}
 	}
+	// --- END MODIFIED GOAL ---
 
 	@Override
 	public MobType getMobType() {
@@ -280,7 +315,10 @@ public class ThalassogerEntity extends Raider implements RangedAttackMob, GeoEnt
 	}
 
 	public static void init() {
-		Raid.RaiderType.create("thalassoger", BenssharksModEntities.THALASSOGER.get(), new int[]{0, 0, 0, 1, 1, 2, 3, 3});
+		// Only register to Raid if enabled in config
+		if (SpawnsConfiguration.THALASSOGER_RAID_ENABLED.get()) {
+			Raid.RaiderType.create("thalassoger", BenssharksModEntities.THALASSOGER.get(), new int[]{0, 0, 0, 1, 1, 2, 3, 3});
+		}
 	}
 
 	@Override

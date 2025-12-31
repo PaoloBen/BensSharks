@@ -22,16 +22,18 @@ import net.mcreator.sharks.entity.TigerSharkEntity;
 import net.mcreator.sharks.entity.ThresherSharkEntity;
 import net.mcreator.sharks.entity.ThalassogerEntity;
 import net.mcreator.sharks.entity.ShrakEntity;
+import net.mcreator.sharks.entity.ShoalEntity;
 import net.mcreator.sharks.entity.SharkMinionEntity;
 import net.mcreator.sharks.entity.SeekingArrowEntity;
 import net.mcreator.sharks.entity.SeekerSharkProjectileEntity;
 import net.mcreator.sharks.entity.SeaLionEntity;
 import net.mcreator.sharks.entity.SawsharkEntity;
-import net.mcreator.sharks.entity.RollParticleEntity;
+import net.mcreator.sharks.entity.SardineEntity;
 import net.mcreator.sharks.entity.RemoraEntity;
 import net.mcreator.sharks.entity.PilotFishEntity;
 import net.mcreator.sharks.entity.NurseSharkEntity;
 import net.mcreator.sharks.entity.MutatedEggProjectileEntity;
+import net.mcreator.sharks.entity.MegamouthSharkEntity;
 import net.mcreator.sharks.entity.MegalodonEntity;
 import net.mcreator.sharks.entity.MakoSharkEntity;
 import net.mcreator.sharks.entity.LeopardSharkEntity;
@@ -49,6 +51,7 @@ import net.mcreator.sharks.entity.BlacktipReefSharkEntity;
 import net.mcreator.sharks.entity.BaskingSharkEntity;
 import net.mcreator.sharks.entity.BarracudaEntity;
 import net.mcreator.sharks.entity.AxodileEntity;
+import net.mcreator.sharks.entity.AngelsharkEntity;
 import net.mcreator.sharks.BenssharksMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -139,8 +142,6 @@ public class BenssharksModEntities {
 			EntityType.Builder.<GreaterAxodileEntity>of(GreaterAxodileEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(GreaterAxodileEntity::new)
 
 					.sized(1f, 0.6f));
-	public static final RegistryObject<EntityType<RollParticleEntity>> ROLL_PARTICLE = register("roll_particle", EntityType.Builder.<RollParticleEntity>of(RollParticleEntity::new, MobCategory.MISC).setShouldReceiveVelocityUpdates(true)
-			.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(RollParticleEntity::new).fireImmune().sized(0.1f, 0.1f));
 	public static final RegistryObject<EntityType<GreenlandSharkEntity>> GREENLAND_SHARK = register("greenland_shark",
 			EntityType.Builder.<GreenlandSharkEntity>of(GreenlandSharkEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(GreenlandSharkEntity::new)
 
@@ -179,6 +180,22 @@ public class BenssharksModEntities {
 			EntityType.Builder.<ThresherSharkEntity>of(ThresherSharkEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ThresherSharkEntity::new)
 
 					.sized(1.35f, 0.875f));
+	public static final RegistryObject<EntityType<SardineEntity>> SARDINE = register("sardine",
+			EntityType.Builder.<SardineEntity>of(SardineEntity::new, MobCategory.WATER_AMBIENT).setShouldReceiveVelocityUpdates(true).setTrackingRange(32).setUpdateInterval(3).setCustomClientFactory(SardineEntity::new)
+
+					.sized(0.5f, 0.3f));
+	public static final RegistryObject<EntityType<ShoalEntity>> SHOAL = register("shoal",
+			EntityType.Builder.<ShoalEntity>of(ShoalEntity::new, MobCategory.WATER_AMBIENT).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ShoalEntity::new)
+
+					.sized(0.1f, 0.1f));
+	public static final RegistryObject<EntityType<MegamouthSharkEntity>> MEGAMOUTH_SHARK = register("megamouth_shark",
+			EntityType.Builder.<MegamouthSharkEntity>of(MegamouthSharkEntity::new, MobCategory.WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MegamouthSharkEntity::new)
+
+					.sized(1f, 0.5f));
+	public static final RegistryObject<EntityType<AngelsharkEntity>> ANGELSHARK = register("angelshark",
+			EntityType.Builder.<AngelsharkEntity>of(AngelsharkEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(AngelsharkEntity::new)
+
+					.sized(1.15f, 0.7f));
 
 	// Start of user code block custom entities
 	// End of user code block custom entities
@@ -209,7 +226,6 @@ public class BenssharksModEntities {
 			WhaleSharkEntity.init();
 			PilotFishEntity.init();
 			GreaterAxodileEntity.init();
-			RollParticleEntity.init();
 			GreenlandSharkEntity.init();
 			WhitetipSharkEntity.init();
 			BarracudaEntity.init();
@@ -219,6 +235,10 @@ public class BenssharksModEntities {
 			SharkMinionEntity.init();
 			SeaLionEntity.init();
 			ThresherSharkEntity.init();
+			SardineEntity.init();
+			ShoalEntity.init();
+			MegamouthSharkEntity.init();
+			AngelsharkEntity.init();
 		});
 	}
 
@@ -244,7 +264,6 @@ public class BenssharksModEntities {
 		event.put(WHALE_SHARK.get(), WhaleSharkEntity.createAttributes().build());
 		event.put(PILOT_FISH.get(), PilotFishEntity.createAttributes().build());
 		event.put(GREATER_AXODILE.get(), GreaterAxodileEntity.createAttributes().build());
-		event.put(ROLL_PARTICLE.get(), RollParticleEntity.createAttributes().build());
 		event.put(GREENLAND_SHARK.get(), GreenlandSharkEntity.createAttributes().build());
 		event.put(WHITETIP_SHARK.get(), WhitetipSharkEntity.createAttributes().build());
 		event.put(BARRACUDA.get(), BarracudaEntity.createAttributes().build());
@@ -254,5 +273,9 @@ public class BenssharksModEntities {
 		event.put(SHARK_MINION.get(), SharkMinionEntity.createAttributes().build());
 		event.put(SEA_LION.get(), SeaLionEntity.createAttributes().build());
 		event.put(THRESHER_SHARK.get(), ThresherSharkEntity.createAttributes().build());
+		event.put(SARDINE.get(), SardineEntity.createAttributes().build());
+		event.put(SHOAL.get(), ShoalEntity.createAttributes().build());
+		event.put(MEGAMOUTH_SHARK.get(), MegamouthSharkEntity.createAttributes().build());
+		event.put(ANGELSHARK.get(), AngelsharkEntity.createAttributes().build());
 	}
 }

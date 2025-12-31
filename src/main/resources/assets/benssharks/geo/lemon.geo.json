@@ -28,9 +28,24 @@
 				{
 					"name": "Torso3",
 					"parent": "Torso2",
-					"pivot": [0, 4, -10],
+					"pivot": [0, 4, -10]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso3",
+					"pivot": [0, 0, 1],
 					"cubes": [
 						{"origin": [-4.5, 0, -10], "size": [9, 9, 20], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "DorsalFin",
+					"parent": "Belly",
+					"pivot": [0, 9, 5],
+					"rotation": [-2.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, -7, 13.3], "size": [1, 9, 5], "pivot": [0, 18, 36], "rotation": [-30, 0, 0], "uv": [58, 56]},
+						{"origin": [0, -7, 13.3], "size": [1, 9, 5], "pivot": [1, 18, 36], "rotation": [-30, 0, 0], "uv": [58, 56]}
 					]
 				},
 				{
@@ -94,16 +109,6 @@
 					]
 				},
 				{
-					"name": "Dorsal",
-					"parent": "Torso2",
-					"pivot": [0, 9, 5],
-					"rotation": [-2.5, 0, 0],
-					"cubes": [
-						{"origin": [-1, -7, 13.3], "size": [1, 9, 5], "pivot": [0, 18, 36], "rotation": [-30, 0, 0], "uv": [58, 56]},
-						{"origin": [0, -7, 13.3], "size": [1, 9, 5], "pivot": [1, 18, 36], "rotation": [-30, 0, 0], "uv": [58, 56]}
-					]
-				},
-				{
 					"name": "RightFin",
 					"parent": "Torso2",
 					"pivot": [-5, 1, -2],
@@ -151,8 +156,13 @@
 					"pivot": [0, 2, -19]
 				},
 				{
-					"name": "jaw",
+					"name": "jaw3",
 					"parent": "Head",
+					"pivot": [0, 2, -10]
+				},
+				{
+					"name": "jaw",
+					"parent": "jaw3",
 					"pivot": [0, 2, -10],
 					"cubes": [
 						{"origin": [-2.5, 1, -16], "size": [5, 2, 9], "uv": [36, 45]},
@@ -193,8 +203,13 @@
 					"pivot": [0, 2, -19]
 				},
 				{
-					"name": "jaw2",
+					"name": "jaw4",
 					"parent": "Head2",
+					"pivot": [0, 2, -10]
+				},
+				{
+					"name": "jaw2",
+					"parent": "jaw4",
 					"pivot": [0, 2, -10],
 					"cubes": [
 						{"origin": [-2.5, 1, -16], "size": [5, 2, 9], "uv": [84, 107]},

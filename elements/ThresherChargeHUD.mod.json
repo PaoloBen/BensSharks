@@ -1,0 +1,266 @@
+{
+  "_fv": 73,
+  "_type": "overlay",
+  "definition": {
+    "priority": "NORMAL",
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon5.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge1"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 315,
+          "y": 224,
+          "locked": true
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon3.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge9"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 400,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge8"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 390,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge7"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 380,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge6"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 370,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge5"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 360,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge4"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 350,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge3"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 340,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge2"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 330,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "thresher_charge_icon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ConditionShowCharge1"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 320,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_return_overcharge_text5",
+          "text": {
+            "fixedValue": "",
+            "name": "ReturnOverchargeText"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "ConditionShowOvercharge"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 365,
+          "y": 223,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_return_overcharge_text6",
+          "text": {
+            "fixedValue": "",
+            "name": "ReturnOverchargeText"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "ConditionShowOvercharge"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 365,
+          "y": 225,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_return_overcharge_text7",
+          "text": {
+            "fixedValue": "",
+            "name": "ReturnOverchargeText"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "ConditionShowOvercharge"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 364,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_return_overcharge_text8",
+          "text": {
+            "fixedValue": "",
+            "name": "ReturnOverchargeText"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "ConditionShowOvercharge"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 366,
+          "y": 224,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_return_overcharge_text",
+          "text": {
+            "fixedValue": "",
+            "name": "ReturnOverchargeText"
+          },
+          "color": {
+            "value": -13988097,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "ConditionShowOvercharge"
+          },
+          "anchorPoint": "BOTTOM_CENTER",
+          "x": 365,
+          "y": 224,
+          "locked": false
+        }
+      }
+    ],
+    "baseTexture": "",
+    "overlayTarget": "Ingame",
+    "displayCondition": {
+      "name": "ConditionShowCharge1"
+    },
+    "gridSettings": {
+      "sx": 11,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

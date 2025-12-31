@@ -19,7 +19,7 @@
       "name": "ShrakOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "shrak_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -47,16 +47,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/ShrakEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -131,7 +122,7 @@
       "name": "NurseShark",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "nurse_shark",
       "metadata": {
         "files": [
@@ -146,22 +137,13 @@
       "name": "NurseSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "nurse_shark_on_entity_tick_update",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/NurseSharkOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -372,7 +354,7 @@
       "name": "RemoraBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "remora_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -414,7 +396,7 @@
       "name": "RemoraRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "remora_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -485,62 +467,20 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "NurseSharkOnInitialEntitySpawn",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "nurse_shark_on_initial_entity_spawn",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -553,28 +493,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -839,22 +758,13 @@
       "name": "TigerSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "tiger_shark_on_entity_tick_update",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/TigerSharkOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -906,28 +816,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -1264,7 +1153,7 @@
       "name": "Axodile",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "axodile",
       "metadata": {
         "files": [
@@ -1332,28 +1221,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/AxodileOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -1716,7 +1584,7 @@
       "name": "BlueSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "blue_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -1783,28 +1651,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -1832,23 +1679,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BonnetheadSharkEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "BonnetheadSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "bonnethead_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -1888,28 +1726,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -1953,7 +1770,7 @@
       "name": "MakoShark",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "mako_shark",
       "metadata": {
         "files": [
@@ -2007,22 +1824,13 @@
       "name": "MakoSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "mako_shark_on_entity_tick_update",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/MakoSharkOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -2035,28 +1843,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -2111,7 +1898,7 @@
       "name": "BonnetheadBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "bonnethead_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -2153,7 +1940,7 @@
       "name": "BonnetheadSharkRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "bonnethead_shark_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -2255,28 +2042,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -2318,7 +2084,7 @@
       "name": "CookiecutterSharkBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "cookiecutter_shark_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -2360,7 +2126,7 @@
       "name": "CookiecutterSharkRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "cookiecutter_shark_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -2544,16 +2310,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BlacktipReefSharkEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -2566,28 +2323,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BlacktipReefSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -2626,7 +2362,7 @@
       "name": "BlacktipReefSharkBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "blacktip_reef_shark_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -2668,7 +2404,7 @@
       "name": "BlacktipReefSharkRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "blacktip_reef_shark_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -2720,7 +2456,7 @@
       "name": "BlacktipReefSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "blacktip_reef_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -2949,35 +2685,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "BaskingSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "basking_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -3015,28 +2730,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/FollowIfTamedProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -3115,7 +2809,7 @@
       "name": "BullSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "bull_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -3165,28 +2859,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -3388,35 +3061,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "MegalodonOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "megalodon_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -3836,7 +3488,7 @@
       "name": "LemonSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "lemon_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -3925,28 +3577,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/LemonSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4071,35 +3702,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/EatDroppedItemProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "Thalassoger",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "thalassoger",
       "metadata": {
         "files": [
@@ -4182,17 +3792,13 @@
       "name": "SeekerSharkHoming",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "seeker_shark_homing",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SeekerSharkHomingProcedure.java"
         ],
         "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
           {
             "name": "immediatesourceentity",
             "type": "entity"
@@ -4226,20 +3832,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SeekerSharkProjectileProjectileHitsLivingEntityProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "immediatesourceentity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4252,16 +3845,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SeekerSharkProjectileProjectileHitsBlockProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "immediatesourceentity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4287,20 +3871,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SeekerSharkProjectileProjectileHitsPlayerProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "immediatesourceentity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4411,28 +3982,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/EatKrillProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4476,7 +4026,7 @@
       "name": "WhaleSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "whale_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -4504,28 +4054,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/WhaleSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -4710,10 +4239,6 @@
           "src/main/java/net/mcreator/sharks/procedures/SeekingArrowWhileProjectileFlyingTickProcedure.java"
         ],
         "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
           {
             "name": "immediatesourceentity",
             "type": "entity"
@@ -4945,35 +4470,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/PilotFishOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "PilotFishRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "pilot_fish_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -5038,7 +4542,7 @@
       "name": "PilotFishBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "pilot_fish_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -5247,7 +4751,7 @@
       "name": "GreaterAxodile",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "greater_axodile",
       "metadata": {
         "files": [
@@ -5268,53 +4772,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GreaterAxodileOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      }
-    },
-    {
-      "name": "RollParticle",
-      "type": "animatedentity",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "roll_particle",
-      "metadata": {
-        "files": [
-          "src/main/java/net/mcreator/sharks/entity/RollParticleEntity.java",
-          "src/main/java/net/mcreator/sharks/client/renderer/RollParticleRenderer.java",
-          "src/main/java/net/mcreator/sharks/entity/model/RollParticleModel.java",
-          "src/main/java/net/mcreator/sharks/entity/layer/RollParticleLayer.java"
-        ]
-      }
-    },
-    {
-      "name": "RollParticleOnEntityTickUpdate",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "roll_particle_on_entity_tick_update",
-      "metadata": {
-        "files": [
-          "src/main/java/net/mcreator/sharks/procedures/RollParticleOnEntityTickUpdateProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -5327,12 +4785,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GreaterAxodileThisEntityKillsAnotherOneProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "sourceentity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -5345,28 +4798,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GreaterAxodileOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -5517,7 +4949,7 @@
       "name": "GreenlandSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "greenland_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -5567,28 +4999,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -5649,7 +5060,7 @@
       "name": "WhitetipSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "whitetip_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -5699,28 +5110,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -5916,7 +5306,7 @@
       "name": "Spetum",
       "type": "animateditem",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "spetum",
       "metadata": {
         "files": [
@@ -6012,28 +5402,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BarracudaOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6093,28 +5462,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/MakoSprintProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6205,28 +5553,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/BarracudaEatProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6270,7 +5597,7 @@
       "name": "BarracudaBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "barracuda_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -6312,7 +5639,7 @@
       "name": "BarracudaRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "barracuda_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -6484,7 +5811,7 @@
       "name": "LeopardShark",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "leopard_shark",
       "metadata": {
         "files": [
@@ -6505,23 +5832,14 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/LeopardSharkEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "LeopardSharkRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "leopard_shark_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -6560,22 +5878,13 @@
       "name": "LeopardSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "leopard_shark_on_entity_tick_update",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/LeopardSharkOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6588,28 +5897,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/LeopardSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6629,7 +5917,7 @@
       "name": "LeopardSharkBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "leopard_shark_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -6686,7 +5974,7 @@
       "name": "GoblinSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "goblin_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -6714,16 +6002,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GoblinSharkEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6736,28 +6015,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GoblinSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6790,7 +6048,7 @@
       "name": "LeopardSharkBucketTamedRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "leopard_shark_bucket_tamed_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -6832,7 +6090,7 @@
       "name": "Sawshark",
       "type": "animatedentity",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "sawshark",
       "metadata": {
         "files": [
@@ -6853,38 +6111,20 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SawsharkEntityIsHurtProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
       "name": "SawsharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "sawshark_on_entity_tick_update",
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SawsharkOnEntityTickUpdateProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6897,28 +6137,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SawsharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6944,7 +6163,7 @@
       "name": "SawsharkRightClickedOnEntity",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "sawshark_right_clicked_on_entity",
       "metadata": {
         "files": [
@@ -6996,7 +6215,7 @@
       "name": "SawsharkBucketRightclickedOnBlock",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "sawshark_bucket_rightclicked_on_block",
       "metadata": {
         "files": [
@@ -7504,28 +6723,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7537,19 +6735,6 @@
       "metadata": {
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure.java"
-        ],
-        "dependencies": []
-      }
-    },
-    {
-      "name": "GreatWhiteSprint",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "great_white_sprint",
-      "metadata": {
-        "files": [
-          "src/main/java/net/mcreator/sharks/procedures/GreatWhiteSprintProcedure.java"
         ],
         "dependencies": []
       }
@@ -7611,28 +6796,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7775,7 +6939,7 @@
       "name": "ThresherSharkOnEntityTickUpdate",
       "type": "procedure",
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "thresher_shark_on_entity_tick_update",
       "metadata": {
         "files": [
@@ -7785,10 +6949,6 @@
           {
             "name": "entity",
             "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
           }
         ]
       }
@@ -7803,28 +6963,7 @@
         "files": [
           "src/main/java/net/mcreator/sharks/procedures/ThresherSharkOnInitialEntitySpawnProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -7878,6 +7017,1196 @@
         ],
         "dependencies": []
       }
+    },
+    {
+      "name": "ConditionShowCharge1",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_1",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge1Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge2",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_2",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge2Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge3",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_3",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge3Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ThresherChargeHUD",
+      "type": "overlay",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "thresher_charge_hud",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/client/screens/ThresherChargeHUDOverlay.java"
+        ]
+      }
+    },
+    {
+      "name": "ReturnOverchargeText",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "return_overcharge_text",
+      "metadata": {
+        "return_type": "string",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ReturnOverchargeTextProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowOvercharge",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_overcharge",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowOverchargeProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge4",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_4",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge4Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ],
+        "return_type": "logic"
+      }
+    },
+    {
+      "name": "ConditionShowCharge5",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_5",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge5Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge6",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_6",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge6Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge7",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_7",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge7Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge8",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_8",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge8Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConditionShowCharge9",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "condition_show_charge_9",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ConditionShowCharge9Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemoraTargets",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "remora_targets",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/RemoraTargetsProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "PilotFishTargets",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pilot_fish_targets",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/PilotFishTargetsProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "Seeking",
+      "type": "enchantment",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "seeking",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/enchantment/SeekingEnchantment.java"
+        ]
+      }
+    },
+    {
+      "name": "SeekingHandler",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "seeking_handler",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SeekingHandlerProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SeekingArrowGhostLogic",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "seeking_arrow_ghost_logic",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SeekingArrowGhostLogicProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "PilotFishEntityDies",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pilot_fish_entity_dies",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/PilotFishEntityDiesProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BarracudaEntityDies",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "barracuda_entity_dies",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/BarracudaEntityDiesProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpetumSpecialInformation",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "spetum_special_information",
+      "metadata": {
+        "return_type": "string",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SpetumSpecialInformationProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "GlobalFishFlopper",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "global_fish_flopper",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/GlobalFishFlopperProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "RemoraLoot",
+      "type": "loottable",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "remora_loot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/loot_tables/entities/remora.json"
+        ]
+      }
+    },
+    {
+      "name": "SmoothTurns",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurnsProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "ThresherSharkDryout",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "thresher_shark_dryout",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ThresherSharkDryoutProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "GlobalExternalAggro",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "global_external_aggro",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/GlobalExternalAggroProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SmoothTurns2",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns_2",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurns2Procedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SmoothTurns3",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns_3",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurns3Procedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "EatDroppedItems",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "eat_dropped_items",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/EatDroppedItemsProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "EatingKrill",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "eating_krill",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/EatingKrillProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "BarracudaEating",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "barracuda_eating",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/BarracudaEatingProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "GlobalFrenzyFlopper",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "global_frenzy_flopper",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/GlobalFrenzyFlopperProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "AxodileSlideStopper",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "axodile_slide_stopper",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/AxodileSlideStopperProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "GlobalSharkFlopping",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "global_shark_flopping",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/GlobalSharkFloppingProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "Sardine",
+      "type": "animatedentity",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sardine",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/benssharks/models/item/sardine_spawn_egg.json",
+          "src/main/java/net/mcreator/sharks/entity/model/SardineModel.java",
+          "src/main/java/net/mcreator/sharks/entity/SardineEntity.java",
+          "src/main/java/net/mcreator/sharks/client/renderer/SardineRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "SardineOnEntityTickUpdate",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sardine_on_entity_tick_update",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SardineOnEntityTickUpdateProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SardineSprint",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sardine_sprint",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SardineSprintProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SmoothTurns4",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns_4",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurns4Procedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "RawSardine",
+      "type": "item",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "raw_sardine",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/benssharks/models/item/raw_sardine.json",
+          "src/main/java/net/mcreator/sharks/item/RawSardineItem.java"
+        ]
+      }
+    },
+    {
+      "name": "SardineDrops",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "sardine_drops",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SardineDropsProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CookedSardine",
+      "type": "item",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "cooked_sardine",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/item/CookedSardineItem.java",
+          "src/main/resources/assets/benssharks/models/item/cooked_sardine.json"
+        ]
+      }
+    },
+    {
+      "name": "CookingSardine",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "cooking_sardine",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/cooking_sardine.json"
+        ]
+      }
+    },
+    {
+      "name": "SmeltingSardine",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "smelting_sardine",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/smelting_sardine.json"
+        ]
+      }
+    },
+    {
+      "name": "CampingSardine",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "camping_sardine",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/camping_sardine.json"
+        ]
+      }
+    },
+    {
+      "name": "FishBucketRecipe10",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "fish_bucket_recipe_10",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/fish_bucket_recipe_10.json"
+        ]
+      }
+    },
+    {
+      "name": "FishBucketRecipe11",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "fish_bucket_recipe_11",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/fish_bucket_recipe_11.json"
+        ]
+      }
+    },
+    {
+      "name": "FishBucketRecipe12",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "fish_bucket_recipe_12",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/fish_bucket_recipe_12.json"
+        ]
+      }
+    },
+    {
+      "name": "FishBucketRecipe13",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "fish_bucket_recipe_13",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/fish_bucket_recipe_13.json"
+        ]
+      }
+    },
+    {
+      "name": "FishBucketRecipe14",
+      "type": "recipe",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "fish_bucket_recipe_14",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/recipes/fish_bucket_recipe_14.json"
+        ]
+      }
+    },
+    {
+      "name": "SardineBucket",
+      "type": "item",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "sardine_bucket",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/benssharks/models/item/sardine_bucket.json",
+          "src/main/java/net/mcreator/sharks/item/SardineBucketItem.java"
+        ]
+      }
+    },
+    {
+      "name": "SardineBucketRightclickedOnBlock",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sardine_bucket_rightclicked_on_block",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SardineBucketRightclickedOnBlockProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "direction",
+            "type": "direction"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SardineRightClickedOnEntity",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sardine_right_clicked_on_entity",
+      "metadata": {
+        "return_type": "actionresulttype",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SardineRightClickedOnEntityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SharkBucketHelper",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "shark_bucket_helper",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SharkBucketHelperProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SeaLionSprint",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sea_lion_sprint",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SeaLionSprintProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SeaLionEatDroppedItems",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "sea_lion_eat_dropped_items",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "VanillaMobsAggroToFish",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "vanilla_mobs_aggro_to_fish",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/VanillaMobsAggroToFishProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "DolphinEatSardine",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "dolphin_eat_sardine",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/DolphinEatSardineProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SardineLoot",
+      "type": "loottable",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "sardine_loot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/benssharks/loot_tables/entities/sardine.json"
+        ]
+      }
+    },
+    {
+      "name": "SmoothTurns5",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns_5",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurns5Procedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "Shoal",
+      "type": "animatedentity",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "shoal",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/entity/ShoalEntity.java",
+          "src/main/java/net/mcreator/sharks/entity/model/ShoalModel.java",
+          "src/main/java/net/mcreator/sharks/client/renderer/ShoalRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "ShoalOnInitialEntitySpawn",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "shoal_on_initial_entity_spawn",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/ShoalOnInitialEntitySpawnProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MakoBreaching",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mako_breaching",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/MakoBreachingProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "MegamouthShark",
+      "type": "animatedentity",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "megamouth_shark",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/entity/model/MegamouthSharkModel.java",
+          "src/main/java/net/mcreator/sharks/entity/MegamouthSharkEntity.java",
+          "src/main/java/net/mcreator/sharks/client/renderer/MegamouthSharkRenderer.java",
+          "src/main/resources/assets/benssharks/models/item/megamouth_shark_spawn_egg.json"
+        ]
+      }
+    },
+    {
+      "name": "MegamouthSharkRightClickedOnEntity",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "megamouth_shark_right_clicked_on_entity",
+      "metadata": {
+        "return_type": "actionresulttype",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/MegamouthSharkRightClickedOnEntityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MegamouthSharkOnEntityTickUpdate",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "megamouth_shark_on_entity_tick_update",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/MegamouthSharkOnEntityTickUpdateProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "Vortex",
+      "type": "potioneffect",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "vortex",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/potion/VortexMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "MegaMouth",
+      "type": "potioneffect",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mega_mouth",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/potion/MegaMouthMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "CookiecutterSharkNaturalEntitySpawningCondition",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "cookiecutter_shark_natural_entity_spawning_condition",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/CookiecutterSharkNaturalEntitySpawningConditionProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Angelshark",
+      "type": "animatedentity",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "angelshark",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/client/renderer/AngelsharkRenderer.java",
+          "src/main/resources/assets/benssharks/models/item/angelshark_spawn_egg.json",
+          "src/main/java/net/mcreator/sharks/entity/AngelsharkEntity.java",
+          "src/main/java/net/mcreator/sharks/entity/model/AngelsharkModel.java"
+        ]
+      }
+    },
+    {
+      "name": "AngelsharkOnEntityTickUpdate",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "angelshark_on_entity_tick_update",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/AngelsharkOnEntityTickUpdateProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AngelsharkRightClickedOnEntity",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "angelshark_right_clicked_on_entity",
+      "metadata": {
+        "return_type": "actionresulttype",
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/AngelsharkRightClickedOnEntityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmoothTurns6",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "smooth_turns_6",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/SmoothTurns6Procedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "AngelsharkEat",
+      "type": "procedure",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "angelshark_eat",
+      "metadata": {
+        "files": [
+          "src/main/java/net/mcreator/sharks/procedures/AngelsharkEatProcedure.java"
+        ],
+        "dependencies": []
+      }
     }
   ],
   "variable_elements": [
@@ -7910,6 +8239,12 @@
       "type": "logic",
       "scope": "map",
       "value": "false"
+    },
+    {
+      "name": "ThresherRiptideCharges",
+      "type": "number",
+      "scope": "player_lifetime",
+      "value": "0"
     }
   ],
   "sound_elements": [
@@ -7969,6 +8304,22 @@
       ],
       "category": "neutral",
       "subtitle": "Sea Lion cries."
+    },
+    {
+      "name": "shoot",
+      "files": [
+        "shoot"
+      ],
+      "category": "neutral",
+      "subtitle": "Shwoosh"
+    },
+    {
+      "name": "landing_impact",
+      "files": [
+        "landingimpact"
+      ],
+      "category": "neutral",
+      "subtitle": "boosh"
     }
   ],
   "tag_elements": {
@@ -7979,12 +8330,52 @@
     "ENTITIES:minecraft:raiders": [
       "~CUSTOM:Thalassoger"
     ],
+    "ENTITIES:minecraft:fishes": [
+      "#benssharks:sharks",
+      "CUSTOM:Barracuda",
+      "CUSTOM:Krill",
+      "CUSTOM:PilotFish",
+      "CUSTOM:Remora",
+      "CUSTOM:Sardine"
+    ],
+    "ENTITIES:benssharks:filterfeeders": [
+      "CUSTOM:BaskingShark",
+      "CUSTOM:MegamouthShark",
+      "CUSTOM:WhaleShark"
+    ],
     "ITEMS:minecraft:swords": [
       "~CUSTOM:SharkToothClub"
+    ],
+    "ENTITIES:benssharks:predators": [
+      "CUSTOM:BlacktipReefShark",
+      "CUSTOM:BlueShark",
+      "CUSTOM:BonnetheadShark",
+      "CUSTOM:BullShark",
+      "CUSTOM:CookiecutterShark",
+      "CUSTOM:GoblinShark",
+      "CUSTOM:GreenlandShark",
+      "CUSTOM:LandShark",
+      "CUSTOM:LemonShark",
+      "CUSTOM:LeopardShark",
+      "CUSTOM:MakoShark",
+      "CUSTOM:Megalodon",
+      "CUSTOM:NurseShark",
+      "CUSTOM:Sawshark",
+      "CUSTOM:SharkMinion",
+      "CUSTOM:Shrak",
+      "CUSTOM:ThresherShark",
+      "CUSTOM:TigerShark",
+      "CUSTOM:WhitetipShark",
+      "CUSTOM:Angelshark"
+    ],
+    "ENTITIES:benssharks:sharks": [
+      "#benssharks:filterfeeders",
+      "#benssharks:predators"
     ]
   },
   "tab_element_order": {
     "CUSTOM:BensSharks": [
+      "Angelshark",
       "Axodile",
       "BaskingShark",
       "Barracuda",
@@ -8003,10 +8394,12 @@
       "LeopardShark",
       "MakoShark",
       "Megalodon",
+      "MegamouthShark",
       "NurseShark",
       "WhitetipShark",
       "PilotFish",
       "Remora",
+      "Sardine",
       "Sawshark",
       "SeaLion",
       "SharkMinion",
@@ -8023,6 +8416,7 @@
       "LeopardSharkBucket",
       "PilotFishBucket",
       "RemoraBucket",
+      "SardineBucket",
       "SawsharkBucket",
       "CellophaneNoodles",
       "CookiecutterSharkLive",
@@ -8043,6 +8437,8 @@
       "CookedBarracuda",
       "RawPilotFish",
       "CookedPilotFish",
+      "RawSardine",
+      "CookedSardine",
       "SharkFin",
       "SharkPlushie",
       "SharkTooth",
@@ -8058,8 +8454,8 @@
   "language_map": {
     "en_us": {
       "item.minecraft.splash_potion.effect.jaws_potion": "Splash Potion of Jaws",
-      "item.benssharks.land_shark_spawn_egg": "Land Shark Spawn Egg",
       "item.benssharks.bull_shark_spawn_egg": "Bull Shark Spawn Egg",
+      "item.benssharks.land_shark_spawn_egg": "Land Shark Spawn Egg",
       "item.benssharks.starch": "Starch",
       "item.sharks.dent": "Dent",
       "entity.benssharks.krill": "Krill",
@@ -8068,7 +8464,9 @@
       "entity.sharks.nurse_shark": "Nurse Shark",
       "item.benssharks.bonnethead_shark_spawn_egg": "Bonnethead Shark Spawn Egg",
       "item.benssharks.barracuda_spawn_egg": "Barracuda Spawn Egg",
+      "entity.benssharks.shoal": "Shoal",
       "item.benssharks.raw_barracuda": "Raw Barracuda",
+      "item.benssharks.shoal_spawn_egg": "Shoal Spawn Egg",
       "item.benssharks.cooked_pilot_fish": "Cooked Pilot Fish",
       "advancements.pleasure.descr": "Feed a Tiger Shark.",
       "block.benssharks.land_mine": "Land Mine",
@@ -8079,6 +8477,7 @@
       "item.benssharks.leopard_shark_spawn_egg": "Leopard Shark Spawn Egg",
       "block.sharks.land_mine": "Land Mine",
       "item.benssharks.shark_tooth": "Shark Tooth",
+      "subtitles.shoot": "Shwoosh",
       "enchantment.benssharks.serrated": "Serrated",
       "item.benssharks.krill_bucket": "Krill Bucket",
       "item.benssharks.sawshark_spawn_egg": "Sawshark Spawn Egg",
@@ -8090,7 +8489,7 @@
       "entity.benssharks.cookiecutter_shark": "Cookiecutter Shark",
       "entity.shraks.shark": "Shark",
       "entity.benssharks.barracuda": "Barracuda",
-      "item.benssharks.roll_particle_spawn_egg": "rolling Spawn Egg",
+      "enchantment.benssharks.seeking": "Seeking",
       "item.sharks.remora_spawn_egg": "Remora Spawn Egg",
       "item.benssharks.whale_shark_spawn_egg": "Whale Shark Spawn Egg",
       "effect.benssharks.detached": "Detached",
@@ -8116,12 +8515,15 @@
       "entity.benssharks.thresher_shark": "Thresher Shark",
       "entity.benssharks.goblin_shark": "Goblin Shark",
       "item.benssharks.mako_shark_spawn_egg": "Mako Shark Spawn Egg",
+      "item.benssharks.sardine_spawn_egg": "Sardine Spawn Egg",
       "item.benssharks.jagged_leggings": "Jagged Leggings",
       "entity.benssharks.bull_shark": "Bull Shark",
       "item.sharks.shark_fin": "Shark Fin",
       "entity.benssharks.mako_shark": "Mako Shark",
+      "entity.benssharks.megamouth_shark": "Megamouth Shark",
       "item.benssharks.krill_item": "Krill",
       "item.benssharks.krill_noodles": "Krill Noodles",
+      "item.benssharks.sardine_bucket": "Bucket of Sardine",
       "subtitles.sea_lion.hurt": "Sea Lion growls.",
       "item.benssharks.leopard_shark_bucket_tamed": "Bucket of Leopard Shark",
       "entity.benssharks.greenland_shark": "Greenland Shark",
@@ -8164,8 +8566,10 @@
       "block.benssharks.shark_plush_block": "Shark Plush",
       "item.sharks.sucker": "Sucker",
       "item.benssharks.spetum": "Spetum",
+      "item.benssharks.angelshark_spawn_egg": "Angelshark Spawn Egg",
       "item.benssharks.dent": "Dent",
       "entity.benssharks.sawshark": "Sawshark",
+      "effect.benssharks.mega_mouth": "Mega Mouth",
       "advancements.shark_aid.title": "\"You\u0027re gonna need a bigger boat.\"",
       "subtitles.bite": "Chomp!",
       "entity.benssharks.blacktip_reef_shark": "Blacktip Reef Shark",
@@ -8174,14 +8578,19 @@
       "entity.benssharks.bonnethead_shark": "Bonnethead Shark",
       "item.benssharks.cellophane_noodles": "Cellophane Noodles",
       "entity.benssharks.lemon_shark": "Lemon Shark",
+      "subtitles.landing_impact": "boosh",
       "item.benssharks.basking_shark_spawn_egg": "Basking Shark Spawn Egg",
       "item.benssharks.lemon_shark_spawn_egg": "Lemon Shark Spawn Egg",
       "subtitles.shark.chomp": "Chomp!",
       "subtitles.squeak": "Squeak!",
+      "entity.benssharks.angelshark": "Angelshark",
       "entity.sharks.remora": "Remora",
+      "entity.benssharks.sardine": "Sardine",
       "item.sharks.remora_bucket": "Bucket of Remora",
+      "effect.benssharks.vortex": "Vortex",
       "item.minecraft.lingering_potion.effect.frenzy_potion": "Lingering Potion of Frenzy",
       "item.benssharks.cookiecutter_shark_spawn_egg": "Cookiecutter Shark Spawn Egg",
+      "item.benssharks.cooked_sardine": "Cooked Sardine",
       "item.benssharks.shark_fin": "Shark Fin",
       "item.benssharks.fish_broth": "Fish Broth",
       "item.benssharks.greater_axodile_spawn_egg": "Greater Axodile Spawn Egg",
@@ -8199,11 +8608,13 @@
       "item.benssharks.barracuda_bucket": "Bucket of Barracuda",
       "item.minecraft.lingering_potion.effect.potion_of_sealing": "Lingering Potion Sealing",
       "item.benssharks.nurse_shark_spawn_egg": "Nurse Shark Spawn Egg",
+      "item.benssharks.megamouth_shark_spawn_egg": "Megamouth Shark Spawn Egg",
       "entity.benssharks.megalodon": "Megalodon",
       "item.sharks.greatwhite_shark_spawn_egg": "Great White Shark Spawn Egg",
       "item.shraks.shark_spawn_egg": "Shark Spawn Egg",
       "block.benssharks.land_mine_primed": "Land Mine",
       "item.minecraft.splash_potion.effect.frenzy_potion": "Splash Potion of Frenzy",
+      "item.benssharks.raw_sardine": "Raw Sardine",
       "item.benssharks.sea_lion_spawn_egg": "Sea Lion Spawn Egg",
       "item.benssharks.sawshark_bucket": "Bucket of Sawshark",
       "item.benssharks.jagged_chestplate": "Jagged Chestplate",
@@ -8220,7 +8631,6 @@
       "advancements.shark_aid.descr": "Obtain the \"Jaws\" Effect from feeding a Great White Shark.",
       "item.benssharks.pilot_fish_spawn_egg": "Pilot Fish Spawn Egg",
       "entity.benssharks.sea_lion": "Sea Lion",
-      "entity.benssharks.roll_particle": "rolling",
       "entity.benssharks.tiger_shark": "Tiger Shark",
       "effect.benssharks.jaws": "Jaws",
       "entity.sharks.greatwhite_shark": "Great White Shark",
@@ -8228,8 +8638,8 @@
     },
     "es_es": {
       "item.minecraft.splash_potion.effect.jaws_potion": "Poción arrojadiza de mandíbulas",
-      "item.benssharks.bull_shark_spawn_egg": "Generar tiburón toro",
       "item.benssharks.land_shark_spawn_egg": "Generar tiburón terrestre",
+      "item.benssharks.bull_shark_spawn_egg": "Generar tiburón toro",
       "item.benssharks.starch": "Almidón",
       "item.sharks.dent": "Punta de tridente",
       "entity.benssharks.krill": "Krill",
@@ -8238,7 +8648,9 @@
       "entity.sharks.nurse_shark": "Tiburón nodriza",
       "item.benssharks.bonnethead_shark_spawn_egg": "Generar tiburón cabeza de pala",
       "item.benssharks.barracuda_spawn_egg": "Generar barracuda",
+      "entity.benssharks.shoal": "Shoal",
       "item.benssharks.raw_barracuda": "Barracuda cruda",
+      "item.benssharks.shoal_spawn_egg": "Shoal Spawn Egg",
       "item.benssharks.cooked_pilot_fish": "Pez piloto asado",
       "advancements.pleasure.descr": "Alimenta a un tiburón tigre.",
       "block.benssharks.land_mine": "Mina terrestre",
@@ -8249,6 +8661,7 @@
       "item.benssharks.leopard_shark_spawn_egg": "Generar tiburón leopardo",
       "block.sharks.land_mine": "Mina terrestre",
       "item.benssharks.shark_tooth": "Diente de tiburón",
+      "subtitles.shoot": "Shwoosh",
       "enchantment.benssharks.serrated": "Dentado",
       "item.benssharks.krill_bucket": "Cubo con krill",
       "item.benssharks.sawshark_spawn_egg": "Generar tiburón sierra",
@@ -8260,7 +8673,7 @@
       "entity.benssharks.cookiecutter_shark": "Tiburón cortagalletas",
       "entity.shraks.shark": "Tiburón",
       "entity.benssharks.barracuda": "Barracuda",
-      "item.benssharks.roll_particle_spawn_egg": "Generar particula de rodar",
+      "enchantment.benssharks.seeking": "Seeking",
       "item.sharks.remora_spawn_egg": "Generar remora",
       "item.benssharks.whale_shark_spawn_egg": "Generar tiburón ballena",
       "effect.benssharks.detached": "Desprendido",
@@ -8286,12 +8699,15 @@
       "entity.benssharks.thresher_shark": "Thresher Shark",
       "entity.benssharks.goblin_shark": "Tiburón duende",
       "item.benssharks.mako_shark_spawn_egg": "Generar tiburón mako",
+      "item.benssharks.sardine_spawn_egg": "Sardine Spawn Egg",
       "item.benssharks.jagged_leggings": "Grebas dentadas",
       "entity.benssharks.bull_shark": "Tiburón toro",
       "item.sharks.shark_fin": "Aleta de tiburón",
       "entity.benssharks.mako_shark": "Tiburón mako",
+      "entity.benssharks.megamouth_shark": "Megamouth Shark",
       "item.benssharks.krill_item": "Krill",
       "item.benssharks.krill_noodles": "Fideos de krill",
+      "item.benssharks.sardine_bucket": "Sardine Bucket",
       "subtitles.sea_lion.hurt": "Sea Lion growls.",
       "item.benssharks.leopard_shark_bucket_tamed": "Cubo con tiburón leopardo",
       "entity.benssharks.greenland_shark": "Tiburón de groenlandia",
@@ -8334,8 +8750,10 @@
       "block.benssharks.shark_plush_block": "Peluche de tiburón",
       "item.sharks.sucker": "Ventosa",
       "item.benssharks.spetum": "Corseca",
+      "item.benssharks.angelshark_spawn_egg": "Angelshark Spawn Egg",
       "item.benssharks.dent": "Punta de tridente",
       "entity.benssharks.sawshark": "Tiburón sierra",
+      "effect.benssharks.mega_mouth": "Mega Mouth",
       "advancements.shark_aid.title": "\"Vamos a necesitar un barco más grande.\"",
       "subtitles.bite": "¡Chomp!",
       "entity.benssharks.blacktip_reef_shark": "Tiburón punta negra",
@@ -8344,14 +8762,19 @@
       "entity.benssharks.bonnethead_shark": "Tiburón cabeza de pala",
       "item.benssharks.cellophane_noodles": "Fideos de celofán",
       "entity.benssharks.lemon_shark": "Tiburón limón",
+      "subtitles.landing_impact": "boosh",
       "item.benssharks.basking_shark_spawn_egg": "Generar tiburón peregrino",
       "item.benssharks.lemon_shark_spawn_egg": "Generar tiburón limón",
       "subtitles.shark.chomp": "¡Chomp!",
       "subtitles.squeak": "¡Squeak!",
+      "entity.benssharks.angelshark": "Angelshark",
       "entity.sharks.remora": "Remora",
+      "entity.benssharks.sardine": "Sardine",
       "item.sharks.remora_bucket": "Cubo con remora",
+      "effect.benssharks.vortex": "Vortex",
       "item.minecraft.lingering_potion.effect.frenzy_potion": "Poción persistente de frenesí",
       "item.benssharks.cookiecutter_shark_spawn_egg": "Generar tiburón cortagalletas",
+      "item.benssharks.cooked_sardine": "Cooked Sardine",
       "item.benssharks.shark_fin": "Aleta de tiburón",
       "item.benssharks.fish_broth": "Caldo de pescado",
       "item.benssharks.greater_axodile_spawn_egg": "Generar gran axodilo",
@@ -8369,11 +8792,13 @@
       "item.benssharks.barracuda_bucket": "Cubo con barracuda",
       "item.minecraft.lingering_potion.effect.potion_of_sealing": "Poción persistente de sellado",
       "item.benssharks.nurse_shark_spawn_egg": "Generar tiburón nodriza",
+      "item.benssharks.megamouth_shark_spawn_egg": "Megamouth Shark Spawn Egg",
       "entity.benssharks.megalodon": "Megalodon",
       "item.sharks.greatwhite_shark_spawn_egg": "Generar gran tiburón blanco",
       "item.shraks.shark_spawn_egg": "Generar tiburón",
       "block.benssharks.land_mine_primed": "Mina terrestre",
       "item.minecraft.splash_potion.effect.frenzy_potion": "Poción arrojadiza de frenesí",
+      "item.benssharks.raw_sardine": "Raw Sardine",
       "item.benssharks.sea_lion_spawn_egg": "Sea Lion Spawn Egg",
       "item.benssharks.sawshark_bucket": "Cubo con tiburón sierra",
       "item.benssharks.jagged_chestplate": "Peto dentado",
@@ -8390,7 +8815,6 @@
       "advancements.shark_aid.descr": "Obten el efecto \"mandíbulas\" por alimentar a un gran tiburón blanco.",
       "item.benssharks.pilot_fish_spawn_egg": "Generar pez piloto",
       "entity.benssharks.sea_lion": "Sea Lion",
-      "entity.benssharks.roll_particle": "Rodar",
       "entity.benssharks.tiger_shark": "Tiburón tigre",
       "effect.benssharks.jaws": "Mandíbulas",
       "entity.sharks.greatwhite_shark": "Gran tiburón blanco",

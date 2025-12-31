@@ -205,7 +205,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 
 		});
 		this.targetSelector.addGoal(5, new HurtByTargetGoal(this).setAlertOthers());
-		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Cod.class, false, false) {
+		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, SardineEntity.class, false, false) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -226,7 +226,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, Salmon.class, false, false) {
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, Cod.class, false, false) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -247,7 +247,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, PilotFishEntity.class, false, false) {
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Salmon.class, false, false) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -268,7 +268,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, BarracudaEntity.class, false, false) {
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, PilotFishEntity.class, false, false) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -289,7 +289,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(10, new RandomStrollGoal(this, 1) {
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, BarracudaEntity.class, false, false) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -310,7 +310,7 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(11, new RandomLookAroundGoal(this) {
+		this.goalSelector.addGoal(11, new RandomStrollGoal(this, 1) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -331,7 +331,28 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(12, new FloatGoal(this) {
+		this.goalSelector.addGoal(12, new RandomLookAroundGoal(this) {
+			@Override
+			public boolean canUse() {
+				double x = SharkMinionEntity.this.getX();
+				double y = SharkMinionEntity.this.getY();
+				double z = SharkMinionEntity.this.getZ();
+				Entity entity = SharkMinionEntity.this;
+				Level world = SharkMinionEntity.this.level();
+				return super.canUse() && IFNOTSITTINGProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = SharkMinionEntity.this.getX();
+				double y = SharkMinionEntity.this.getY();
+				double z = SharkMinionEntity.this.getZ();
+				Entity entity = SharkMinionEntity.this;
+				Level world = SharkMinionEntity.this.level();
+				return super.canContinueToUse() && IFNOTSITTINGProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(13, new FloatGoal(this) {
 			@Override
 			public boolean canUse() {
 				double x = SharkMinionEntity.this.getX();
@@ -497,12 +518,13 @@ public class SharkMinionEntity extends TamableAnimal implements GeoEntity {
 
 	private PlayState movementPredicate(AnimationState event) {
 		if (this.animationprocedure.equals("empty")) {
-			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F))
-
-			) {
+			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) && !this.isVehicle()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
 			}
 			if (this.isShiftKeyDown()) {
+				return event.setAndContinue(RawAnimation.begin().thenLoop("sit"));
+			}
+			if (this.isVehicle() && event.isMoving()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("sit"));
 			}
 			return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));

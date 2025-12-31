@@ -1,0 +1,140 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.megamouth_shark",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 9,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Shark",
+					"pivot": [0, 8, -3]
+				},
+				{
+					"name": "Torso",
+					"parent": "Shark",
+					"pivot": [0, 14, -16]
+				},
+				{
+					"name": "Torso2",
+					"parent": "Torso",
+					"pivot": [0, 10, -16]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso2",
+					"pivot": [0, 6, -2],
+					"cubes": [
+						{"origin": [-6, 1, -16], "size": [12, 12, 28], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "Thorax",
+					"parent": "Torso2",
+					"pivot": [0, 6, 12],
+					"cubes": [
+						{"origin": [-4.5, 2.5, 11], "size": [9, 9, 19], "uv": [0, 40]},
+						{"origin": [-12.62211, 0.41269, 23.43982], "size": [10, 2, 5], "pivot": [-6, 2, 24], "rotation": [0.35606, 47.44138, -36.18887], "uv": [80, 29]},
+						{"origin": [2.62211, 0.41269, 23.43982], "size": [10, 2, 5], "pivot": [6, 2, 24], "rotation": [0.35606, -47.44138, 36.18887], "uv": [36, 86]}
+					]
+				},
+				{
+					"name": "Abdomen",
+					"parent": "Thorax",
+					"pivot": [0, 6, 30],
+					"cubes": [
+						{"origin": [-2, 4, 29], "size": [4, 6, 15], "uv": [56, 56]},
+						{"origin": [-0.5, 5, 34], "size": [1, 6, 5], "pivot": [0, 16, 39], "rotation": [-32.5, 0, 0], "uv": [50, 93]},
+						{"origin": [-0.5, 1, 28], "size": [1, 5, 4], "pivot": [0, 12, 33], "rotation": [37.5, 0, 0], "uv": [44, 68]}
+					]
+				},
+				{
+					"name": "Tail",
+					"parent": "Abdomen",
+					"pivot": [0, 6, 44],
+					"cubes": [
+						{"origin": [-1, 7.58579, 47.88579], "size": [2, 18, 6], "pivot": [0, 15, 46], "rotation": [-57.5, 0, 0], "uv": [0, 81]},
+						{"origin": [-0.5, -3, 35], "size": [1, 11, 6], "pivot": [0, 14, 42], "rotation": [37.5, 0, 0], "uv": [66, 86]}
+					]
+				},
+				{
+					"name": "DorsalFin",
+					"parent": "Torso2",
+					"pivot": [0, 13, 6],
+					"rotation": [-5, 0, 0],
+					"cubes": [
+						{"origin": [-1.5, 11.50624, 3.29653], "size": [3, 13, 7], "pivot": [0, 10.84091, 3.35623], "rotation": [-45, 0, 0], "uv": [16, 81]}
+					]
+				},
+				{
+					"name": "RightFin",
+					"parent": "Torso2",
+					"pivot": [-6, 3, -3],
+					"cubes": [
+						{"origin": [-20.18262, 0.90572, -2.73305], "size": [15, 2, 7], "pivot": [-6, 2, -3], "rotation": [0.76058, 16.55414, -25.23709], "uv": [44, 77]}
+					]
+				},
+				{
+					"name": "LeftFin",
+					"parent": "Torso2",
+					"pivot": [6, 3, -3],
+					"cubes": [
+						{"origin": [5.18262, 0.90572, -2.73305], "size": [15, 2, 7], "pivot": [6, 2, -3], "rotation": [0.76058, -16.55414, 25.23709], "uv": [80, 0]}
+					]
+				},
+				{
+					"name": "Head",
+					"parent": "Shark",
+					"pivot": [0, 7, -16]
+				},
+				{
+					"name": "skull",
+					"parent": "Head",
+					"pivot": [0, 9, -16],
+					"cubes": [
+						{"origin": [-6, 8, -27], "size": [12, 5, 11], "uv": [56, 40]},
+						{"origin": [-6, 7, -26], "size": [12, 1, 9], "uv": [80, 9]}
+					]
+				},
+				{
+					"name": "jaw2",
+					"parent": "Head",
+					"pivot": [0, 5, -16]
+				},
+				{
+					"name": "Skull3",
+					"parent": "jaw2",
+					"pivot": [0, 8, -21]
+				},
+				{
+					"name": "Skull2",
+					"parent": "Skull3",
+					"pivot": [0, 8, -21],
+					"cubes": [
+						{"origin": [-6.005, 5, -23], "size": [0.01, 3, 7], "uv": [36, 93]},
+						{"origin": [5.995, 5, -23], "size": [0.01, 3, 7], "uv": [36, 93], "mirror": true}
+					]
+				},
+				{
+					"name": "jaw3",
+					"parent": "jaw2",
+					"pivot": [0, 4, -16]
+				},
+				{
+					"name": "jaw",
+					"parent": "jaw3",
+					"pivot": [0, 4, -16],
+					"cubes": [
+						{"origin": [-6, 2, -26], "size": [12, 3, 10], "uv": [0, 68]},
+						{"origin": [-6, 5, -26], "size": [12, 1, 9], "uv": [80, 19]}
+					]
+				}
+			]
+		}
+	]
+}

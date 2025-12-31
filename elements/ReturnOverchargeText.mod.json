@@ -1,0 +1,7 @@
+{
+  "_fv": 73,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"entity_isalive\"><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></value><statement name=\"DO0\"><block type=\"return_string\"><value name=\"return\"><block type=\"java_code_get\"><field name=\"CODE\">(entity instanceof net.minecraft.world.entity.player.Player _player &amp;&amp; _player.isCreative() &amp;&amp; (_player.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new net.mcreator.sharks.network.BenssharksModVariables.PlayerVariables())).ThresherRiptideCharges &gt;= 1) &amp;#10;? \"\\u221E\" &amp;#10;: (&amp;#10;    \"\" + (int)(((entity.getCapability(net.mcreator.sharks.network.BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new net.mcreator.sharks.network.BenssharksModVariables.PlayerVariables())).ThresherRiptideCharges - 1) / 9)&amp;#10;)</field></block></value></block></statement><next><block type=\"return_string\"><value name=\"return\"><block type=\"text\"><field name=\"TEXT\"></field></block></value></block></next></block></next></block></xml>"
+  }
+}

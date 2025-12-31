@@ -30,6 +30,7 @@ import net.mcreator.sharks.init.BenssharksModEnchantments;
 import net.mcreator.sharks.init.BenssharksModBlocks;
 import net.mcreator.sharks.init.BenssharksModBlockEntities;
 import net.mcreator.sharks.configuration.SpawnsConfiguration;
+import net.mcreator.sharks.configuration.SharkAggroConfig;
 
 import java.util.function.Supplier;
 import java.util.function.Function;
@@ -50,7 +51,9 @@ public class BenssharksMod {
 		// 1. Registers your new Biome Modifier system
 		SharkBiomeModifiers.register(FMLJavaModLoadingContext.get().getModEventBus());
 		// 2. Registers your config file so it actually loads! This was missing.
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpawnsConfiguration.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpawnsConfiguration.SPEC, "benssharks/benssharks-spawns.toml");
+		// 3. Registers the NEW Shark Aggro config <--- ADD THIS LINE
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SharkAggroConfig.COMMON_SPEC, "benssharks/benssharks-common.toml");
 		// End of user code block mod constructor
 		MinecraftForge.EVENT_BUS.register(this);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

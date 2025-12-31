@@ -1,6 +1,7 @@
 package net.mcreator.sharks.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -22,7 +23,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.advancements.AdvancementProgress;
@@ -57,12 +57,16 @@ public class TigerSharkRightClickedOnEntityProcedure {
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.MAIN_HAND, true);
-					if (sourceentity instanceof LivingEntity _entity) {
-						ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
-						_setstack.setCount(1);
-						_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-						if (_entity instanceof Player _player)
-							_player.getInventory().setChanged();
+					if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getCount() > 0 && !(sourceentity instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
+						if (sourceentity instanceof Player _player) {
+							ItemStack _stktoremove = new ItemStack(BenssharksModItems.FISH_BUCKET.get());
+							_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+						}
+						if (sourceentity instanceof Player _player) {
+							ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
+							_setstack.setCount(1);
+							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+						}
 					}
 					entity.getPersistentData().putBoolean("canBeMilked", true);
 					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
@@ -89,7 +93,7 @@ public class TigerSharkRightClickedOnEntityProcedure {
 								_player.getAdvancements().award(_adv, criteria);
 						}
 					}
-					BenssharksMod.queueServerWork(6000, () -> {
+					BenssharksMod.queueServerWork(20, () -> {
 						entity.getPersistentData().putBoolean("canBeMilked", false);
 					});
 				}
@@ -99,12 +103,16 @@ public class TigerSharkRightClickedOnEntityProcedure {
 						_entity.swing(InteractionHand.MAIN_HAND, true);
 					if (sourceentity instanceof LivingEntity _entity)
 						_entity.swing(InteractionHand.OFF_HAND, true);
-					if (sourceentity instanceof LivingEntity _entity) {
-						ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
-						_setstack.setCount(1);
-						_entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-						if (_entity instanceof Player _player)
-							_player.getInventory().setChanged();
+					if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getCount() > 0 && !(sourceentity instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
+						if (sourceentity instanceof Player _player) {
+							ItemStack _stktoremove = new ItemStack(BenssharksModItems.FISH_BUCKET.get());
+							_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+						}
+						if (sourceentity instanceof Player _player) {
+							ItemStack _setstack = new ItemStack(Items.BUCKET).copy();
+							_setstack.setCount(1);
+							ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+						}
 					}
 					entity.getPersistentData().putBoolean("canBeMilked", true);
 					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
@@ -131,17 +139,10 @@ public class TigerSharkRightClickedOnEntityProcedure {
 								_player.getAdvancements().award(_adv, criteria);
 						}
 					}
-					BenssharksMod.queueServerWork(6000, () -> {
+					BenssharksMod.queueServerWork(20, () -> {
 						entity.getPersistentData().putBoolean("canBeMilked", false);
 					});
 				}
-			}
-			if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.FISH_BUCKET.get()) {
-				if (sourceentity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(Component.literal("Feeding on Cooldown"), true);
-			} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == BenssharksModItems.FISH_BUCKET.get()) {
-				if (sourceentity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(Component.literal("Feeding on Cooldown"), true);
 			}
 		}
 		return InteractionResult.PASS;

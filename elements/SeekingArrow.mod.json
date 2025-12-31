@@ -11,7 +11,7 @@
     },
     "igniteFire": false,
     "power": 2.0,
-    "damage": 12.0,
+    "damage": 4.5,
     "knockback": 2,
     "entityModel": "ModelSeekingArrow",
     "customModelTexture": "seekingarrow.png",

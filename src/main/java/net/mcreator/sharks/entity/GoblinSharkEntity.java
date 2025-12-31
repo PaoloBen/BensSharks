@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
@@ -36,11 +36,9 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.GlowSquid;
@@ -48,7 +46,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -58,15 +55,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.IfTamedProcedure;
 import net.mcreator.sharks.procedures.GoblinSharkPlayerCollidesWithThisEntityProcedure;
-import net.mcreator.sharks.procedures.GoblinSharkOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.GoblinSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.GoblinSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(GoblinSharkEntity.class, EntityDataSerializers.BOOLEAN);
@@ -245,37 +238,16 @@ public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, Squid.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = GoblinSharkEntity.this.getX();
-				double y = GoblinSharkEntity.this.getY();
-				double z = GoblinSharkEntity.this.getZ();
-				Entity entity = GoblinSharkEntity.this;
-				Level world = GoblinSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = GoblinSharkEntity.this.getX();
-				double y = GoblinSharkEntity.this.getY();
-				double z = GoblinSharkEntity.this.getZ();
-				Entity entity = GoblinSharkEntity.this;
-				Level world = GoblinSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
-		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(11, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
-		this.goalSelector.addGoal(12, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(13, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(14, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(15, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(16, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, Drowned.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
+		this.goalSelector.addGoal(11, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(12, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(13, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(14, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(15, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(16, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, Drowned.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 1, 1.2));
 	}
 
 	@Override
@@ -289,8 +261,8 @@ public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -301,19 +273,6 @@ public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		GoblinSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		GoblinSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -335,7 +294,6 @@ public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		GoblinSharkOnEntityTickUpdateProcedure.execute(this.level(), this);
 		this.refreshDimensions();
 	}
 
@@ -388,13 +346,8 @@ public class GoblinSharkEntity extends PathfinderMob implements GeoEntity {
 
 	private PlayState movementPredicate(AnimationState event) {
 		if (this.animationprocedure.equals("empty")) {
-			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F))
-
-					&& !this.isSprinting()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
-			}
 			if (this.isInWaterOrBubble()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+				return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
 			}
 			if (this.isSprinting()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("sprint"));

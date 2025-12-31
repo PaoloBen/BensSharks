@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -43,7 +43,6 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -57,7 +56,6 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -68,16 +66,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.LemonSharkRightClickedOnEntityProcedure;
-import net.mcreator.sharks.procedures.LemonSharkOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.LemonSharkOnEntityTickUpdateProcedure;
-import net.mcreator.sharks.procedures.LemonSharkEntityIsHurtProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -178,10 +172,11 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 		this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, true));
 		this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, Guardian.class, true, true));
 		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, ElderGuardian.class, true, true));
-		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(8, new NearestAttackableTargetGoal(this, SardineEntity.class, true, true));
+		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
+		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = LemonSharkEntity.this.getX();
@@ -202,18 +197,18 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(13, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
-		this.goalSelector.addGoal(14, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
-		this.goalSelector.addGoal(15, new TemptGoal(this, 1, Ingredient.of(Items.SALMON), false));
-		this.goalSelector.addGoal(16, new LookAtPlayerGoal(this, BlacktipReefSharkEntity.class, (float) 32));
-		this.goalSelector.addGoal(17, new LookAtPlayerGoal(this, BonnetheadSharkEntity.class, (float) 32));
-		this.goalSelector.addGoal(18, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 32));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 4, 16, 16));
-		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 4, 16, 16));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 4, 16, 16));
-		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
-		this.goalSelector.addGoal(24, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(14, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
+		this.goalSelector.addGoal(15, new TemptGoal(this, 1, Ingredient.of(Items.COD), false));
+		this.goalSelector.addGoal(16, new TemptGoal(this, 1, Ingredient.of(Items.SALMON), false));
+		this.goalSelector.addGoal(17, new LookAtPlayerGoal(this, BlacktipReefSharkEntity.class, (float) 32));
+		this.goalSelector.addGoal(18, new LookAtPlayerGoal(this, BonnetheadSharkEntity.class, (float) 32));
+		this.goalSelector.addGoal(19, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 32));
+		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 4, 16, 16));
+		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 4, 16, 16));
+		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, BullSharkEntity.class, (float) 4, 16, 16));
+		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 16, 16));
+		this.goalSelector.addGoal(25, new RandomSwimmingGoal(this, 1, 40));
 	}
 
 	@Override
@@ -222,8 +217,8 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -234,19 +229,6 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		LemonSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		LemonSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -281,7 +263,6 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		LemonSharkOnEntityTickUpdateProcedure.execute(this.level(), this);
 		this.refreshDimensions();
 	}
 
@@ -332,7 +313,7 @@ public class LemonSharkEntity extends Animal implements GeoEntity {
 		builder = builder.add(Attributes.MAX_HEALTH, 20);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 8);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 32);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.2);
 		builder = builder.add(ForgeMod.SWIM_SPEED.get(), 1);
 		return builder;

@@ -1,27 +1,18 @@
 package net.mcreator.sharks.procedures;
 
-import net.minecraftforge.registries.ForgeRegistries;
-
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.BlockPos;
 
 import java.util.List;
 import java.util.Comparator;
 
 public class SeekingArrowWhileProjectileFlyingTickProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity immediatesourceentity) {
-		if (entity == null || immediatesourceentity == null)
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity immediatesourceentity) {
+		if (immediatesourceentity == null)
 			return;
 		double dis = 0;
 		{
@@ -36,27 +27,60 @@ public class SeekingArrowWhileProjectileFlyingTickProcedure {
 				} else {
 					if (world instanceof ServerLevel _level)
 						_level.sendParticles(ParticleTypes.GLOW_SQUID_INK, (immediatesourceentity.getX()), (immediatesourceentity.getY()), (immediatesourceentity.getZ()), 1, 0.01, 0.01, 0.01, 0);
+				} // 0. GET OWNER
+				net.minecraft.world.entity.Entity owner = null;
+				if (immediatesourceentity instanceof net.minecraft.world.entity.projectile.Projectile proj) {
+					owner = proj.getOwner();
 				}
-				if (world instanceof Level _level) {
-					if (!_level.isClientSide()) {
-						_level.playSound(null, BlockPos.containing(immediatesourceentity.getX(), immediatesourceentity.getY(), immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")),
-								SoundSource.NEUTRAL, (float) 0.025, 2);
-					} else {
-						_level.playLocalSound((immediatesourceentity.getX()), (immediatesourceentity.getY()), (immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")),
-								SoundSource.NEUTRAL, (float) 0.025, 2, false);
-					}
+				// 1. RESET SEEKING STATE
+				// Default to "Solid Arrow" (Not Seeking)
+				immediatesourceentity.getPersistentData().putBoolean("ActivelySeeking", false);
+				if (immediatesourceentity instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+					arrow.setPierceLevel((byte) 0);
 				}
-				if (((Entity) world.getEntitiesOfClass(LivingEntity.class, AABB.ofSize(new Vec3(x, y, z), 30, 30, 30), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+				// 2. CHECK FOR ENEMY
+				if (entityiterator instanceof net.minecraft.world.entity.monster.Enemy && entityiterator != owner && entityiterator != immediatesourceentity) {
+					// --- A. SMOOTH STEERING LOGIC ---
+					double currentSpeed = immediatesourceentity.getDeltaMovement().length();
+					// Keep minimum speed to prevent floating arrows
+					if (currentSpeed < 0.1)
+						currentSpeed = 0.5;
+					// Calculate direction
+					double dX = entityiterator.getX() - immediatesourceentity.getX();
+					double dY = entityiterator.getBoundingBox().getCenter().y - immediatesourceentity.getY();
+					double dZ = entityiterator.getZ() - immediatesourceentity.getZ();
+					double dist = Math.sqrt(dX * dX + dY * dY + dZ * dZ);
+					if (dist > 0) {
+						net.minecraft.world.phys.Vec3 currentVelocity = immediatesourceentity.getDeltaMovement();
+						net.minecraft.world.phys.Vec3 desiredDir = new net.minecraft.world.phys.Vec3(dX, dY, dZ).normalize();
+						// Blend directions (0.3 = Smooth turn)
+						double turnSpeed = 0.3;
+						net.minecraft.world.phys.Vec3 newDir = currentVelocity.normalize().scale(1.0 - turnSpeed).add(desiredDir.scale(turnSpeed));
+						// Apply new velocity
+						immediatesourceentity.setDeltaMovement(newDir.normalize().scale(currentSpeed));
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)) == entityiterator) {
-					if (!(entityiterator == entity || entityiterator == immediatesourceentity || (entityiterator instanceof Player _plr ? _plr.getAbilities().instabuild : false)
-							|| (entityiterator instanceof TamableAnimal _tamIsTamedBy && entity instanceof LivingEntity _livEnt ? _tamIsTamedBy.isOwnedBy(_livEnt) : false))) {
-						dis = Math.sqrt(Math.pow(entityiterator.getX() - immediatesourceentity.getX(), 2) + Math.pow(entityiterator.getY() - immediatesourceentity.getY(), 2) + Math.pow(entityiterator.getZ() - immediatesourceentity.getZ(), 2));
-						immediatesourceentity.setDeltaMovement(
-								new Vec3(((entityiterator.getX() - immediatesourceentity.getX()) / dis), ((entityiterator.getY() - immediatesourceentity.getY()) / dis), ((entityiterator.getZ() - immediatesourceentity.getZ()) / dis)));
+					// --- B. ACTIVATE GHOST MODE ---
+					if (immediatesourceentity instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow) {
+						arrow.setPierceLevel((byte) 5);
+						immediatesourceentity.getPersistentData().putBoolean("ActivelySeeking", true);
 					}
+					// --- C. MANUAL IMPACT TRIGGER (Max 18 Damage) ---
+					// Deals damage based on velocity.
+					if (immediatesourceentity.getBoundingBox().intersects(entityiterator.getBoundingBox().inflate(0.3))) {
+						// CALCULATE DAMAGE: Speed * 6.0
+						// Speed 3.0 (Full Charge) * 6.0 = 18.0 Damage
+						float calculatedDamage = (float) (currentSpeed * 6.0);
+						// Safety: Ensure it deals at least 6 damage (3 hearts)
+						if (calculatedDamage < 6.0f)
+							calculatedDamage = 6.0f;
+						// 1. Deal Damage
+						if (world instanceof net.minecraft.world.level.Level _lvl) {
+							entityiterator.hurt(_lvl.damageSources().arrow((net.minecraft.world.entity.projectile.AbstractArrow) immediatesourceentity, owner), calculatedDamage);
+						}
+						// 2. Kill the Arrow
+						immediatesourceentity.discard();
+					}
+					break;
 				}
 			}
 		}

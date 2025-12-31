@@ -1,4 +1,3 @@
-
 package net.mcreator.sharks.entity;
 
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -36,11 +35,13 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -74,21 +75,22 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 import net.mcreator.sharks.procedures.NurseSharkRightClickedOnEntityProcedure;
 import net.mcreator.sharks.procedures.NurseSharkPlayerCollidesWithThisEntityProcedure;
-import net.mcreator.sharks.procedures.NurseSharkOnInitialEntitySpawnProcedure;
-import net.mcreator.sharks.procedures.NurseSharkOnEntityTickUpdateProcedure;
 import net.mcreator.sharks.procedures.NurseSharkItIsStruckByLightningProcedure;
-import net.mcreator.sharks.procedures.NurseSharkEntityIsHurtProcedure;
+import net.mcreator.sharks.procedures.NurseSharkOnEntityTickUpdateProcedure;
+import net.mcreator.sharks.procedures.NurseSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.IfTamedProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModItems;
 import net.mcreator.sharks.init.BenssharksModEntities;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
+import java.util.EnumSet;
 
 public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(NurseSharkEntity.class, EntityDataSerializers.BOOLEAN);
@@ -111,11 +113,19 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		setNoAi(false);
 		setMaxUpStep(0.6f);
 		this.setPathfindingMalus(BlockPathTypes.WATER, 0);
+		
 		this.moveControl = new MoveControl(this) {
 			@Override
 			public void tick() {
+				if (NurseSharkEntity.this.isOrderedToSit()) {
+					NurseSharkEntity.this.setSpeed(0.0F);
+					NurseSharkEntity.this.setDeltaMovement(0, 0, 0);
+					return;
+				}
+
 				if (NurseSharkEntity.this.isInWater())
 					NurseSharkEntity.this.setDeltaMovement(NurseSharkEntity.this.getDeltaMovement().add(0, 0.005, 0));
+				
 				if (this.operation == MoveControl.Operation.MOVE_TO && !NurseSharkEntity.this.getNavigation().isDone()) {
 					double dx = this.wantedX - NurseSharkEntity.this.getX();
 					double dy = this.wantedY - NurseSharkEntity.this.getY();
@@ -175,94 +185,95 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
-		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this) {
-			@Override
-			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
-		this.goalSelector.addGoal(3, new OwnerHurtByTargetGoal(this) {
-			@Override
-			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && IfTamedProcedure.execute(entity);
-			}
-
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && IfTamedProcedure.execute(entity);
-			}
-		});
-		this.goalSelector.addGoal(4, new BreedGoal(this, 1));
-		this.goalSelector.addGoal(5, new FollowParentGoal(this, 0.8));
-		this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2, false) {
+		
+		this.goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
+		this.goalSelector.addGoal(2, new BreedGoal(this, 1));
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.targetSelector.addGoal(7, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(8, new RandomSwimmingGoal(this, 1, 40));
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false));
-		this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, Squid.class, true, false));
-		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false));
-		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, LivingEntity.class, true, false) {
+		
+		this.goalSelector.addGoal(4, new SharkFollowOwnerGoal(this, 1.0, 10.0f, 64.0f));
+		this.goalSelector.addGoal(5, new FollowParentGoal(this, 0.8));
+		this.goalSelector.addGoal(6, new TemptGoal(this, 1, Ingredient.of(BenssharksModItems.FISH_BUCKET.get()), false));
+		
+		// --- SMART TARGETING (Corrected) ---
+		
+		// 7. Protect Owner (OwnerHurtByTargetGoal)
+		this.targetSelector.addGoal(7, new OwnerHurtByTargetGoal(this) {
 			@Override
 			public boolean canUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canUse() && AggressiveSharksProcedureProcedure.execute(world);
-			}
+				if (!super.canUse()) return false;
+				LivingEntity owner = NurseSharkEntity.this.getOwner();
+				if (owner == null) return false;
+				
+				// Get the attacker from the owner directly
+				LivingEntity attacker = owner.getLastHurtByMob();
+				if (attacker == null) return false;
 
-			@Override
-			public boolean canContinueToUse() {
-				double x = NurseSharkEntity.this.getX();
-				double y = NurseSharkEntity.this.getY();
-				double z = NurseSharkEntity.this.getZ();
-				Entity entity = NurseSharkEntity.this;
-				Level world = NurseSharkEntity.this.level();
-				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
+				// Check Friendlies
+				if (attacker instanceof TamableAnimal pet && pet.isOwnedBy(owner)) return false; 
+				if (attacker.isAlliedTo(owner)) return false;
+				
+				return true;
 			}
 		});
-		this.goalSelector.addGoal(13, new PanicGoal(this, 1.2));
-		this.goalSelector.addGoal(14, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(16, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
-		this.goalSelector.addGoal(17, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
-		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, Drowned.class, (float) 16, 1, 1.2));
-		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 1, 1.2));
+
+		// 8. Attack Owner's Target (OwnerHurtTargetGoal)
+		this.targetSelector.addGoal(8, new OwnerHurtTargetGoal(this) {
+			@Override
+			public boolean canUse() {
+				if (!super.canUse()) return false;
+				LivingEntity owner = NurseSharkEntity.this.getOwner();
+				if (owner == null) return false;
+
+				// Get the victim from the owner directly
+				LivingEntity victim = owner.getLastHurtMob();
+				if (victim == null) return false;
+
+				// Check Friendlies
+				if (victim instanceof TamableAnimal pet && pet.isOwnedBy(owner)) return false; 
+				if (victim.isAlliedTo(owner)) return false; 
+				
+				return true;
+			}
+		});
+
+		this.targetSelector.addGoal(9, new HurtByTargetGoal(this));
+		
+		this.goalSelector.addGoal(10, new RandomSwimmingGoal(this, 1, 40));
+		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, CookiecutterSharkEntity.class, true, false));
+		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, Squid.class, true, false));
+		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, GlowSquid.class, true, false));
+		
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal<LivingEntity>(this, LivingEntity.class, 10, true, false, (entity) -> {
+			if (!AggressiveSharksProcedureProcedure.execute(this.level())) return false;
+			if (this.isTame() && this.getOwner() != null) {
+				if (entity == this.getOwner()) return false;
+				if (entity instanceof TamableAnimal pet && pet.isOwnedBy(this.getOwner())) return false;
+				if (entity.isAlliedTo(this.getOwner())) return false;
+			}
+			return true;
+		}) {
+			@Override
+			public boolean canUse() {
+				return super.canUse();
+			}
+		});
+		
+		this.goalSelector.addGoal(15, new PanicGoal(this, 1.2));
+		this.goalSelector.addGoal(16, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(17, new LookAtPlayerGoal(this, WaterAnimal.class, (float) 128));
+		this.goalSelector.addGoal(18, new AvoidEntityGoal<>(this, MegalodonEntity.class, (float) 32, 1, 1.2));
+		this.goalSelector.addGoal(19, new AvoidEntityGoal<>(this, Dolphin.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(20, new AvoidEntityGoal<>(this, ShrakEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(21, new AvoidEntityGoal<>(this, TigerSharkEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(22, new AvoidEntityGoal<>(this, MakoSharkEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(23, new AvoidEntityGoal<>(this, RemoraEntity.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(24, new AvoidEntityGoal<>(this, Drowned.class, (float) 16, 1, 1.2));
+		this.goalSelector.addGoal(25, new AvoidEntityGoal<>(this, AxodileEntity.class, (float) 16, 1, 1.2));
 	}
 
 	@Override
@@ -276,10 +287,10 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
-	}
-
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+        this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
+    }
+    
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.hurt"));
@@ -294,19 +305,6 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	public void thunderHit(ServerLevel serverWorld, LightningBolt lightningBolt) {
 		super.thunderHit(serverWorld, lightningBolt);
 		NurseSharkItIsStruckByLightningProcedure.execute();
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		NurseSharkEntityIsHurtProcedure.execute(this.level(), this);
-		return super.hurt(source, amount);
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		NurseSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -330,6 +328,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 		ItemStack itemstack = sourceentity.getItemInHand(hand);
 		InteractionResult retval = InteractionResult.sidedSuccess(this.level().isClientSide());
 		Item item = itemstack.getItem();
+		
 		if (itemstack.getItem() instanceof SpawnEggItem) {
 			retval = super.mobInteract(sourceentity, hand);
 		} else if (this.level().isClientSide()) {
@@ -344,6 +343,13 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 					} else if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
 						this.usePlayerItem(sourceentity, hand, itemstack);
 						this.heal(4);
+						retval = InteractionResult.sidedSuccess(this.level().isClientSide());
+					} else if (!this.isFood(itemstack)) {
+						// SIT TOGGLE
+						this.setOrderedToSit(!this.isOrderedToSit());
+						this.jumping = false;
+						this.navigation.stop();
+						this.setDeltaMovement(0,0,0);
 						retval = InteractionResult.sidedSuccess(this.level().isClientSide());
 					} else {
 						retval = super.mobInteract(sourceentity, hand);
@@ -365,6 +371,12 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 					this.setPersistenceRequired();
 			}
 		}
+		
+		// Return Success if we handled it
+		if (retval == InteractionResult.SUCCESS || retval == InteractionResult.CONSUME || retval == InteractionResult.sidedSuccess(this.level().isClientSide())) {
+			return retval;
+		}
+		
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
@@ -376,7 +388,7 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		NurseSharkOnEntityTickUpdateProcedure.execute(this.level(), this);
+		NurseSharkOnEntityTickUpdateProcedure.execute(this);
 		this.refreshDimensions();
 	}
 
@@ -440,17 +452,19 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	}
 
 	private PlayState movementPredicate(AnimationState event) {
+		if (this.isOrderedToSit()) {
+			return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
+		}
+		
 		if (this.animationprocedure.equals("empty")) {
-			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F))
-
-					&& !this.isSprinting()) {
+			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) && !this.entityData.get(DATA_Sprinting)) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("walk"));
 			}
 			if (this.isInWaterOrBubble()) {
+				if (this.entityData.get(DATA_Sprinting)) {
+					return event.setAndContinue(RawAnimation.begin().thenLoop("sprint"));
+				}
 				return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
-			}
-			if (this.isSprinting()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("sprint"));
 			}
 			return event.setAndContinue(RawAnimation.begin().thenLoop("land"));
 		}
@@ -521,5 +535,74 @@ public class NurseSharkEntity extends TamableAnimal implements GeoEntity {
 	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
 		return this.cache;
+	}
+	
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+		try {
+			NurseSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
+		} catch (Exception e) {
+			// Ignore safely
+		}
+		return retval;
+	}
+
+	// --- CUSTOM FOLLOW GOAL (NO TELEPORT) ---
+	static class SharkFollowOwnerGoal extends Goal {
+		private final NurseSharkEntity shark;
+		private LivingEntity owner;
+		private final double speedModifier;
+		private final float startDistance;
+		private final float stopDistance;
+		private final PathNavigation navigation;
+		private int timeToRecalcPath;
+
+		public SharkFollowOwnerGoal(NurseSharkEntity shark, double speed, float minDir, float maxDist) {
+			this.shark = shark;
+			this.speedModifier = speed;
+			this.startDistance = minDir;
+			this.stopDistance = 2.0f;
+			this.navigation = shark.getNavigation();
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		}
+
+		@Override
+		public boolean canUse() {
+			LivingEntity owner = this.shark.getOwner();
+			if (owner == null) return false;
+			if (this.shark.isOrderedToSit()) return false;
+			if (this.shark.distanceToSqr(owner) < (double) (this.startDistance * this.startDistance)) return false;
+			this.owner = owner;
+			return true;
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			if (this.navigation.isDone()) return false;
+			if (this.shark.isOrderedToSit()) return false;
+			return this.shark.distanceToSqr(this.owner) > (double) (this.stopDistance * this.stopDistance);
+		}
+
+		@Override
+		public void start() {
+			this.timeToRecalcPath = 0;
+		}
+
+		@Override
+		public void tick() {
+			if (this.shark.isOrderedToSit()) {
+				this.navigation.stop();
+				return;
+			}
+			
+			this.shark.getLookControl().setLookAt(this.owner, 10.0F, (float) this.shark.getMaxHeadXRot());
+			if (--this.timeToRecalcPath <= 0) {
+				this.timeToRecalcPath = 10;
+				if (!this.shark.isLeashed() && !this.shark.isPassenger()) {
+					this.navigation.moveTo(this.owner, this.speedModifier);
+				}
+			}
+		}
 	}
 }

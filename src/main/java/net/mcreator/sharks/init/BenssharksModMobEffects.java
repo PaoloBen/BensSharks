@@ -10,9 +10,11 @@ import net.minecraftforge.registries.DeferredRegister;
 
 import net.minecraft.world.effect.MobEffect;
 
+import net.mcreator.sharks.potion.VortexMobEffect;
 import net.mcreator.sharks.potion.SealingPotionMobEffect;
 import net.mcreator.sharks.potion.PreyMobEffect;
 import net.mcreator.sharks.potion.ParasiteMobEffect;
+import net.mcreator.sharks.potion.MegaMouthMobEffect;
 import net.mcreator.sharks.potion.JawsMobEffect;
 import net.mcreator.sharks.potion.FrenzyMobEffect;
 import net.mcreator.sharks.potion.FertilizedMobEffect;
@@ -32,4 +34,6 @@ public class BenssharksModMobEffects {
 	public static final RegistryObject<MobEffect> PREY = REGISTRY.register("prey", () -> new PreyMobEffect());
 	public static final RegistryObject<MobEffect> FRENZY = REGISTRY.register("frenzy", () -> new FrenzyMobEffect());
 	public static final RegistryObject<MobEffect> FERTILIZED = REGISTRY.register("fertilized", () -> new FertilizedMobEffect());
+	public static final RegistryObject<MobEffect> VORTEX = REGISTRY.register("vortex", () -> new VortexMobEffect());
+	public static final RegistryObject<MobEffect> MEGA_MOUTH = REGISTRY.register("mega_mouth", () -> new MegaMouthMobEffect());
 }

@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
@@ -35,11 +35,9 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.GlowSquid;
@@ -49,7 +47,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -59,14 +56,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import net.mcreator.sharks.procedures.CookiecutterSharkRightClickedOnEntityProcedure;
-import net.mcreator.sharks.procedures.CookiecutterSharkOnInitialEntitySpawnProcedure;
 import net.mcreator.sharks.procedures.CookiecutterSharkOnEntityTickUpdateProcedure;
 import net.mcreator.sharks.procedures.AggressiveSharksProcedureProcedure;
 import net.mcreator.sharks.init.BenssharksModEntities;
-
-import javax.annotation.Nullable;
 
 public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(CookiecutterSharkEntity.class, EntityDataSerializers.BOOLEAN);
@@ -172,21 +167,22 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 		this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, BullSharkEntity.class, true, true));
 		this.targetSelector.addGoal(12, new NearestAttackableTargetGoal(this, WhitetipSharkEntity.class, true, true));
 		this.targetSelector.addGoal(13, new NearestAttackableTargetGoal(this, LemonSharkEntity.class, true, true));
-		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
-		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, true, true));
-		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, SawsharkEntity.class, true, true));
-		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, true, true));
-		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, true, true));
-		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
-		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
-		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, Squid.class, true, true));
-		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, AxodileEntity.class, true, true));
-		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
-		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
-		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, WhaleSharkEntity.class, true, true));
-		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, BaskingSharkEntity.class, true, true));
-		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, LandSharkEntity.class, true, true));
-		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
+		this.targetSelector.addGoal(14, new NearestAttackableTargetGoal(this, ThresherSharkEntity.class, true, true));
+		this.targetSelector.addGoal(15, new NearestAttackableTargetGoal(this, NurseSharkEntity.class, true, true));
+		this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, LeopardSharkEntity.class, true, true));
+		this.targetSelector.addGoal(17, new NearestAttackableTargetGoal(this, SawsharkEntity.class, true, true));
+		this.targetSelector.addGoal(18, new NearestAttackableTargetGoal(this, BlacktipReefSharkEntity.class, true, true));
+		this.targetSelector.addGoal(19, new NearestAttackableTargetGoal(this, BonnetheadSharkEntity.class, true, true));
+		this.targetSelector.addGoal(20, new NearestAttackableTargetGoal(this, BarracudaEntity.class, true, true));
+		this.targetSelector.addGoal(21, new NearestAttackableTargetGoal(this, GlowSquid.class, true, true));
+		this.targetSelector.addGoal(22, new NearestAttackableTargetGoal(this, Squid.class, true, true));
+		this.targetSelector.addGoal(23, new NearestAttackableTargetGoal(this, AxodileEntity.class, true, true));
+		this.targetSelector.addGoal(24, new NearestAttackableTargetGoal(this, Turtle.class, true, true));
+		this.targetSelector.addGoal(25, new NearestAttackableTargetGoal(this, Dolphin.class, true, true));
+		this.targetSelector.addGoal(26, new NearestAttackableTargetGoal(this, WhaleSharkEntity.class, true, true));
+		this.targetSelector.addGoal(27, new NearestAttackableTargetGoal(this, BaskingSharkEntity.class, true, true));
+		this.targetSelector.addGoal(28, new NearestAttackableTargetGoal(this, LandSharkEntity.class, true, true));
+		this.targetSelector.addGoal(29, new NearestAttackableTargetGoal(this, LivingEntity.class, true, true) {
 			@Override
 			public boolean canUse() {
 				double x = CookiecutterSharkEntity.this.getX();
@@ -207,22 +203,22 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 				return super.canContinueToUse() && AggressiveSharksProcedureProcedure.execute(world);
 			}
 		});
-		this.goalSelector.addGoal(29, new MeleeAttackGoal(this, 1.2, false) {
+		this.goalSelector.addGoal(30, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.goalSelector.addGoal(31, new RandomSwimmingGoal(this, 1, 40));
-		this.goalSelector.addGoal(33, new LookAtPlayerGoal(this, MegalodonEntity.class, (float) 6));
-		this.goalSelector.addGoal(34, new LookAtPlayerGoal(this, BaskingSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(35, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
-		this.goalSelector.addGoal(36, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(37, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(38, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(39, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
-		this.goalSelector.addGoal(40, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
-		this.goalSelector.addGoal(41, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
+		this.goalSelector.addGoal(32, new RandomSwimmingGoal(this, 1, 40));
+		this.goalSelector.addGoal(34, new LookAtPlayerGoal(this, MegalodonEntity.class, (float) 6));
+		this.goalSelector.addGoal(35, new LookAtPlayerGoal(this, BaskingSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(36, new LookAtPlayerGoal(this, ShrakEntity.class, (float) 6));
+		this.goalSelector.addGoal(37, new LookAtPlayerGoal(this, TigerSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(38, new LookAtPlayerGoal(this, MakoSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(39, new LookAtPlayerGoal(this, BlueSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(40, new LookAtPlayerGoal(this, NurseSharkEntity.class, (float) 6));
+		this.goalSelector.addGoal(41, new LookAtPlayerGoal(this, Turtle.class, (float) 6));
+		this.goalSelector.addGoal(42, new LookAtPlayerGoal(this, Dolphin.class, (float) 6));
 	}
 
 	@Override
@@ -231,8 +227,8 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 	}
 
 	@Override
-	public SoundEvent getAmbientSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.ambient"));
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("intentionally_empty")), 0.15f, 1);
 	}
 
 	@Override
@@ -243,13 +239,6 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 	@Override
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.tropical_fish.death"));
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		CookiecutterSharkOnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
-		return retval;
 	}
 
 	@Override
@@ -339,19 +328,15 @@ public class CookiecutterSharkEntity extends PathfinderMob implements GeoEntity 
 
 	private PlayState movementPredicate(AnimationState event) {
 		if (this.animationprocedure.equals("empty")) {
+			if ((event.isMoving() || !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F))
+
+			) {
+				return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
+			}
 			if (this.isInWaterOrBubble()) {
 				return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
 			}
-			if (this.isSprinting()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
-			}
-			if (this.isVehicle() && event.isMoving()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
-			}
-			if (this.isAggressive() && event.isMoving() && !this.isVehicle()) {
-				return event.setAndContinue(RawAnimation.begin().thenLoop("swim"));
-			}
-			return event.setAndContinue(RawAnimation.begin().thenLoop("flop"));
+			return event.setAndContinue(RawAnimation.begin().thenLoop("land"));
 		}
 		return PlayState.STOP;
 	}

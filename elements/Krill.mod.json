@@ -20,7 +20,7 @@
     "stepHeight": 0.6,
     "hasSpawnEgg": true,
     "spawnEggBaseColor": {
-      "value": -2195122,
+      "value": -2199730,
       "falpha": 0.0
     },
     "spawnEggDotColor": {
@@ -92,7 +92,7 @@
       "value": "CUSTOM:KrillItem"
     },
     "livingSound": {
-      "value": "entity.tropical_fish.ambient"
+      "value": ""
     },
     "hurtSound": {
       "value": "entity.tropical_fish.hurt"
@@ -101,7 +101,7 @@
       "value": "entity.tropical_fish.death"
     },
     "stepSound": {
-      "value": ""
+      "value": "intentionally_empty"
     },
     "raidCelebrationSound": {
       "value": ""

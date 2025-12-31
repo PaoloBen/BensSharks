@@ -21,7 +21,7 @@ public class BarracudaOnEntityTickUpdateProcedure {
 				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(BenssharksModMobEffects.DRYOUT_EFFECT.get(), 600, 0, true, false));
 			});
-		} else if (entity.isInWaterRainOrBubble()) {
+		} else if (entity.isInWaterOrBubble()) {
 			if (entity instanceof LivingEntity _entity)
 				_entity.removeEffect(BenssharksModMobEffects.DRYOUT_EFFECT.get());
 		}

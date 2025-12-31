@@ -32,7 +32,8 @@
     "enableMeleeDamage": true,
     "damageVsEntity": 9.0,
     "specialInformation": {
-      "fixedValue": []
+      "fixedValue": [],
+      "name": "SpetumSpecialInformation"
     },
     "hasGlow": false,
     "guiBoundTo": "<NONE>",

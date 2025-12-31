@@ -14,6 +14,7 @@ import net.minecraft.world.item.EnderpearlItem;
 import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.LingeringPotionItem;
+import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.EntityHitResult;
@@ -24,6 +25,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 
 import net.mcreator.sharks.init.BenssharksModItems;
+import net.mcreator.sharks.init.BenssharksModMobEffects; // Added Import for Effects
+import net.mcreator.sharks.network.BenssharksModVariables;
 
 import javax.annotation.Nullable;
 
@@ -62,17 +65,25 @@ public class ThresherRiptideAbilityProcedure {
 
             // --- 2. COMPATIBILITY CHECK: ANIMATIONS ---
             UseAnim anim = mainHand.getUseAnimation();
-            if (anim == UseAnim.BOW || anim == UseAnim.CROSSBOW || anim == UseAnim.SPEAR || anim == UseAnim.SPYGLASS || anim == UseAnim.BLOCK) {
+            if (anim == UseAnim.BOW || anim == UseAnim.CROSSBOW || anim == UseAnim.SPEAR || 
+                anim == UseAnim.SPYGLASS || anim == UseAnim.BLOCK || 
+                anim == UseAnim.EAT || anim == UseAnim.DRINK) {
                 return;
             }
 
-            // --- 3. COMPATIBILITY CHECK: TAGS ---
+            // --- 3. COMPATIBILITY CHECK: PROPERTIES ---
+            if (mainHand.isEdible()) {
+                return;
+            }
+
+            // --- 4. COMPATIBILITY CHECK: TAGS ---
             if (mainHand.is(ItemTags.create(new ResourceLocation("minecraft", "bows"))) || 
-                mainHand.is(ItemTags.create(new ResourceLocation("minecraft", "boats")))) {
+                mainHand.is(ItemTags.create(new ResourceLocation("minecraft", "boats"))) ||
+                mainHand.is(ItemTags.create(new ResourceLocation("forge", "foods")))) {
                 return;
             }
 
-            // --- 4. COMPATIBILITY CHECK: CLASSES ---
+            // --- 5. COMPATIBILITY CHECK: CLASSES ---
             if (mainHand.getItem() instanceof ProjectileWeaponItem ||  
                 mainHand.getItem() instanceof FishingRodItem ||      
                 mainHand.getItem() instanceof SnowballItem ||        
@@ -80,11 +91,12 @@ public class ThresherRiptideAbilityProcedure {
                 mainHand.getItem() instanceof EnderpearlItem ||      
                 mainHand.getItem() instanceof ExperienceBottleItem || 
                 mainHand.getItem() instanceof SplashPotionItem ||    
-                mainHand.getItem() instanceof LingeringPotionItem) { 
+                mainHand.getItem() instanceof LingeringPotionItem ||
+                mainHand.getItem() instanceof PotionItem) {
                 return;
             }
 
-            // --- 5. SAFETY CHECK: ENTITY INTERACTION ---
+            // --- 6. SAFETY CHECK: ENTITY INTERACTION ---
             Vec3 eyePos = entity.getEyePosition(1.0F);
             Vec3 viewVec = entity.getViewVector(1.0F);
             Vec3 targetVec = eyePos.add(viewVec.scale(5.0d));
@@ -103,43 +115,47 @@ public class ThresherRiptideAbilityProcedure {
                 return;
             }
 
-            // --- 6. RIPTIDE LOGIC (Server Side Only) ---
-            if (!world.isClientSide()) {
-                double charges = entity.getPersistentData().getDouble("ThresherRiptideCharges");
+            // --- 7. ENVIRONMENT CHECK (RIPTIDE RESTRICTION) ---
+            // Allow if: (Wet OR Rain OR Bubble) OR (Has Frenzy Effect)
+            boolean isWet = entity.isInWaterRainOrBubble();
+            boolean hasFrenzy = player.hasEffect(BenssharksModMobEffects.FRENZY.get());
 
-                // REQUIREMENT: Must have at least 1 charge (Even in Creative)
+            if (!isWet && !hasFrenzy) {
+                return;
+            }
+
+            // --- 8. RIPTIDE LOGIC (Server Side Only) ---
+            if (!world.isClientSide()) {
+                
+                double charges = (entity.getCapability(BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+                        .orElse(new BenssharksModVariables.PlayerVariables())).ThresherRiptideCharges;
+
                 if (charges > 0) {
                     
-                    // CONSUMPTION: Only remove charge if NOT Creative
                     if (!player.isCreative()) {
-                        entity.getPersistentData().putDouble("ThresherRiptideCharges", charges - 1);
+                         {
+                            double _setval = charges - 1;
+                            final net.minecraft.world.entity.Entity _ent = entity;
+                            entity.getCapability(BenssharksModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+                                capability.ThresherRiptideCharges = _setval;
+                                capability.syncPlayerVariables(_ent);
+                            });
+                        }
                     }
 
-                    // Physics Launch
                     net.minecraft.world.phys.Vec3 launchDir = entity.getViewVector(1.0f);
                     entity.setDeltaMovement(launchDir.x * 3.0, launchDir.y * 3.0, launchDir.z * 3.0);
                     
-                    // Force Sync
                     entity.hasImpulse = true; 
                     player.hurtMarked = true; 
                     entity.fallDistance = 0;
 
-                    // Animation & Sound
                     player.startAutoSpinAttack(20);
 
                     if (world instanceof net.minecraft.world.level.Level _level) {
                         _level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), 
                             net.minecraftforge.registries.ForgeRegistries.SOUND_EVENTS.getValue(new net.minecraft.resources.ResourceLocation("item.trident.riptide_3")), 
                             net.minecraft.sounds.SoundSource.PLAYERS, 1.0f, 1.0f);
-                    }
-
-                    // Status Message Logic
-                    if (!player.isCreative()) {
-                        // Survival: Show remaining count
-                        player.displayClientMessage(net.minecraft.network.chat.Component.literal("\u00A7bThresher Charges: " + (int) (charges - 1)), true);
-                    } else {
-                        // Creative: Show Infinity Symbol (\u221E)
-                        player.displayClientMessage(net.minecraft.network.chat.Component.literal("\u00A7bThresher Charges: \u221E"), true);
                     }
                 }
             }

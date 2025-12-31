@@ -7,8 +7,8 @@
 				"texture_width": 128,
 				"texture_height": 128,
 				"visible_bounds_width": 7,
-				"visible_bounds_height": 3,
-				"visible_bounds_offset": [0, 0.5, 0]
+				"visible_bounds_height": 4,
+				"visible_bounds_offset": [0, 1, 0]
 			},
 			"bones": [
 				{
@@ -59,7 +59,12 @@
 				{
 					"name": "Torso2",
 					"parent": "Torso",
-					"pivot": [0, 5, -2],
+					"pivot": [0, 5, -2]
+				},
+				{
+					"name": "Belly",
+					"parent": "Torso2",
+					"pivot": [0, 5, -13],
 					"cubes": [
 						{"origin": [-6, 0, -13], "size": [12, 11, 22], "uv": [0, 95]}
 					]

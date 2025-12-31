@@ -1,0 +1,26 @@
+{
+  "_fv": 73,
+  "_type": "enchantment",
+  "definition": {
+    "name": "Seeking",
+    "supportedSlots": "hand",
+    "weight": 5,
+    "anvilCost": 1,
+    "maxLevel": 4,
+    "damageModifier": 0,
+    "incompatibleEnchantments": [
+      {
+        "value": "RIPTIDE"
+      }
+    ],
+    "supportedItems": [
+      {
+        "value": "Items.TRIDENT"
+      }
+    ],
+    "isTreasureEnchantment": false,
+    "isCurse": false,
+    "canGenerateInLootTables": true,
+    "canVillagerTrade": true
+  }
+}
