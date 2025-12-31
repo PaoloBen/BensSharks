@@ -40,7 +40,7 @@
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:SharkFinSoup"
+      "value": "CUSTOM:SoupSharkfin"
     },
     "name": "soup_shark_fin_recipe",
     "namespace": "mod"
